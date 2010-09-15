@@ -1,27 +1,23 @@
-=head0 The Perl Philosophy
+=encoding utf8
 
-Perl is a language for getting things done.  It's flexible, forgiving, and
-malleable.  In the hands of a capable programmer, it can perform almost any
-task, from one-liner calculations and automations to multi-programmer,
-multi-year projects and everything in between.
+=head0 Perl 哲学
 
-Perl is powerful, and modern Perl--Perl which takes advantage of the best
-knowledge, deepest experience, and reusable idioms of the global Perl
-community--is maintainable, fast, and easy to use.  Perhaps most
-importantly, it can help you do what you need to do with little frustration
-and no ceremony.
+Perl 是一种能“干实事”的语言。它灵活、宽容、可塑。在一名编程能者的手中，它可以
+完成几乎所有的任务，从“一句话”的简单运算和自动完成任务到多人、多年的项目，
+外加夹在两者之间的部分。
 
-Perl is a pragmatic language.  You, the programmer, are in charge.  Rather than
-manipulating your mind and your problems to fit how the language designer
-thinks you should write programs, Perl allows you to solve your problems as you
-see fit.
+Perl 功能强大，摩登 Perl────一个集最上乘知识和经验，以及来自全球 Perl 社区的
+可重用惯用语的Perl────它可维护、快速、易用。也许最重要的是，它能够帮助你无挫折、
+无繁文缛节地做你需要做的事。
 
-Perl is a language which can grow with you.  You can write useful programs with
-the knowledge that you can learn in an hour of reading this book.  Yet if you
-take the time to understand the philosophies behind the syntax, semantics, and
-design of the language, you can be far more productive.
+Perl 是一门实用主义语言。你，程序员，完全地掌控着自己编写的程序。相对于操控你的思想
+和你面对的问题来适应语言设计者认为你应该怎样写程序，Perl 允许你按你觉得合适的方式
+解决问题。
 
-First, you need to know how to learn more.
+Perl 是一门伴随你成长的语言。你能够用你在一小时内阅读本书所学到的知识写出有用的程序。
+如果你还能花点时间理解语法、语义、语言设计背后的哲学，你会变得更有成效。
+
+首先，你需要知道如何学到更多东西。
 
 L<perldoc>
 
