@@ -1,104 +1,85 @@
-What is Modern Perl?
+什么是摩登 Perl？
 --------------------
 
-Perl is a popular, powerful, and widely used programming language.  Over its
-twenty year lifespan, it's powered millions of systems worldwide, moving
-trillions of dollars.  More importantly, it's helped countless people get their
-work done effectively.
+Perl 是一种流行且强大并被广泛使用的编程语言。在走过的20多年里，它给数百万系统提供动力，
+推动着万亿美元的价值。更为重要的是，它帮助无数的人们高效地完成他们的任务。
 
-The Perl community has a reputation for clever solutions -- and a reputation
-for institutional knowledge that isn't always clear to novices and neophytes.
-Modern Perl, written with this knowledge, can be very clean, very maintainable,
-and very effective.
+Perl 社区因提供睿智解答而赢得良好声誉────同时也因对于各式新手来说不那么直白的专业领域知识
+而出名。利用这些知识写就的摩登 Perl，会是十分清晰、可维护，并且相当高效。
 
-That knowledge should be available to everyone.  This book will teach you how
-to program Perl well by teaching you how to understand Perl's design, its
-syntax, and its semantics.
+这部分知识应该提供给每个人。本书将通过教你理解 Perl 的设计、语法、语义，使你学会如何更好
+地写出 Perl 程序。
 
 http://www.modernperlbooks.com/mt/2009/01/why-modern-perl.html
 
 
-Intended Audience
+目标人群
 -----------------
 
-I assume readers have some familiarity with Perl.  They should have it
-installed and should know how to write, edit, save, and run Perl programs.
-They don't necessarily have to have finished reading a tutorial such as
-Learning Perl or Beginning Perl, but they should be sufficiently familiar with
-programming to be able to follow along with examples.
+我假设读者对 Perl 有一定的熟悉程度。他们应该已经将 Perl 安装完成，并知道如何编写，
+修改，保存和运行 Perl 程序。他们并不需要读完类似《Perl语言入门》(Learning Perl) 或是
+《Beginning Perl》，但是他们应该对编程足够熟悉以便能沿着例子前进。
 
-I try not to assume complete knowledge of even basic constructs; I try to
-explain them in detail, as understanding subtleties of design and
-implementation are important to mastering the subject of Perl.
+我尝试不对读者是否完全了解基本语法结构做出假设，而是详细地对它们进行解释。因为理解
+设计与实现之微妙对于掌握 Perl 的主旨来说相当重要。
 
 
-Reviewer Guidelines
+审稿人指南
 -------------------
 
-I appreciate all suggestions and critiques, especially:
+我衷心感谢每一条建议和意见，特别是：
 
- * is the work accurate?
- * is the work complete?
- * is the work coherent?
- * are there missing sections and subjects?
- * are the examples effective?
- * is the flow of information appropriate?
+ * 是否准确？
+ * 是否完整？
+ * 是否一致?
+ * 缺少哪些章节和主题？
+ * 例子是否有效？
+ * 信息的流程是否合适？
 
 
-Building this Book
+生成本书
 ------------------
 
-You need a modern version of Perl installed.  I recommend Perl 5.10.1, but
-anything newer than 5.8.6 should work.
+你需要安装一个Perl 的现代化版本。我推荐 Perl 5.10.1，但是新于 5.8.6 的版本都可以工作。
 
-You should also have Pod::PseudoPod 0.16 or newer installed with its
-dependencies.
+你应该也已经连同依赖模块一起安装完 Pod::PseudoPod 0.16 或更新版本。
 
-From the top level directory of a checkout, build the individual chapters with:
+从签出的最顶端目录，用下列命令生成独立的章节：
 
     $ perl build/tools/build_chapters.pl
 
-The chapter sources are in the sections/ directory.  Each chapter has a
-corresponding chapter_nn.pod file.  Each file contains multiple POD links which
-refer to other files in the sections/ directory.  Each of those files contains
-a PseudoPOD Z<> anchor.
+源章节位于 sections/ 目录下。每章都对应一个 chapter_nn.pod 文件。每个文件都包含多个 POD
+链接，指向 sections/ 目录下的其他文件。每一个被指向的文件都含有一个 PseudoPOD Z<> 锚点。
 
-The build_chapters.pl program weaves these sections into chapters and writes
-them to POD files in build/chapters.
+build_chapters.pl 程序将这些小节缝合为章，并将它们写到 build/chapters 目录下的 POD 文件中。
 
-(This process makes it easy to rearrange sections within and between chapters
-without generating huge diffs.)
+（此过程使得重排章节变得简单，并无须生成巨大的差异。）
 
-To build HTML from these woven chapters:
+从已缝合章节生成本书的 HTML 版本：
 
     $ perl build/tools/build_html.pl
 
-This will produce nicely-formatted HTML in the build/html/ directory.  If
-anything looks wrong, it's a mistake on my part (or a CSS problem) and patches
-are very welcome.
+此命令将在 build/html/ 目录下生成格式齐整的 HTML 文件。如果有什么不正常的地方，算作我的失误
+（也可能是 CSS 问题），欢迎提交补丁。
 
-To build an ePub eBook from the woven chapters:
+从已缝合章节生成本书的 ePub 电子书版本：
 
     $ perl build/tools/build_epub.pl
 
-This will produce an ePub eBook in the build/epub/ directory.
+这个命令 将在 build/epub/ 目录中生成一份 ePub 电子书。
 
 
-Contributing to Modern Perl
+向 Modern Perl 做贡献
 ---------------------------
 
-For now, this draft work is licensed under a Creative Commons
-Attribution-Noncommercial-No Derivative Works 3.0 United States License.  For
-more details, see:
+现在，本书稿以知识共享“署名-非商业性使用-禁止演绎 3.0 美国” (Creative Commons 
+Attribution-Noncommercial-No Derivative Works 3.0 United States License) 许可发布。详见如下链接：
 
     http://creativecommons.org/licenses/by-nc-nd/3.0/us/
 
-Please feel free to point people to this repository.  Suggestions and
-contributions are welcome.  Please do not redistribute with modifications
-(forking with Git is fine, but I request that you send me patches or pull
-requests).
+请随意向他人推荐本代码仓库。欢迎提交建议和贡献。请不要分发本稿的自行修改版本（可以用 git 来 fork
+，但我请求你将补丁或 pull request 发送给我）。
 
-This book will be available under a less restrictive license when it comes out
-in print from Onyx Neon Press:
+本书由 Onyx Neon Press 印行后，将以一个更为宽松的许可提供：
 
     http://www.onyxneon.com/
