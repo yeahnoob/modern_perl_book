@@ -1,22 +1,18 @@
-=head0 Perl and Its Community
+=encoding utf8
 
-One of Larry's main goals for Perl 5 was to encourage Perl development and
-evolution outside the core distribution.  Perl 4 had several forks, because
-there was no easy way to connect it to a relational database, for example.
-Larry wanted people to create and maintain their own extensions without
-fragmenting Perl into thousands of incompatible pidgins.
+=head0 Perl 和它的社区
 
-You can add technical mechanisms for extensions, but you must also consider
-community aspects as well.  Extensions and enhancements that no one shares are
-extensions and enhancements that everyone has to build and test and debug and
-maintain themselves.  Yet shared extensions and libraries are worthless if you
-can't find them, or you can't enhance them, or you don't have permission to use
-them.
+Larry 设计 Perl 5 的一个主要目标就是鼓励核心发行版之外开发与革新。Perl 4 有几个
+旁支，因为，举例来说，没什么简单的方法能让它连接到关系数据库。Larry 希望人们能够
+创建并维护他们自己对语言的扩展而无须使 Perl 分裂为千百个不兼容的混杂语言。
 
-Fortunately, the Perl community exists.  It's strong and healthy.  It welcomes
-willing participants at all levels--and not just for people who produce and
-share code.  Consider taking advantage of the knowledge and experience of
-countless other Perl programmers, and to share your abilities as well.
+你可以为扩展而引入某种技术上的机制，但是你也需站在社区角度考虑此事。那些不在人群
+中共享的扩展和增强使得每个人必须自己动手对其进行编译、测试、调试和维护。如果没人
+能够找到或者找到了也不能修正甚至根本无权使用，那么共享扩展和库同样也是毫无意义的。
+
+幸运的是，我们有 Perl 社区的存在。它强壮且健康。它欢迎任何级别的参与者────并不只
+有那些产出并共享代码的人。考虑利用无数其他 Perl 程序员的知识和经验，并同样地分享
+你自己的能力。
 
 L<perl_community>
 
