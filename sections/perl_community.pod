@@ -1,61 +1,54 @@
+=encoding utf8
+
 Z<perl_community>
 
-=head1 Community Sites
+=head1 社区网站
 
 X<perl.org>
 X<websites; perl.org>
 
-Perl's homepage is U<http://www.perl.org/>.  This site hosts documentation,
-source code, tutorials, mailing lists, and several important community
-projects.  If you're new to Perl, the Perl beginners mailing list is a friendly
-place to ask novice questions and get accurate and helpful answers.  See
-U<http://beginners.perl.org/>.
+Perl 的主页位于 U<http://www.perl.org/>。这个站点提供了文档、源代码、教程、邮件列表
+以及若干重要的社区项目。如果你是 Perl 新手，那么友善的 Perl 新手邮件列表就是你提问并
+得到准确解答的地方。参见 U<http://beginners.perl.org/>。
 
-An important subdomain of note is U<http://dev.perl.org/>, a central site for
-core development of Perl 5, Perl 6N<The main Perl 6 site is
-U<http://www.perl6.org/>>, and even Perl 1.
+U<http://dev.perl.org/> 是一个值得一提的子域名，Perl 5、 Perl 6 N<Perl 6 主站为
+U<http://www.perl6.org/>>，甚至是 Perl 1 核心开发的中心站点。
 
 X<Perl Pub>
 
-Perl.com publishes several articles and tutorials about Perl programming every
-month.  Its archives reach back into the 20th century.  See
-U<http://www.perl.com/>.
+Perl.com 每月发布若干关于 Perl 编程的文章和教程。其存档可追溯到20世纪。参见
+U<http://www.perl.com/>。
 
 X<cpan.org>
 X<websites; cpan.org>
 
-The CPAN's (L<cpan>) central location is U<http://www.cpan.org/>, though
-experienced users spend more time on U<http://search.cpan.org/>.  This central
-software distribution hub of reusable, free Perl code is an essential part of
-the Perl community.
+CPAN (L<cpan>) 的中心位置位于 U<http://www.cpan.org/>，虽然有经验的用户通常在 
+U<http://search.cpan.org/> 上花去更多时间。这个承载着可重用、免费 Perl 代码的
+软件发布中心枢纽是 Perl 社区的基本组成部分。
 
 X<PerlMonks>
 
-PerlMonks, at U<http://perlmonks.org/>, is a venerable community site devoted
-to questions and answers and other discussions about Perl programming.  It
-celebrated its tenth anniversary in December 2009, making it one of the longest
-lasting web communities dedicated to any programming language.
+PerlMonks，位于 U<http://perlmonks.org/>，这处可敬的社区站点专门用于 Perl 编程问答及
+其他讨论。它于2009年十二月过完十周岁生日，使其成为编程语言专用 Web 社区中持续时间最长
+者之一。
 
 X<use Perl;>
 X<blogs.perl.org>
 
-Several community sites offer news and commentary.  The oldest is
-U<http://use.perl.org/>; it has offered custom journals for many years.
-Several well-known Perl hackers write there.  U<http://blogs.perl.org/> is a
-newer community site dedicated to blogging about Perl.
+若干社区网站提供新闻和评论。最古老的是 U<http://use.perl.org/>，它提供自主期刊已有
+许多年头。不少知名 Perl 黑客曾在那里执笔。U<http://blogs.perl.org/> 是一个用于撰写 
+Perl 主题博客的新兴社区站点。
 
 X<Enlightened Perl Organization>
 
-Other sites aggregate the Perl-related musings of Perl hackers, including
-U<http://perlsphere.net/>, U<http://planet.perl.org/>, and
-U<http://ironman.enlightenedperl.org/>.  The latter is part of an initiative
-from the Enlightened Perl Organization (U<http://enlightenedperl.org/>) to
-increase the amount of and improve the quality of Perl publishing on the web.
+其他一些站点则集中展示了 Perl 黑客们对 Perl 的沉思，包括 U<http://perlsphere.net/>、
+U<http://planet.perl.org/> 以及 U<http://ironman.enlightenedperl.org/>。后者是来自 
+Enlightened Perl Organization (U<http://enlightenedperl.org/>) 倡议的一部分，以期增加
+Perl 在线出版物的数量和质量。
 
 X<Perl Buzz>
 
-Perl Buzz (U<http://perlbuzz.com/>) collects and republishes some of the most
-interesting and useful Perl news on a regular basis.
+Perl Buzz (U<http://perlbuzz.com/>) 定期收集并重新发布一些最有趣、有用的 Perl 新闻。
 
 =head1 Development Sites
 
