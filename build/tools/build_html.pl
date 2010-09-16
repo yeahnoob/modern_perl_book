@@ -87,5 +87,7 @@ sub get_output_fh
     open my $fh, '>', $name
         or die "Cannot write to '$name': $!\n";
 
+    binmode $fh, 'utf8';
+
     return $fh;
 }
