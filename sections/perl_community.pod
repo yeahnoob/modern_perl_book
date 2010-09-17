@@ -50,58 +50,51 @@ X<Perl Buzz>
 
 Perl Buzz (U<http://perlbuzz.com/>) 定期收集并重新发布一些最有趣、有用的 Perl 新闻。
 
-=head1 Development Sites
+=head1 开发网站 
 
 X<RT>
 X<Best Practical>
 
-Best Practical Solutions (U<http://bestpractical.com/>) maintains an
-installation of their popular request tracking system, RT, for CPAN authors as
-well as Perl 5 and Perl 6 development.  Every CPAN distribution has its own RT
-queue, linked from C<search.cpan.org> and available on U<http://rt.cpan.org/>.
-Perl 5 and Perl 6 have separate RT queues available on U<http://rt.perl.org/>.
+Best Practical Solutions (U<http://bestpractical.com/>) 为 CPAN 作者以及 Perl 5、Perl 6
+的开发维护着一份他们产品────流行的需求跟踪系统────RT的安装。每一个 CPAN 模块的发行版有着
+属于自己的 RT 队列，C<search.cpan.org> 的模块页上有对应的链接，指向 U<http://rt.cpan.org/>。
+Perl 5 和 Perl 6 各自有一个位于 U<http://rt.perl.org/> 的 RT 队列。
 
 X<Perl 5 Porters>
 X<p5p>
 
-The Perl 5 Porters (also known as I<p5p>) mailing list is the central point for
-Perl 5 development discussion.  See
-U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>.
+Perl 5 Porters（也称 I<p5p>）邮件列表是 Perl 5 开发讨论的中心点。参见
+U<http://lists.cpan.org/showlist.cgi?name=perl5-porters>。
 
 X<TPF>
 X<The Perl Foundation>
 X<TPF wiki>
 
-The Perl Foundation (U<http://www.perlfoundation.org/>) hosts a wiki for all
-things Perl 5.  See U<http://www.perlfoundation.org/perl5>.
+Perl 基金会（U<http://www.perlfoundation.org/>）为所有有关 Perl 5 的内容提供了一个 Wiki
+参见 U<http://www.perlfoundation.org/perl5>。
 
 X<Github>
 X<Gitpan>
 
-Many Perl hackers use Github (U<http://github.com/>) to host their
-projectsN<...  including the drafts of this book at
-U<http://github.com/chromatic/modern_perl_book/>>.  One particularly notable
-page on Github is Gitpan, which hosts Git repositories chronicling the complete
-history of every distribution on the CPAN.  See U<http://github.com/gitpan/>.
+许多 Perl 黑客使用 Github（U<http://github.com/>）来存放他们的项目 N<…… 包括本书的书稿，
+位于 U<http://github.com/chromatic/modern_perl_book/>>。一个特别值得注意的 Github 页便是
+Gitpan，它存有记录每一个 CPAN 模块历史的 Git 代码库。参见 U<http://github.com/gitpan/>。
 
-=head1 Events
+=head1 活动
 
 X<YAPC>
 
-There are plenty of events in the physical world as well.  The Perl community
-holds a lot of conferences, workshops, and seminars.  In particular, the
-community-run YAPC--Yet Another Perl Conference--is a successful, local,
-low-cost conference model held on multiple continents.  See
-U<http://yapc.org/>.
+物理世界同样有着众多活动。Perl 社区每年举办不少会议、workshop和研讨会。特别地，社区运营着 
+YAPC ──── Yet Another Perl Conference （“又一次 Perl 大会”）──── 是一场成功的、地方性、低
+成本且在多个大洲举办的会议模型。参见 U<http://yapc.org/>。
 
-The Perl Foundation wiki lists other events at
-U<http://www.perlfoundation.org/perl5/index.cgi?perl_events>.
+Perl 基金会 Wiki 于 U<http://www.perlfoundation.org/perl5/index.cgi?perl_events> 列举了其它
+社区活动。
 
 X<Perl Mongers>
 
-There are also hundreds of local Perl Mongers groups which get together
-frequently for technical talks and social interaction.  See
-U<http://www.pm.org/>.
+同样还有本地 Perl Monger 小组（Perl 小贩组？！）不时地碰头举办技术讲座和社会交流。参见
+U<http://www.pm.org/>。
 
 =head1 IRC
 
@@ -111,14 +104,11 @@ X<IRC; #catalyst>
 X<IRC; #perl-help>
 X<IRC; #perl>
 
-When Perl mongers aren't at local meetups or conferences or workshops, many
-collaborate and chat online through IRC, a textual group chat system from the
-early days of the Internet.  Many of the most popular and useful Perl projects
-have their own IRC channels, such as I<#moose> or I<#catalyst>.
+当 Perl 贩子们不出现在本地会议或大会上或 workshop 中，他们中的许多人会互相协助并在 IRC
+────一种英特网早期发展起来、基于文本的群组聊天系统────上聊天。不少最为出名且有用的 Perl
+项目拥有自己的 IRC 频道，例如 I<#moose> 和 I<#catalyst>。
 
-The main server for Perl community is U<irc://irc.perl.org/>.  Other notable
-channels include I<#perl-help>, for general assistance on Perl programming, and
-I<#perl-qa>, devoted to testing and other quality issues.  Be aware that the
-channel I<#perl> is I<not> for general help--instead, it's a general purpose
-room for discussing whatever its participants want to discussN<... and it's not
-often friendly to people who ask basic programming questions.>.
+Perl 社区的主 IRC 服务器是 U<irc://irc.perl.org/>。其他值得一提的频道包括 I<#perl-help>
+──── 为一般性 Perl 编程求助而设，以及 I<#perl-qa> ──── 为测试和质量问题专用。注意 I<#perl> 
+I<不是> 一般性的求助频道，相反，它是一个为讨论其参与者想讨论的任何事情而设的通用聊天室。
+N<…… 而且它对提出编程基础问题的人通常不十分友好>。
