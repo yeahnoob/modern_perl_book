@@ -10,6 +10,8 @@ Z<implicit_ideas>
 
 =head2 默认标量变量
 
+Z<default_scalar_variable>
+
 X<default scalar variable>
 X<variables; $_>
 X<$_>
