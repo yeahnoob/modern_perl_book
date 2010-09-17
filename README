@@ -66,7 +66,13 @@ build_chapters.pl 程序将这些小节缝合为章，并将它们写到 build/c
 
     $ perl build/tools/build_epub.pl
 
-这个命令 将在 build/epub/ 目录中生成一份 ePub 电子书。
+此命令将在 build/epub/ 目录中生成一份 ePub 电子书。
+
+从章节生成 PDF 文档：
+
+    $ perl build/tools/build_pdf.pl
+
+此命令将在 build/pdf 目录中生成 PDF 文档。你必须从 CPAN 安装完 App::pod2pdf 模块。
 
 
 向 Modern Perl 做贡献

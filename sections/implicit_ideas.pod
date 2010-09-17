@@ -6,7 +6,7 @@ Z<implicit_ideas>
 
 像不少口语一样，Perl 提供了语言学捷径。上下文即是这样一个特性。阅读代码的无论是
 编译器还是程序员，都可以通过现有信息了解到所期望结果的数量和操作符的类型，而不必
-额外添加明确信息来消歧。Perl 中也存在其他类似的特性。
+额外添加明确信息来消歧。Perl 中也存在其他类似的特性，包括本质上是代词的默认变量。
 
 =head2 默认标量变量
 
@@ -16,7 +16,7 @@ X<default scalar variable>
 X<variables; $_>
 X<$_>
 
-默认标量变量（也称为话题变量）C<$_>，是 Perl 中语言学捷径的最佳例证。它最显眼的地方
+I<默认标量变量>（也称为I<话题变量>）C<$_>，是 Perl 中语言学捷径的最佳例证。它最显眼的地方
 就是它的 I<“缺席”>：当缺少一明确变量时，Perl 中许多内置操作是针对 C<$_> 的内容进行的。
 你仍可以将 C<$_> 填入所缺变量的位置，但是这通常是多此一举。
 
@@ -31,7 +31,7 @@ X<$_>
 
 =end programlisting
 
-在无明确变量时，C<chomp> 移去 C<$_> 尾部的换行符，因此下列两行代码是等价的：
+在没有指明变量时，C<chomp> 移去 C<$_> 尾部的换行符，因此下列两行代码是等价的：
 
 =begin programlisting
 
@@ -40,7 +40,11 @@ X<$_>
 
 =end programlisting
 
-同样的，内置函数 C<say> 和 C<print> 在缺少参数时作用于 C<$_> 之上：
+C<$_> 在 Perl 中的功能等同于汉语中的代词I<“它”>（英语中的代词 I<it>）。第一行
+读作 “C<chomp> I<它>”，第二行则读作“C<chomp>”。当你不指明对什么做 chomp 操作时，
+Perl 理解你的意思，Perl 总是 chomp I<它>。
+
+类似的，内置函数 C<say> 和 C<print> 在缺少参数时作用于 C<$_> 之上：
 
 =begin programlisting
 
@@ -78,7 +82,7 @@ X<keywords; reverse>
 X<uc>
 X<keywords; uc>
 
-Perl 中许多标量操作符（包括但不限于 C<chr>、C<ord>、C<lc>、C<length>、C<reverse> 及 C<uc>）
+Perl 中许多标量操作符（包括 C<chr>、C<ord>、C<lc>、C<length>、C<reverse> 及 C<uc>）
 在你不提供替代选项时，作用于默认标量变量上。
 
 Perl 的循环指令 (L<looping_directives>) 同样设置 C<$_> 变量，比如用 C<for> 遍历一个列表：
@@ -192,8 +196,8 @@ X<@_>
 
 =end programlisting
 
-I<不同于> C<$_>，当你调用其他函数时，Perl 自动地为你局部化 C<@_>。数组操作符 C<shift> 和 C<pop> 
-在没有提供其他操作数时作用于 C<@_>。
+正如 C<$_> 对应代词 I<它>，C<@_> 对应代词 I<它们>。I<不同于> C<$_>，当你调用其他函数时，
+Perl 自动地为你局部化 C<@_>。数组操作符 C<shift> 和 C<pop> 在没有提供其他操作数时作用于 C<@_>。
 
 X<variables; @ARGV>
 X<@ARGV>
