@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 Names
 
 Z<names>
@@ -5,12 +7,10 @@ Z<names>
 X<names>
 X<identifiers>
 
-I<Names> (or I<identifiers>) are everywhere in Perl programs: variables,
-functions, packages, classes, and even filehandles have names.  These names all
-start with a letter or an underscore.  They may optionally include any
-combination of letters, numbers, and underscores.  When the C<utf8> pragma
-(L<pragmas>, L<unicode>) is in effect, you may use any valid UTF-8 characters
-in identifiers.  These are all valid Perl identifiers:
+Perl 程序中，I<名称>（或 I<标识符>）无处不在：变量、函数、包、类甚至是文件句柄也
+有名称。这些名称都以字母或下划线开头。他们可以选择性包含任何字母、数字和下划线的
+组合。当 C<utf8> 编译命令（L<pragmas>、L<unicode>）生效时，你可以在标识符中使用
+任意合法的 UTF-8 字符。这些都是合法的 Perl 标识符：
 
 =begin programlisting
 
@@ -20,12 +20,12 @@ in identifiers.  These are all valid Perl identifiers:
 
     sub anAwkwardName3;
 
-    # with C<use utf8;> enabled
+    # 启用 C<use utf8;> 时
     package Ingy::DE<ouml>t::Net;
 
 =end programlisting
 
-These are invalid Perl identifiers:
+这些是不合法的 Perl 标识符：
 
 =begin programlisting
 
@@ -39,20 +39,17 @@ These are invalid Perl identifiers:
 
 X<symbolic lookups>
 
-These rules only apply to names which appear in literal form in source code;
-that is, if you've typed it directly like C<sub fetch_pie> or C<my
-$waffleiron>.
+这些规则仅适用于源代码中以字面形式出现的名称，就是说，直接键入 C<sub fetch_pie>
+或是 C<my $waffleiron>。
 
-Perl's dynamic nature makes it possible to refer to entities with names
-generated at runtime or provided as input to a program.  These are I<symbolic
-lookups>.  You get more flexibility this way at the expense of some safety.  In
-particular, invoking functions or methods indirectly or looking up namespaced
-symbols lets you bypass Perl's parser, which is the only part of Perl that
-enforces these grammatical rules.  Be aware that doing so can produce confusing
-code; a hash (L<hashes>) or nested data structure (L<nested_data_structures>)
-is often clearer.
+Perl 动态的本质使得它可以按名称引用在运行时生成或者以输入的方式提供给程序的那些
+实体。这称为 I<符号查找>。 你可以通过这种方式获得更多的灵活性，但以牺牲安全性作
+为代价。特别地，间接调用函数或方法或是查找名称空间内的符号让你绕过 Perl 的语法
+分析器──── Perl 中唯一强制执行语法规则的部分。请注意这样做可能会生成迷惑性的代码，
+一个哈希（L<hashes>）或嵌套数据结构（L<nested_data_structures>）（相比符号引用）
+会使代码更加清晰。
 
-=head2 Variable Names and Sigils
+=head2 变量名和印记(sigil)
 
 X<variables; names>
 X<scalar variables>
@@ -63,11 +60,9 @@ X<variables; arrays>
 X<hash variables>
 X<variables; hashes>
 
-I<Variable names> always have a leading sigil which indicates the type of the
-variable's value.  I<Scalar variables> (L<scalars>) have a leading dollar sign
-(C<$>) character.  I<Array variables> (L<arrays>) have a leading at sign (C<@>)
-character.  I<Hash variables> (L<hashes>) have a leading percent sign (C<%>)
-character:
+I<变量名> 的开头总有一个标明其值类型的印记。I<标量变量>（L<scalars>）开头是美元符
+号（C<$>）。I<数组变量>（L<arrays>）开头是“at”符号（C<@>）。I<哈希变量>（L<hashes>）
+的开头则是一个百分号（C<%>）。
 
 =begin programlisting
 
@@ -77,9 +72,8 @@ character:
 
 =end programlisting
 
-These sigils offer a sort of namespacing for the variables, where it's possible
-(though often confusing) to have variables of the same name but different
-types:
+这些印记多少为变量提供了一些名称空间，使得拥有同名不同型的变量成为可能（虽然通常
+具有迷惑性）：
 
 =begin programlisting
 
@@ -87,13 +81,12 @@ types:
 
 =end programlisting
 
-Perl won't get confused, but people reading the code will.
+Perl 不会因此犯迷糊，但是阅读代码的人则会。
 
 X<variant sigils>
 
-Perl 5 uses I<variant sigils>, where the sigil on a variable may change
-depending on what you do with it.  For example, to access a (scalar) element of
-an array or a hash, the sigil changes to the dollar sign (C<$>) character:
+Perl 5 使用 I<变化印记> ──── 变量的印记可能会随使用情况的不同而不同。例如，访问数组
+或哈希中的（标量）元素，印记就变成了美元符号（C<$>）：
 
 =begin programlisting
 
@@ -108,16 +101,13 @@ an array or a hash, the sigil changes to the dollar sign (C<$>) character:
 X<lvalue>
 X<rvalue>
 
-In the latter two lines, using a scalar element of an aggregate as an I<lvalue>
-(the target of an assignment, on the left side of the C<=> character) imposes
-scalar context (L<context_philosophy>) on the I<rvalue> (the value assigned, on
-the right side of the C<=> character).
+在最后两行中，将集合类型的标量成员用作 I<左值>（赋值的目标，位于 C<=> 符号的左侧）会
+向 I<右值>（所赋之值，位于 C<=> 符号的右侧）施加标量上下文（L<context_philosophy>）。
 
 X<slicing>
 
-Similarly, accessing multiple elements of a hash or an array--an operation
-known as I<slicing>--uses the at symbol (C<@>) as the leading sigil and
-imposes list context:
+类似地，访问数组或哈希中的多个元素────一个被称为 I<分片> 的操作────使用“at”符号（C<@>）
+作为印记并施加列表上下文：
 
 =begin programlisting
 
@@ -129,33 +119,24 @@ imposes list context:
 
 =end programlisting
 
-The most reliable way to determine the type of a variable--scalar, array, or
-hash--is to look at the operations performed on it.  Scalars support all basic
-operations, such as string, numeric, and boolean manipulations.  Arrays support
-indexed access through square brackets.  Hashes support keyed access through
-curly brackets.
+决定一个变量────标量、数组或哈希────类型最可靠的方法是看对它进行何种操作。标量支持所
+有基本的操作，诸如字符串、数值、布尔处理。数组通过中括号支持对元素的下标访问。哈希通
+过大括号支持对元素的按键访问。
 
-=head2 Package-Qualified Names
+=head2 包限定名称
 
 X<fully-qualified name>
 
-Occasionally you may need to refer to functions or variables in a separate
-namespace.  Often you will need to refer to a class by its I<fully-qualified
-name>.  These names are collections of package names joined by double colons
-(C<::>).  That is, C<My::Fine::Package> refers to a logical collection of
-variables and functions.
+你偶尔会需要引用其他名称空间中的函数或变量。通常你需要通过类的 I<完全限定名称> 来引
+用它。这些名称由双冒号（C<::>）分隔的包名组成。就是说，C<My::Fine::Package> 指向一个
+逻辑上的函数以及变量的集合。
 
-While the standard naming rules apply to package names, by convention
-user-defined packages all start with uppercase letters.  The Perl core reserves
-lowercase package names for built-in pragmas (L<pragmas>), such as C<strict>
-and C<warnings>.  This is a policy enforced by community guidelines instead of
-Perl itself.
+虽然标准命名规则也适用于包名，照惯例，用户定义的包的名称通常以大写字母开头。Perl 核心
+为内建编译命令（L<pragmas>）保留了小写包名，如 C<strict> 和 C<warnings>。这是由社区指南
+而非 Perl 自身强制的规矩。
 
-Namespaces do not nest in Perl 5.  The relationship between between
-C<Some::Package> and C<Some::Package::Refinement> is only a storage mechanism,
-with no further implications on the relationships between parent and child or
-sibling packages.  When Perl looks up a symbol in C<Some::Package::Refinement>,
-it looks in the C<main::> symbol table for a symbol representing the C<Some::>
-namespace, then in there for the C<Package::> namespace, and so on.  It's your
-responsibility to make any I<logical> relationships between entities obvious
-when you choose names and organize your code.
+Perl 5 没有嵌套名称空间。C<Some::Package> 和 C<Some::Package::Refinement> 的关系仅仅是
+存储机制上的，并无第二重暗示指出在包关系上它们是父子还是兄弟。当 Perl 在 C<Some::Package::Refinement>
+中查找某一符号时，它向 C<main::> 符号表查找代表 C<Some::> 名称空间的符号，接着再在其中
+查找 C<Package::> 名称空间，如此等等。当你选择名称和组织代码时，使实体之间的 I<逻辑> 关
+系明显是你的责任。

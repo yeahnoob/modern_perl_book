@@ -1,11 +1,11 @@
-=head0 The Perl Language
+=encoding utf8
 
-The Perl language has several smaller parts which combine to form its syntax.
-Unlike spoken language, where nuance and tone of voice and intuition allow
-people to communicate despite slight misunderstandings and fuzzy concepts,
-computers and source code require precision.  You can write effective Perl code
-without knowing every detail of every language feature, but you must understand
-how they work together to write Perl code well.
+=head0 Perl 语言
+
+Perl 语言的语法由若干更小的部分组合而成。不像口语────说话的语气、语音、语调和直觉
+使得人们可以在略带误解或概念模糊的情况下继续沟通，计算机和源代码要求的是精确。不需
+了解语言每一项功能的每一处细节，你同样可以写出有效的 Perl 代码，但为了写好代码，你
+必须理解这些细节是如何在一起工作的。
 
 L<names>
 
