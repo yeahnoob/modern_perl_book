@@ -1,11 +1,13 @@
-=head1 Control Flow
+=encoding utf8
+
+=head1 控制流程 
 
 Z<control_flow>
 
 X<control flow>
 
-Perl's basic I<control flow> is straightforward.  Program execution starts at
-the beginning (the first line of the file executed) and continues to the end:
+Perl 的基本 I<控制流程> 相当直截了当。程序执行过程起始于程序开头（被执行文件的第一行）
+然后一直到结尾：
 
 =begin programlisting
 
@@ -17,20 +19,17 @@ the beginning (the first line of the file executed) and continues to the end:
 
 X<control flow directives>
 
-Most programs need more complex control flow.  Perl's I<control flow
-directives> change the order of execution--what happens next in the
-program--depending on the values of arbitrarily complex expressions.
+大多数程序需要更为复杂的控制流程。Perl 的 I<控制流程语句> 改变了程序执行的顺序────程序
+中接下来要发生的────依赖于任意复杂的表达式的值。
 
-=head2 Branching Directives
+=head2 分支语句
 
 X<if>
 X<control flow directives; if>
 X<postfix if>
 X<postfix expressions; if>
 
-The C<if> directive evaluates a conditional expression and performs the
-associated action only when the conditional expression evaluates to a true
-value:
+C<if> 语句对一条件表达式求值并仅在此条件表达式的值为真时执行相关动作：
 
 =begin programlisting
 
@@ -38,8 +37,7 @@ value:
 
 =end programlisting
 
-This postfix form is useful for simple expressions.  A block form groups
-multiple expressions into a single unit:
+这种后缀形式在表达式较简单时很有用。代码块形式则将多个表达式组合成单一单元：
 
 =begin programlisting
 
@@ -51,9 +49,8 @@ multiple expressions into a single unit:
 
 =end programlisting
 
-Note that the postfix form does not I<require> parentheses around its
-condition, while the block form does.  The conditional expression may also be
-complex:
+注意后缀形式并不 I<要求> 条件两边有括号，但代码块形式则相反。条件表达式也可
+以相对复杂：
 
 =begin programlisting
 
@@ -65,8 +62,8 @@ complex:
 
 =end programlisting
 
-... though in this case, parenthesization of the expression in postfix form may
-add clarityN<It may also argue against using the postfix form.>:
+……虽然在此种情况下，采用后缀形式的括号形式可以使其稍显清晰
+N<同时也会因此对是否使用后缀形式产生争论>：
 
 =begin programlisting
 
@@ -79,8 +76,8 @@ X<control flow directives; unless>
 X<postfix unless>
 X<postfix expressions; unless>
 
-The C<unless> directive is a negated form of C<if>.  Perl will perform the
-requested action when the conditional expression evaluates to I<false>:
+C<unless> 语句是 C<if> 的否定形式。Perl 在条件表达式的值为 I<假> 时执行
+所需操作：
 
 =begin programlisting
 
@@ -88,8 +85,8 @@ requested action when the conditional expression evaluates to I<false>:
 
 =end programlisting
 
-Like C<if>, C<unless> also has a block form.  Unlike C<if>, the block form of
-C<unless> is much rarer than its postfix form:
+和 C<if> 类似，C<unless> 也有代码块形式。不同于 C<if>，C<unless> 的代码块形式相比其 
+后缀形式来说很少见：
 
 =begin programlisting
 
@@ -101,8 +98,7 @@ C<unless> is much rarer than its postfix form:
 
 =end programlisting
 
-C<unless> works very well for postfix conditionals, especially parameter
-validation in functions (L<postfix_parameter_validation>):
+C<unless> 很适合后缀条件，特别是函数中的参数验证（L<postfix_parameter_validation>）：
 
 =begin programlisting
 
@@ -118,15 +114,13 @@ validation in functions (L<postfix_parameter_validation>):
 
 =end programlisting
 
-C<unless> can be difficult to read with multiple conditions; this is one reason
-it appears rarely in its block form.
+条件一多 C<unless> 就会变得难以阅读，这便是它很少以代码块形式出现的原因之一。
 
 X<else>
 X<control flow directives; else>
 
-The block forms of C<if> and C<unless> both work with the C<else> directive,
-which provides code to run when the conditional expression does not evaluate to
-true (for C<if>) or false (for C<unless>):
+C<if> 以及 C<unless> 都可以搭配 C<else> 语句，它提供了当条件表达式的值不为真（C<if>）
+或假（C<unless>）时运行的代码：
 
 =begin programlisting
 
@@ -143,8 +137,7 @@ true (for C<if>) or false (for C<unless>):
 
 =end programlisting
 
-C<else> blocks allow you to rewrite C<if> and C<unless> conditionals in terms
-of each other:
+C<else> 代码块允许你按不同于自身的方式重写 C<if> 和 C<unless> 条件语句：
 
 =begin programlisting
 
@@ -161,12 +154,9 @@ of each other:
 
 =end programlisting
 
-If you read the previous example out loud, you may notice the awkward
-pseudocode phrasing: "Unless this name is Bob, do this.  Otherwise, do
-something else."  The implied double negative can be confusing.  Perl provides
-both C<if> and C<unless> to allow you to phrase your conditionals in the most
-natural and readable way.  Likewise, you can choose between positive and
-negative assertions with regard to the comparison operators you use:
+如果你大声读出前面这个例子，你会发现一例不合适的伪代码用词：“除非该名字为 Bob，做这件事。否则
+做那件。”隐含的双重否定可能会很迷惑。Perl 提供了 C<if> 和 C<unless> 使得你可以按最为自然、
+最为上口的方式对条件语句进行组织。同样地，你可以根据比较操作符在肯定和否定断言之间进行选择：
 
 =begin programlisting
 
@@ -183,15 +173,13 @@ negative assertions with regard to the comparison operators you use:
 
 =end programlisting
 
-The double negative implied by the presence of the C<else> block argues against
-this particular phrasing.
+因 C<else> 代码块的出现而隐含着的双重否定示意此代码组织方式是不合理的。
 
 X<elsif>
 X<control flow directives; elsif>
 
-One or more C<elsif> directives may follow an C<if> block form and may precede
-any single C<else>.  You may use as many C<elsif> blocks as you like, but you
-may not change the order in which the block types appear:
+在单个 C<else> 之前、C<if> 代码块之后可以跟一个或多个 C<elsif> 语句。C<elsif> 代码块的使用数量不限，
+但你不可以改变块出现的顺序：
 
 =begin programlisting
 
@@ -213,12 +201,10 @@ may not change the order in which the block types appear:
 
 =end programlisting
 
-You may also use the C<elsif> block with an C<unless> chain, but the resulting
-code may be unclear.  There is no C<elseunless>.
+你也可以在 C<unless> 链内使用 C<elsif> 块，但是结果代码会不那么清晰。不存在 C<elseunless> 的说法。
 
-There is no C<else if> constructN<Larry prefers C<elsif> for aesthetic reasons,
-as well the prior art of the Ada programming language.>, so this code contains
-a syntax error:
+同样也没有 C<else if> 这一语法结构 N<Larry 出于美学原因以及 Ada 编程语言的现有技术选择了 C<elsif>>，
+因此，这段代码含有语法错误：
 
 =begin programlisting
 
@@ -235,14 +221,12 @@ a syntax error:
 
 =end programlisting
 
-=head2 The Ternary Conditional Operator
+=head2 三元条件操作符
 
 X<ternary conditional>
 X<control flow directives; ternary conditional>
 
-The I<ternary conditional> operator offers an alternate approach to control
-flow.  It evaluates a conditional expression and evaluates to one of two
-different results:
+I<三元条件> 操作符提供了另一种方法来控制流程。它先将条件表达式求值，并由此对两不同结果之一求值：
 
 =begin programlisting
 
@@ -250,15 +234,12 @@ different results:
 
 =end programlisting
 
-The conditional expression precedes the question mark character (C<?>) and the
-colon character (C<:>) separates the alternatives.  The alternatives are
-literals or (parenthesized) expressions of arbitrary complexity, including
-other ternary conditional expressions, though readability may suffer.
+条件表达式位于问号（C<?>）之前，冒号（C<:>）分隔两种选择。这两个选择分支可以是字面值或者（带括号）
+任意复杂的表达式，包括其他的三元条件表达式（以可读性为代价）。
 
 =begin sidebar
 
-An interesting, though obscure, idiom is to use the ternary conditional to
-select between alternative I<variables>, not only values:
+一个有趣但晦涩的惯用语便是使用三元条件语句在两个候选 I<变量> 之间做出选择，而非仅仅对值：
 
 =begin programlisting
 
@@ -266,20 +247,17 @@ select between alternative I<variables>, not only values:
 
 =end programlisting
 
-Again, weigh the benefits of clarity versus the benefits of conciseness.
+再次提醒，请对清晰和简略各自带来的利益进行权衡。
 
 =end sidebar
 
-=head3 Short Circuiting
+=head3 短路求值
 
 X<short circuiting behavior>
 X<short circuiting>
 
-Perl performs a type of behavior known as I<short-circuiting> when it
-encounters complex expressions--expressions composed of multiple evaluated
-expressions.  If Perl can determine that a complex expression would succeed or
-fail as a whole without evaluating every subexpression, it will not evaluate
-subsequent subexpressions.  This is most obvious with an example:
+当遇到由多重待求值的表达式组成的复杂表达式时，Perl 将做出名为 I<短路求值> 的行为。如果 Perl
+可以决定一个复杂的表达式整体的值是真还是假，那么它不会对后续子表达式求值。用例子说明会更加明白：
 
 =begin programlisting
 
@@ -290,12 +268,11 @@ subsequent subexpressions.  This is most obvious with an example:
 
 =begin sidebar
 
-The return value of C<ok()> (L<testing>) is the boolean value obtained by
-evaluating the first argument.
+C<ok()> 的返回值（L<testing>）是对第一个参数求值得到的。
 
 =end sidebar
 
-This example prints:
+这个例子打印出：
 
 =begin screen
 
@@ -305,10 +282,8 @@ This example prints:
 
 =end screen
 
-When the first subexpression--the first call to C<ok>--evaluates to true, Perl
-must evaluate the second subexpression.  When the first subexpression evaluates
-to false, the entire expression cannot succeed, and there is no need to check
-subsequent subexpressions:
+当第一个子表达式────对 C<ok> 的第一次调用────求得真值时，Perl 必须对第二个字表达式求值。
+当第一个表达式求得假值时，整个表达式不为真，因此无需检查后续子表达式。
 
 =begin programlisting
 
@@ -317,7 +292,7 @@ subsequent subexpressions:
 
 =end programlisting
 
-This example prints:
+这个例子打印出：
 
 =begin screen
 
@@ -325,9 +300,8 @@ This example prints:
 
 =end screen
 
-Even though the second subexpression would obviously succeed, Perl never
-evaluates it.  The logic is similar for a complex conditional expression where
-either subexpression must be true for the conditional as a whole to succeed:
+虽然第二个子表达式显然为真，Perl 绝不对其求值。对于“一真即真”复杂条件表达式来说，
+其逻辑也是相似的：
 
 =begin programlisting
 
@@ -336,7 +310,7 @@ either subexpression must be true for the conditional as a whole to succeed:
 
 =end programlisting
 
-This example prints:
+这个例子打印出：
 
 =begin screen
 
@@ -345,13 +319,10 @@ This example prints:
 
 =end screen
 
-Again, with the success of the first subexpression, Perl can avoid evaluating
-the second subexpression.  If the first subexpression were false, the result of
-evaluating the second subexpression would dictate the result of evaluating the
-entire expression.
+再次，第一个子表达式为真，Perl 可以避免对第二个子表达式求值。如果第一个子表达式为假，
+则对第二个子表达式求值的结果将决定整个表达式的真假。
 
-Besides allowing you to avoid potentially expensive computations, short
-circuiting can help you to avoid errors and warnings:
+除了可以让你避免潜在的昂贵计算，短路求值还可以帮助你避免错误和警告：
 
 =begin programlisting
 
@@ -360,7 +331,7 @@ circuiting can help you to avoid errors and warnings:
 =end programlisting
 
 
-=head2 Context for Conditional Directives
+=head2 条件语句相关的上下文
 
 X<context; conditional>
 X<truth>
@@ -368,31 +339,22 @@ X<boolean truth>
 X<true value>
 X<false value>
 
-The conditional directives--C<if>, C<unless>, and the ternary conditional
-operator--all evaluate an expression in boolean context
-(L<context_philosophy>).  As comparison operators such as C<eq>, C<==>, C<ne>,
-and C<!=> all produce boolean results when evaluated, Perl coerces the results
-of other expressions--including variables and values--into boolean forms.
-Empty hashes and arrays evaluate to false.
+这些条件语句────C<if>、C<unless>，以及三元条件表达式────总是在布尔上下文（L<context_philosophy>）
+中对一个表达式进行求值。由于 C<eq>、C<==>、C<ne> 和 C<!=> 这类操作符在求值时总产生布尔结果，Perl
+将其他表达式的求值结果────包括变量和值────强制转换为布尔形式。对空哈希和数组求值得假。
 
-Perl 5 has no single true value, nor a single false value.  Any number that
-evaluates to 0 is false.  This includes C<0>, C<0.0>, C<0e0>, C<0x0>, and so
-on.  The empty string (C<''>) and C<"0"> evaluate to false, but the strings
-C<"0.0">, C<"0e0">, and so on do not.  The idiom C<"0 but true"> evaluates to 0
-in numeric context but evaluates to true, thanks to its string contents.  Both
-the empty list and C<undef> evaluate to false.  Empty arrays and hashes return
-the number 0 in scalar context, so they evaluate to false in boolean context.
+Perl 5 没有单一的真值、也没有单一的假值。任何求值为 0 的数字为假。包括 C<0>、C<0.0>、C<0e0>、
+C<0x0> 等等。空字符串（C<''>）以及 C<"0"> 求值得假，但是字符串如 C<"0.0">、C<"0e0"> 等则不然。
+惯用语 C<"0 but true"> 在数值上下文中求值得 0，但其值因字符串内容而为真。空列表和 C<undef> 都
+为假。空数组和哈希在标量上下文中返回 0，因此它们在布尔上下文中为假。
 
-An array which contains a single element--even C<undef>--evaluates to true in
-boolean context.  A hash which contains any elements--even a key and a value of
-C<undef>--evaluates to true in boolean context.
+带有单个元素的数组────即便该元素是 C<undef>────在布尔上下文中求值得真，含任何元素的哈希────
+即使是一键一值两个 C<undef>────在布尔上下文中也得真。
 
 =begin sidebar
 
-The C<Want> module available from the CPAN allows you to detect boolean context
-within your own functions.  The core C<overloading> pragma (L<overloading>,
-L<pragmas>) allows you to specify what your own data types produce when
-evaluated in a boolean context.
+CPAN 模块 C<Want> 允许你在你的函数内检测布尔上下文。核心编译命令 C<overloading>（L<overloading>、
+L<pragmas>）允许你指定自己的数据类型在布尔上下文中求得的值。
 
 =end sidebar
 
