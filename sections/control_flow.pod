@@ -49,8 +49,7 @@ C<if> 语句对一条件表达式求值并仅在此条件表达式的值为真�
 
 =end programlisting
 
-注意后缀形式并不 I<要求> 条件两边有括号，但代码块形式则相反。条件表达式也可
-以相对复杂：
+虽然代码块形式要求条件两边有括号，但后缀形式则相反。条件表达式也可以相对复杂：
 
 =begin programlisting
 
@@ -261,8 +260,13 @@ X<short circuiting>
 
 =begin programlisting
 
+    # see preface
+    use Test::More 'no_plan';
+
     say "Both true!" if ok(1, 'first subexpression')
                      && ok(1, 'second subexpression');
+
+    done_testing();
 
 =end programlisting
 
@@ -277,7 +281,7 @@ C<ok()> 的返回值（L<testing>）是对第一个参数求值得到的。
 =begin screen
 
     ok 1 - first subexpression
-    ok 2 - first subexpression
+    ok 2 - second subexpression
     Both true!
 
 =end screen
@@ -492,7 +496,11 @@ C<for> 循环将迭代变量 I<别名化> 为迭代中的值，以便你可以�
 
 =begin programlisting
 
-    lc for qw( Huey Dewey Louie );
+    for (qw( Huex Dewex Louie ))
+    {
+        $_++;
+        say;
+    }
 
 =end programlisting
 

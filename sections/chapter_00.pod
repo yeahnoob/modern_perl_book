@@ -14,11 +14,10 @@ I<Modern Perl> 仅是对老练而高效的Perl 5程序员的工作方式的一�
 他们充分利用CPAN。他们的程序带有明显的 “Perl 的味道”，他们展现出对事物的良好品味、独到的匠心
 以及对 Perl 通透的理解。
 
-你也可以成为这样的Perl程序员。
+你也可以学着成为这样的Perl程序员。
 
 =head0 运行 Modern Perl
 
-要利用这本书中的大部分知识无需安装新版本的Perl，但是书中给出的例子假设你正使用 Perl 5.10 或更新版本。
 除非另作说明，每一处代码片段总是假设如下基本程序框架：
 
 =begin programlisting
@@ -29,6 +28,18 @@ I<Modern Perl> 仅是对老练而高效的Perl 5程序员的工作方式的一�
 
     # 这里是示例代码
     ...
+
+=end programlisting
+
+=begin sidebar
+
+Modern::Perl 模块可以从 CPAN 获取。你可以自行安装它，或用如下代码代替：
+
+=begin programlisting
+
+    use strict;
+    use warnings;
+    use 5.010;
 
 =end programlisting
 
@@ -47,19 +58,51 @@ I<Modern Perl> 仅是对老练而高效的Perl 5程序员的工作方式的一�
 
 =end programlisting
 
-如果尚未安装比较现代化的 Perl 版本，你通常可以自行安装一份。Windows 用户可以从
-U<http://www.strawberryperl.com/> 下载 Strawberry Perl。操作系统自带 Perl 5 
-（以及 C 编译器还有其他一些开发工具）的用户，可以以安装CPAN 模块 C<App::perlbrew>N<安装指南参见
-U<http://search.cpan.org/perldoc?App::perlbrew>> 作为开始.
+书中给出的例子假设你正使用 Perl 5.10 或更新版本，理想的话至少是 Perl 5.10.1。许多例子经适当
+修改就可以在 Perl 5 的早期版本上运行，但是早于 Perl 5.10.0 的版本会给你带来更多的困难。本书
+同样描述（但不 I<要求> 使用）Perl 5.12 中新引入的功能。
+
+你通常可以自行安装一份最新的 Perl。Windows 用户可以从 U<http://www.strawberryperl.com/> 下载
+Strawberry Perl。操作系统自带 Perl 5（以及 C 编译器还有其他一些开发工具）的用户，可以以安装 CPAN 
+模块 C<App::perlbrew> N<安装指南参见 U<http://search.cpan.org/perldoc?App::perlbrew>> 作为开始.
 
 C<perlbrew> 允许你安装并管理多个版本的 Perl 5。默认地。它将它们安装在你的家目录下。你不仅可以
 在不影响系统自带 Perl 的情况下拥有多个版本的 Perl 5，而且不用劳烦系统管理员给你特定权限，就
 可以把你喜欢的任何模块安装到这些目录中。
 
-=begin sidebar
+=head1 Perl 5 和 Perl 6
 
-你应该安装 Perl 5 的哪个版本？本书余下部分假设你正使用至少和 Perl 5.10.0 一样新的版本，
-最好是 5.10.1，但是在本书编写时，所有的示例代码都可以在 Perl 5.12.x 系列发行版的每一个
-版本上运行。本书同时也提及 Perl 5.12 增加的功能。
+你应该学习 Perl 5 还是 Perl 6？它们有着同样的哲学和语法以及库和社区，它们有各自合适的位置。如果：
 
-=end sidebar
+=over 4
+
+=item * 你有现成的 Perl 5 代码要维护
+
+=item * 你需要利用 CPAN 模块
+
+=item * 你的部署策略要求严格的稳定性
+
+=back
+
+那么学 Perl 5 吧。如果：
+
+=over 4
+
+=item * 你对频繁升级习以为常
+
+=item * 你能够承受试验新语法和新功能
+
+=item * 你需要的功能仅由 Perl 6 提供
+
+=item * 你可以为它的开发做出贡献（无论是补丁、缺陷报告、文档、赞助或其他资源）
+
+=back
+
+那么学 Perl 6 吧。
+
+一般说来，Perl 5 的开发会保持有关核心语言的部分。有好有坏，变化产生得相当缓慢。Perl 6 更
+具实验性质，它更注重找到最合理的设计而非保证旧的代码可以工作。所幸的是，你可以学习并使用
+两者（并且它们影响着互相进步）。
+
+本书讨论 Perl 5。如要学习 Perl 6，请浏览 U<http://perl6.org/>，试用 Rakudo（U<http://www.rakudo.org/>），
+并参考同样由 Onyx Neon Press 出版的 I<Using Perl 6> 一书。

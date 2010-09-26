@@ -662,6 +662,9 @@ X<qw() operator>
 
 =begin programlisting
 
+    # enable say and other features (see preface)
+    use Modern::Perl;
+
     # you do not need to understand this all
     sub context
     {
@@ -678,5 +681,11 @@ X<qw() operator>
     my @list_slice  = (1, 2, 3)[context()];
     my @array_slice = @list_slice[context()];
     my $array_index = $array_slice[context()];
+
+    # say imposes list context
+    say context();
+
+    # void context is obvious
+    context()
 
 =end programlisting
