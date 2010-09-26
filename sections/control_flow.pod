@@ -358,19 +358,18 @@ L<pragmas>）允许你指定自己的数据类型在布尔上下文中求得的�
 
 =end sidebar
 
-=head2 Looping Directives
+=head2 循环语句
 
 Z<looping_directives>
 
-Perl also provides several directives for looping and iteration.
+Perl 也提供了供循环和迭代使用的若干语句。
 
 X<foreach>
 X<for>
 X<looping directives; for>
 X<looping directives; foreach>
 
-The I<foreach>-style loop evaluates an expression which produces a list and
-executes a statement or block until it has consumed that list:
+I<foreach> 风格的循环对一表达式求值而产生一个列表，接着执行某语句或代码块直到它消耗完该列表：
 
 =begin programlisting
 
@@ -381,22 +380,17 @@ executes a statement or block until it has consumed that list:
 
 =end programlisting
 
-This example uses the range operator to produce a list of integers from one to
-ten inclusive.  The C<foreach> directive loops over them, setting the topic
-variable (C<$_>; see L<default_scalar_variable>) to each in turn.  Perl
-executes the block for each integer and prints the squares of the integers.
+这个例子使用范围操作符产生了一个包括一到十在内的整数列表。C<foreach> 语句在其之上循环，依次设置话题变量
+（C<$_>，参见 L<default_scalar_variable>）。Perl 针对每个整数执行代码块并打印该整数的平方。
 
 =begin sidebar
 
-Perl treats the keywords C<foreach> and C<for> interchangeably.  The remainder
-of the syntax of the loop determines the behavior of the loop.  Though
-experienced Perl programmers tend to refer to the loop with automatic iteration
-as a C<foreach> loop, you can use C<for> safely and clearly any place you might
-want to use C<foreach>.
+Perl 将 C<foreach> 和 C<for> 可互换地看待。循环余下部分的语句决定了循环的行为。尽管有经验的 Perl 程序员
+倾向于用 C<foreach> 循环来指代自动迭代循环，你可以在任何用到 C<foreach> 的地方安全地用 C<for> 替代。
 
 =end sidebar
 
-Like C<if> and C<unless>, the C<for> loop has a postfix form:
+如同 C<if> 及 C<unless>，C<for> 循环也有一个后缀形式：
 
 =begin programlisting
 
@@ -404,10 +398,9 @@ Like C<if> and C<unless>, the C<for> loop has a postfix form:
 
 =end programlisting
 
-Similar suggestions apply for clarity and complexity.
+有关清晰、简略的建议同样适用于此。
 
-You may provide a variable to which to assign the values of the expression in
-place of the topic variable:
+你可以提供一个用于赋值变量以代替话题变量：
 
 =begin programlisting
 
@@ -418,10 +411,8 @@ place of the topic variable:
 
 =end programlisting
 
-If you do so, Perl will not set the topic variable (C<$_>) to the iterated
-values.  Note also that the scope of the variable C<$i> is only valid I<within>
-the loop.  If you have declared a lexical C<$i> in an outer scope, that value
-will remain outside the loop:
+如果你这样做了，Perl 将不会将话题变量（C<$_>）赋值为迭代值。注意变量 C<$i> 的作用域仅限于循环 I<内部>。
+如果你在循环外定义了词法变量 C<$i>，它的值将不受循环内变量的影响：
 
 =begin programlisting
 
@@ -436,8 +427,7 @@ will remain outside the loop:
 
 =end programlisting
 
-This localization occurs even if you do not redeclare the iteration variable as
-a lexical:
+甚至你不将该迭代变量重新声明为词法变量，它仍会被局部化：
 
 =begin programlisting
 
@@ -452,15 +442,14 @@ a lexical:
 
 =end programlisting
 
-=head2 Iteration and Aliasing
+=head2 迭代和别名
 
 X<iteration aliasing>
 X<aliasing>
 X<aliasing; foreach>
 X<aliasing; iteration>
 
-The C<for> loop performs I<aliasing> of the iterator variable to the values in
-the iteration such that you can modify values in place during iteration:
+C<for> 循环将迭代变量 I<别名化> 为迭代中的值，以便你可以直接在迭代过程中修改：
 
 =begin programlisting
 
@@ -477,7 +466,7 @@ the iteration such that you can modify values in place during iteration:
 
 =end programlisting
 
-This aliasing also works with the block style C<foreach> loop:
+代码块形式的 C<foreach> 循环同样也会别名化：
 
 =begin programlisting
 
@@ -488,7 +477,7 @@ This aliasing also works with the block style C<foreach> loop:
 
 =end programlisting
 
-... as well as iteration with the topic variable:
+……用话题变量迭代时也会：
 
 =begin programlisting
 
@@ -499,7 +488,7 @@ This aliasing also works with the block style C<foreach> loop:
 
 =end programlisting
 
-You cannot use aliasing to modify I<constant> values, however:
+你不能通过别名修改 I<常量> 值，然而：
 
 =begin programlisting
 
@@ -507,34 +496,30 @@ You cannot use aliasing to modify I<constant> values, however:
 
 =end programlisting
 
-... as this will throw an exception about modification of read-only values.
-There's little point in doing so anyhow.
+……会抛出有关修改只读值的异常。无论如何，这样并没有什么必要。
 
-You may occasionally see the use of C<for> with a single scalar variable to
-alias C<$_> to the variable:
+你偶尔会碰到 C<for> 搭配别名化为 C<$_> 的单个标量的用法：
 
 =begin programlisting
 
     for ($user_input)
     {
-        s/(\w)/\\$1/g;  # escape non-word characters
-        s/^\s*|\s$/g;   # trim whitespace
+        s/(\w)/\\$1/g;  # 跳过非文字字符
+        s/^\s*|\s$/g;   # 修剪空白
     }
 
 =end programlisting
 
-=head2 Iteration and Scoping
+=head2 迭代和作用范围
 
 X<iterator scoping>
 X<scope; iterator>
 X<my $_>
 X<$_; lexical>
 
-Iterator scoping with the topic variable provides one common source of
-confusion.  In this case, C<some_function()> modifies C<$_> on purpose.  If
-C<some_function()> called other code which modified C<$_> without explicitly
-localizing C<$_>, the iterated value in C<@values> would change.  Debugging
-this can be troublesome:
+迭代器的作用范围连同话题变量一起是为常见的困惑之源。这种情况下，C<some_function()> 有意修改 C<$_>。如果
+C<some_function()> 调用了其他未经明确局部化 C<$_> 而对其加以修改的代码，则在 C<@values> 中的迭代值将改变。
+调试这样的问题很麻烦：
 
 =begin programlisting
 
@@ -550,14 +535,13 @@ this can be troublesome:
 
 =end programlisting
 
-If you I<must> use C<$_> rather than a named variable, lexicalize the topic
-variable with C<my $_>:
+如果你 I<必须> 使用 C<$_> 而非其他具名变量，请使用 C<my $_> 将话题变量词法化：
 
 =begin programlisting
 
     sub some_function_called_later
     {
-        # was $_ = shift;
+        # 曾经是 $_ = shift;
         B<my> $_ = shift;
 
         s/foo/bar/;
@@ -568,14 +552,13 @@ variable with C<my $_>:
 
 =end programlisting
 
-Using a named iteration variable also prevents undesired aliasing behavior
-through C<$_>.
+使用具名变量同时也避免了通过 C<$_> 别名化的行为。
 
-=head2 The C-Style For Loop
+=head2 C 语言风格的 For 循环
 
 X<for loop>
 
-The C-style I<for loop> allows the programmer to manage iteration manually:
+C 语言风格的 I<for 循环> 允许程序员手动控制迭代：
 
 =begin programlisting
 
@@ -586,11 +569,9 @@ The C-style I<for loop> allows the programmer to manage iteration manually:
 
 =end programlisting
 
-You must assign to an iteration variable manually, as there is no default
-assignment to the topic variable.  Consequently there is no aliasing behavior
-either.  Though the scope of any declared lexical variable is to the body of
-the block, a variable I<not> declared explicitly in the iteration control
-section of this construct I<will> overwrite its contents:
+你必须手动给迭代变量赋值，因为现在已经不会自动给话题变量赋值。因此也没有别名化行为。虽然任何
+已声明的词法变量的作用范围是代码块主体部分。一个 I<未> 在迭代控制部分中明确声明的变量的内容
+I<将> 被覆盖：
 
 =begin programlisting
 
@@ -605,30 +586,25 @@ section of this construct I<will> overwrite its contents:
 
 =end programlisting
 
-This loop has three subexpressions in its looping construct.  The first
-subexpression is an initialization section.  It executes once, before the first
-execution of the loop body.  The second subexpression is the conditional
-comparison subexpression.  Perl evaluates this subexpression before each
-iteration of the loop body.  When the subexpression evaluates to a true value,
-the loop iteration proceeds.  When the subexpression evaluates to a false
-value, the loop iteration stops.  The final subexpression executes after each
-iteration of the loop body.
+此循环的循环结构中有三个子表达式。第一个子表达式是初始化部分，它在第一次执行循环体前执行一
+次。第二个子表达式是条件比较子表达式。Perl 每次在循环体执行之前对其求值。当此子表达式值为真时
+循环继续。当此子表达式为假时，循环结束。最后一个子表达式在每次完成循环体时执行。
 
-This may be more obvious with an example:
+一个例子会使问题更加清晰：
 
 =begin programlisting
 
-    # declared outside to avoid declaration in conditional
+    # 在外部声明以避免在条件语句中出现声明
     my $i;
 
     for (
-        # loop initialization subexpression
+        # 循环初始化子表达式
         say 'Initializing' and $i = 0;
 
-        # conditional comparison subexpression
+        # 条件比较子表达式
         say "Iteration: $i" and $i < 10;
 
-        # iteration ending subexpression
+        # 迭代结尾子表达式
         say 'Incrementing $i' and $i++
     )
     {
@@ -637,11 +613,10 @@ This may be more obvious with an example:
 
 =end programlisting
 
-Note the lack of a trailing semicolon at the iteration ending subexpression as
-well as the use of the low-precedence C<and>; this syntax is surprisingly
-finicky.  When possible, prefer the C<foreach> style loop to the C<for> loop.
+请注意迭代结尾子表达式后分号的省略以及低优先级 C<and> 的使用。这种语法真是令人惊讶地考究。当可能时，
+尽量使用 C<foreach> 风格的循环来代替 C<for> 循环。
 
-All three subexpressions are optional.  You may write an infinite loop with:
+所有这个三个表达式都是可选的。你可以这样编写无限循环：
 
 =begin programlisting
 
@@ -649,13 +624,12 @@ All three subexpressions are optional.  You may write an infinite loop with:
 
 =end programlisting
 
-=head2 While and Until
+=head2 While 和 Until
 
 X<while loop>
 X<loops; while>
 
-A I<while> loop continues until the loop conditional expression evaluates to a
-boolean false value.  An infinite loop is much clearer when written:
+I<while> 循环会一直执行直到循环条件得出布尔假值。一个无限循环可以按如下方式清晰地写出：
 
 =begin programlisting
 
@@ -663,10 +637,8 @@ boolean false value.  An infinite loop is much clearer when written:
 
 =end programlisting
 
-The means of evaluating the end of iteration condition in a C<while> loop
-differs from a C<foreach> loop in that the evaluation of the expression itself
-does not produce any side effects.  If C<@values> has one or more elements,
-this code is also an infinite loop:
+这意味着 C<while> 循环的迭代结束条件和 C<foreach> 循环中的有所不同，即对表达式自身求值并不产生任何
+副作用。如果 C<@values> 拥有一个或多个元素，下列代码也是一个无限循环：
 
 =begin programlisting
 
@@ -679,9 +651,7 @@ this code is also an infinite loop:
 
 X<destructive update>
 
-To prevent such an infinite C<while> loop, you must perform a I<destructive
-update> of the C<@values> array by modifying the array with each loop
-iteration:
+为避免此类无限 C<while> 循环，你必须通过每次迭代修改 C<@values> 数组以对其进行 I<析构更新>：
 
 =begin programlisting
 
@@ -695,8 +665,7 @@ iteration:
 X<until loop>
 X<loops; until>
 
-The I<until> loop performs the opposite test as the C<while> loop.  Iteration
-continues while the loop conditional expression evaluates to false:
+I<until> 循环刚好和 C<while> 进行相反的测试。迭代会在循环条件表达式为假时继续：
 
 =begin programlisting
 
@@ -707,8 +676,7 @@ continues while the loop conditional expression evaluates to false:
 
 =end programlisting
 
-The canonical use of the C<while> loop is to iterate over input from a
-filehandle:
+C<while> 循环的典型用法是从一个文件句柄中迭代读取输入：
 
 =begin programlisting
 
@@ -723,7 +691,7 @@ filehandle:
 
 =end programlisting
 
-Perl 5 interprets this C<while> loop as if you had written:
+Perl 5 对此 C<while> 循环进行解释时，就好像你编写了如下代码：
 
 =begin programlisting
 
@@ -734,21 +702,16 @@ Perl 5 interprets this C<while> loop as if you had written:
 
 =end programlisting
 
-Without the implicit C<defined>, any line read from the filehandle which
-evaluated to false in a scalar context--a blank line or a line which contained
-only the character C<0>--would end the loop.  The C<readline> (C<< <> >>)
-operator returns an undefined value only when it has finished reading lines from
-the file.
+不用明确写出 C<defined>，任何从该文件句柄读出、且求值得假────空行或只包含字符 C<0>────的行会结束整个循
+环。当完成从文件中读取行的任务后，C<readline>（C<< <> >>）操作符才返回一个未定义的值。
 
 =begin sidebar
 
-One common mistake is to forget to remove the line-ending characters from each
-line; use the C<chomp> keyword to do so.
+一个常见的错误就是忘记从读入的每一行移除行结束符，使用 C<chomp> 关键字可以完成这项工作。
 
 =end sidebar
 
-Both C<while> and C<until> have postfix forms.  The simplest infinite loop in
-Perl 5 is:
+C<while> 和 C<until> 都可以写成后缀形式。Perl 5 中最简单的无限循环是：
 
 =begin programlisting
 
@@ -756,8 +719,8 @@ Perl 5 is:
 
 =end programlisting
 
-Any single expression is suitable for a postfix C<while> or C<until>, such as
-the classic "Hello, world!" example from 8-bit computers of the early 1980s:
+任何单个表达式对后缀式的 C<while> 和 C<until> 来说都是合适的，例如来自八十年代早期 8 位计算机的
+经典 "Hello, world!"：
 
 =begin programlisting
 
@@ -765,8 +728,7 @@ the classic "Hello, world!" example from 8-bit computers of the early 1980s:
 
 =end programlisting
 
-Infinite loops may seem silly, but they're actually quite useful.  A simple
-event loop for a GUI program or network server may be:
+无限循环可能看上去有点笨拙，但它们实际上很有用。一个简单的 GUI 程序或网络服务器事件循环可以是：
 
 =begin programlisting
 
@@ -777,7 +739,7 @@ event loop for a GUI program or network server may be:
 X<do; looping>
 X<looping; do>
 
-For more complex expressions, use a C<do> block:
+对于更加复杂的表达式，使用 C<do> 代码块：
 
 =begin programlisting
 
@@ -791,11 +753,9 @@ For more complex expressions, use a C<do> block:
 
 =end programlisting
 
-For the purposes of parsing, a C<do> block is itself a single expression,
-though it can contain several expressions.  Unlike the C<while> loop's block
-form, the C<do> block with a postfix C<while> or C<until> will execute its body
-at least once.  This construct is less common than the other loop forms, but no
-less powerful.
+出于语法分析的目的，虽然可以包含若干表达式，C<do> 代码块本身却是一个单一的表达式。不像 C<while> 循环
+的代码块形式，搭配后缀式 C<while> 或 C<until> 的 C<do> 代码块至少会执行它的主体一次。这个结构相比其他
+循环形式来说较为少见，但在功能上毫不逊色。
 
 =head2 Loops within Loops
 
