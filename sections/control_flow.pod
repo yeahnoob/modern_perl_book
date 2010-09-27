@@ -765,12 +765,12 @@ X<looping; do>
 的代码块形式，搭配后缀式 C<while> 或 C<until> 的 C<do> 代码块至少会执行它的主体一次。这个结构相比其他
 循环形式来说较为少见，但在功能上毫不逊色。
 
-=head2 Loops within Loops
+=head2 循环中的循环
 
 X<nested loops>
 X<loops; nested>
 
-You may nest loops within other loops:
+你可以在循环中嵌套其他循环：
 
 =begin programlisting
 
@@ -784,12 +784,11 @@ You may nest loops within other loops:
 
 =end programlisting
 
-In this case, explicitly declaring named variables is essential to
-maintainability.  The potential for confusion as to the scoping of iterator
-variables is too great when using the topic variable.
+在这种情况下，明确地声明具名变量对可维护性来说必不可少。就迭代变量的作用范围而言，当使用话题变量时，
+引发混淆的潜在可能太大了。
 
-A common mistake with nesting C<foreach> and C<while> loops is that it is easy
-to exhaust a filehandle with a C<while> loop:
+嵌套使用  C<foreach> 和 C<while> 时，一个常见的错误是：很容易就可以用 C<while> 循环将某文件句柄整
+得筋疲力尽。
 
 =begin programlisting
 
@@ -799,7 +798,7 @@ to exhaust a filehandle with a C<while> loop:
 
     for my $prefix (@prefixes)
     {
-        # DO NOT USE; likely buggy code
+        # 不要这样用，很可能是有问题的代码
         while (<$fh>)
         {
             say $prefix, $_;
@@ -808,14 +807,10 @@ to exhaust a filehandle with a C<while> loop:
 
 =end programlisting
 
-Opening the filehandle outside of the C<for> loop leaves the file position
-unchanged between each iteration of the C<for> loop.  On its second iteration,
-the C<while> loop will have nothing to read and will not execute.  To solve
-this problem, you may re-open the file inside the C<for> loop (simple to
-understand, but not always a good use of system resources), slurp the entire
-file into memory (which may not work if the file is large), or C<seek> the
-filehandle back to the beginning of the file for each iteration (an often
-overlooked option):
+在 C<for> 循环之外打开文件句柄使得 C<for> 循环在两次迭代间放着文件位置不动。在第二次迭代中，
+C<while> 循环无事可做且不会执行循环体。为解决此问题，你可以在 C<for> 循环内重新打开文件（理解
+上很简单，但是是对系统资源的不恰当使用），将整个文件吸入内存（文件太大可能就不行），或者在每次
+迭代时用 C<seek> 使文件句柄回到文件开头（通常被忽视的选择）：
 
 =begin programlisting
 
@@ -835,20 +830,17 @@ overlooked option):
 
 =end programlisting
 
-=head2 Loop Control
+=head2 循环控制
 
 X<loop control>
 
-Sometimes you need to break out of a loop before you have exhausted the
-iteration conditions.  Perl 5's standard control mechanisms--exceptions and
-C<return>--work, but you may also use I<loop control> statements.
+有时你需要在用尽迭代条件前跳出循环。Perl 5 的标准控制机制────异常和 C<return>────可以实现这个目的，但
+你也可以使用 I<循环控制> 语句。
 
 X<next>
 
-The I<next> statement restarts the loop at its next iteration.  Use it when
-you've done all you need to in the current iteration.  To loop over lines in a
-file but skip everything that looks like a comment, one which starts with the
-character C<#>, you might write:
+I<next> 语句在下一个迭代点重新开始循环。当你已经完成本次迭代的所有任务后可以使用它。要循环读取文件中的每
+一行并跳过所有看上去像注释的内容，即以 C<#> 开始的行，你可能会这样写：
 
 =begin programlisting
 
@@ -862,8 +854,7 @@ character C<#>, you might write:
 
 X<last>
 
-The I<last> statement ends the loop immediately.  To finish processing a file
-once you've seen the ending delimiter, you might write:
+I<last> 语句立即结束循环。想在遇到结束分隔符后结束文件处理，你可能会这样写：
 
 =begin programlisting
 
@@ -878,11 +869,8 @@ once you've seen the ending delimiter, you might write:
 
 X<redo>
 
-The I<redo> statement restarts the current iteration without evaluating the
-conditional again.  This can be useful in those few cases where you want to
-modify the line you've read in place, then start processing over from the
-beginning without clobbering it with another line.  For example, you could
-implement a silly file parser that joins lines which end with a backslash with:
+I<redo> 语句不对条件语句再次求值并重新开始本次迭代。这在少数情况下很有用：比如你想当即修改你读到的行，接着从头
+开始处理而不想影响其他的行时。例如，你可以实现一个把所有以反斜杠结尾的行拼接起来的笨拙的文件分析器：
 
 =begin programlisting
 
@@ -890,7 +878,7 @@ implement a silly file parser that joins lines which end with a backslash with:
     {
         chomp $line;
 
-        # match backslash at the end of a line
+        # 匹配行尾的反斜杠
         if ($line =~ s{\\$}{})
         {
             $line .= <$fh>;
@@ -902,13 +890,12 @@ implement a silly file parser that joins lines which end with a backslash with:
 
 =end programlisting
 
-... though that's a contrived example.
+……虽然这是一个做作的例子。
 
 X<labels>
 X<loops; labels>
 
-Nested loops can make the use of these loop control statements ambiguous.  In
-those cases, a I<loop label> can disambiguate:
+嵌套循环可能会使这些循环控制语句的使用变得模棱两可。在这些情况下，I<循环标签> 可以消除歧义：
 
 =begin programlisting
 
@@ -927,20 +914,16 @@ those cases, a I<loop label> can disambiguate:
 
 =end programlisting
 
-If you find yourself nesting loops such that you need labels to manage control
-flow, consider simplifying your code: perhaps extracting inner loops into
-functions for clarity.
+如果你发现你自己正编写需要标签来控制流程的嵌套循环，考虑简化你的代码：也许将内层循环压缩为
+函数会更清晰。
 
 =head2 Continue
 
 X<continue>
 
-The C<continue> construct behaves like the third subexpression of a C<for>
-loop; Perl executes its block for each iteration of the loop, even when you
-exit an iteration with C<next>.  You may use it with a C<while>, C<until>,
-C<with>, or C<for> loop.  Examples of C<continue> are rare, but it's useful any
-time you want to guarantee that something occurs for every iteration of the loop
-regardless of how that iteration ends:
+C<continue> 语法结构的行为类似于 C<for> 循环的第三个子表达式。Perl 会在循环的每一次迭代过程执行
+该代码块，即便你使用 C<next> 来跳出某次迭代。你可以把它和 C<while>、C<until>、C<with> 或 C<for> 循环
+搭配使用。C<continue> 的例子比较罕见，但在想保证每一次迭代某事都会发生一次并无需顾及循环如何结束时很有用：
 
 =begin programlisting
 
@@ -963,8 +946,7 @@ Z<given_when>
 
 X<given>
 
-The C<given> construct is a feature new to Perl 5.10.  It assigns the value of
-an expression to the topic variable and introduces a block:
+C<given> 语法结构是 Perl 5.10 的新特性。它将某表达式的值赋给话题变量并引入一个代码块：
 
 =begin programlisting
 
@@ -975,8 +957,7 @@ an expression to the topic variable and introduces a block:
 
 =end programlisting
 
-Unlike C<for>, it does not iterate over an aggregate.  It evaluates its value
-in scalar context, and always assigns to the topic variable:
+不像 C<for>，它不对某集合类型进行迭代。它在标量上下文中求值，并总是赋值给话题变量：
 
 =begin programlisting
 
@@ -987,8 +968,7 @@ in scalar context, and always assigns to the topic variable:
 
 =end programlisting
 
-C<given> also lexicalizes the topic variable to prevent accidental
-modification:
+C<given> 同时对话题变量进行局部化来防止无意的修改：
 
 =begin programlisting
 
@@ -1012,11 +992,8 @@ X<when>
 X<topicalization>
 X<topicalize>
 
-By itself, this feature may seem less than useful.  In combination with
-C<when>, it is very useful.  Use C<given> to I<topicalize> a value.  Within the
-associated block, multiple C<when> statements match the topic against
-expressions using I<smart-match> semantics.  Thus you might code a Rock, Paper,
-Scissors game:
+单独出现时，这个功能看上去没什么用。但 C<when> 和其他功能组合时候就会非常有用。使用 C<given> 来 I<话题化> 某个值。
+在关联的代码块之内，多个 C<when> 语句使用 I<智能匹配> 语义逐表达式匹配话题。因此你可以这样编写石头剪刀布游戏：
 
 =begin programlisting
 
@@ -1071,18 +1048,16 @@ Scissors game:
 
 =end programlisting
 
-Perl executes the C<default> rule when none of the other conditions match.
+当无一条件匹配时，Perl 执行 C<default> 规则。
 
 =begin sidebar
 
-The CPAN module C<MooseX::MultiMethods> allows another technique to reduce this
-code further.
+CPAN 模块 C<MooseX::MultiMethods> 允许利用其他技术来减少这段代码。
 
 =end sidebar
 
-The C<when> construct is even more powerful; it can match (L<smart_match>)
-against many other types of expressions including scalars, aggregates,
-references, arbitrary comparison expressions, and even code references.
+C<when> 语法结构甚至更为强大。它可以匹配（L<smart_match>）其他表达式类型诸如标量、集合、
+引用、任意比较表达式甚至是代码引用。
 
 =head2 Tailcalls
 
@@ -1090,9 +1065,8 @@ Z<tailcalls>
 X<tailcalls>
 X<goto>
 
-A I<tailcall> occurs when the last expression within a function is a call to
-another function--the return value of the outer function is the return
-value of the inner function:
+某函数内最后一个表达式是对其他函数的调用时，这种情况称为 I<尾部调用>────外层函数的返回值
+就是内层函数的返回值：
 
 =begin programlisting
 
@@ -1109,21 +1083,15 @@ value of the inner function:
 X<optimization; tailcalls>
 X<tailcall optimization>
 
-In this circumstance, returning from C<greet_person()> directly to the caller
-of C<log_and_greet_person()> is more efficient than returning to
-C<log_and_greet_person()> and immediately returning I<from>
-C<log_and_greet_person()>.  Returning directly from C<greet_person()> to the
-caller of C<log_and_greet_person()> is an optimization known as I<tailcall
-optimization>.
+此例中，C<greet_person()> 直接返回给 C<log_and_greet_person()> 的调用者要比先返回 C<log_and_greet_person()>
+再立刻 I<从> C<log_and_greet_person()> 中返回要来得高效。直接将 C<greet_person()> 返回给 C<log_and_greet_person()> 
+的调用者，是一种叫做 I<尾部调用优化> 的优化手段。
 
-Perl 5 will not detect cases where it could perform this optimization
-automatically.
+Perl 5 不会自动检测它是否应该进行这种优化。
 
 =begin sidebar
 
-Heavily recursive code (L<recursion>), especially mutually recursive code, can
-quickly consume a lot of memory.  Using tailcalls reduces the memory needed for
-internal bookkeeping of control flow, which can make otherwise expensive
-algorithms tractable.
+深度递归的代码（L<recursion>），特别是互相递归的代码，会迅速消耗大量内存。使用尾部调用会减少有关内部
+控制流程记录的内存消耗，这使得某些昂贵的算法变得可行。
 
 =end sidebar
