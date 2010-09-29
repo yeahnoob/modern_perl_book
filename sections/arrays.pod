@@ -1,15 +1,15 @@
-=head1 Arrays
+=encoding utf8
+
+=head1 数组
 
 Z<arrays>
 X<arrays>
 X<first-class>
 
-Perl 5 I<arrays> are data structures which store zero or more scalars.  They're
-I<first-class> data structures, which means that Perl 5 provides a separate
-data type at the language level.  Arrays support indexed access; that is, you
-can access individual members of the array by integer indexes.
+Perl 5 I<数组> 是存放零个或多个标量的数据结构。它们是 I<一等> 数据结构，意味着 Perl 5 在语言级别提供了
+单独的数据类型。数组支持下标访问，即，你可以按整数下标访问某数组中每一个独立的成员。
 
-The C<@> sigil denotes an array.  To declare an array:
+C<@> 印记是数组的标识。要想声明一个数组：
 
 =begin programlisting
 
@@ -17,49 +17,44 @@ The C<@> sigil denotes an array.  To declare an array:
 
 =end programlisting
 
-=head2 Array Elements
+=head2 数组元素
 
 X<variant sigils>
 X<sigils; variance>
 
-I<Accessing> an individual element of an array in Perl 5 requires the scalar
-sigil.  Perl 5 (and you) can recognize that C<$cats[0]> refers to the C<@cats>
-array even despite the change of sigil because the square brackets (C<[]>)
-always identify indexed access to an aggregate variable.  In simpler terms,
-that means "look up one thing in a group of things by an integer".
+在 Perl 5 中 I<访问> 数组中独立的元素要求标量印记。Perl 5（和你）可以识别出 C<$cats[0]> 指的是 C<@cats> 数组
+而不必理会印记的改动，因为中括号（C<[]>）始终标明对集合变量的下标访问。用简单的话来说，意思就是“通过一个整数
+在一组东西里查找某件东西”。
 
-The first element of an array is at index zero:
+数组中第一个元素的下标为零：
 
 =begin programlisting
 
-    # @cats contains a list of Cat objects
+    # @cats 包含一列 Cat（猫）对象
     my $first_cat = $cats[0];
 
 =end programlisting
 
-The last index of an array depends on the number of elements in the array.  An
-array in scalar context (due to scalar assignment, string concatenation,
-addition, or boolean context) evaluates to the number of elements contained in
-the array:
+数组中最后一个元素的下标取决于数组中元素的个数。标量上下文中的数组（因标量赋值、字符串拼接、加法或布尔上下文）
+求值得出数组中所含元素的个数：
 
 =begin programlisting
 
-    # scalar assignment
+    # 标量赋值
     my $num_cats = @cats;
 
-    # string concatenation
+    # 字符串拼接
     say 'I have ' . @cats . ' cats!';
 
-    # addition
+    # 加法 
     my $num_animals = @cats + @dogs + @fish;
 
-    # boolean context
+    # 布尔上下文
     say 'Yep, a cat owner!' if @cats;
 
 =end programlisting
 
-If you need the specific index of the final element of an array, subtract one
-from the number of elements of the array (because array indexes start at 0):
+如果你需要得到最后一个元素指定的下标，将数组元素的个数减去一即可（因为数组下标从零开始）：
 
 =begin programlisting
 
@@ -71,8 +66,7 @@ from the number of elements of the array (because array indexes start at 0):
 
 =end programlisting
 
-You can also use the special variable form of the array to find the last index;
-replace the C<@> array sigil with the slightly more unwieldy C<$#>:
+你也可以使用数组的特殊变量形式来找出最后一个下标，将 C<@> 数组印记替换为更为笨拙的 C<$#>：
 
 =begin programlisting
 
@@ -84,11 +78,9 @@ replace the C<@> array sigil with the slightly more unwieldy C<$#>:
 
 =end programlisting
 
-That may not read as nicely, however.  Most of the time you don't need that
-syntax, as you can use negative offsets to access an array from the end instead
-of the start.  The last element of an array is available at the index C<-1>.
-The second to last element of the array is available at index C<-2>, and so on.
-For example:
+然而，读上去可能不那么好。大多数时间你不会需要那种用法，因为你还可以使用负偏移量从末尾而不是
+开头访问一个数组。数组的最后一个元素可以由下标 C<-1> 取到。倒数第二个元素可以用下标 C<-2>，等等。
+例如：
 
 =begin programlisting
 
@@ -97,13 +89,12 @@ For example:
 
 =end programlisting
 
-You can resize an array by assigning to C<$#>.  If you shrink an array, Perl
-will discard values which do not fit in the resized array.  If you expand an
-array, Perl will fill in the expanded values with C<undef>.
+你可以通过对 C<$#> 赋值来调整数组大小。如果你对数组进行收缩，Perl 将丢弃所有不符合调整后尺寸的值。
+如果你扩展一个数组，Perl 将把 C<undef> 填入多出来的位置。
 
-=head2 Array Assignment
+=head2 数组赋值
 
-You can assign to individual positions in an array directly by index:
+你可以通过对某下标位置直接对数组赋值：
 
 =begin programlisting
 
@@ -116,19 +107,16 @@ You can assign to individual positions in an array directly by index:
 
 =end programlisting
 
-Perl 5 arrays are mutable.  They do not have a static size; they expand or
-contract as necessary.
+Perl 5 的数组是可变的。它没有静态尺寸，它会按需扩展和收缩。
 
 =begin sidebar
 
-You don't have to assign in order, either.  If you assign to an index beyond
-where you've assigned before, Perl will extend the array to account for the new
-size and will fill in all intermediary slots with C<undef>.
+你不也必按顺序赋值。如果你对超出范围的位置赋值的话，Perl 会将数组扩展到合适的大小，
+并向夹在中间的所有空槽都填入 C<undef>。
 
 =end sidebar
 
-Assignment in multiple lines can be tedious.  You can initialize an array from
-a list in one step:
+多行赋值太过冗长。你可以用列表对一个数组进行一步到位的初始化：
 
 =begin programlisting
 
@@ -138,13 +126,12 @@ a list in one step:
 
 =begin sidebar
 
-Remember that the parentheses I<do not> create a list.  Without parentheses,
-this would assign C<Daisy> as the first and only element of the array, due to
-operator precedence (L<precedence>).
+注意括号 I<并不> 创建一个列表。没有了括号，根据操作符优先级（L<precedence>），C<Daisy> 将赋
+值成为数组的第一个也是唯一一个元素。
 
 =end sidebar
 
-Any expression which produces a list in list context can assign to an array:
+任何在列表上下文中产生列表的表达式可以对数组进行赋值：
 
 =begin programlisting
 
@@ -154,10 +141,9 @@ Any expression which produces a list in list context can assign to an array:
 
 =end programlisting
 
-Assigning to a scalar element of an array imposes scalar context, while
-assigning to the array as a whole imposes list context.
+对数组的标量元素赋值将施加标量上下文，对数组整体进行赋值则施加列表上下文。
 
-To clear an array, assign an empty list:
+要清空一个数组，用空列表对其赋值：
 
 =begin programlisting
 
@@ -169,19 +155,17 @@ To clear an array, assign an empty list:
 
 =begin sidebar
 
-As freshly-declared arrays start out empty, C<my @items = ();> is a longer
-version of C<my @items>.  Prefer the latter.
+由于新声明的数组起始为空，C<my @items = ();> 便成为了 C<my @items> 的加长版。请使用后者。
 
 =end sidebar
 
-=head2 Array Slices
+=head2 数组分片
 
 X<array slice>
 X<slices; array>
 
-You can also access elements of an array in list context with a construct known
-as an I<array slice>.  Unlike scalar access of an array element, this indexing
-operation takes a list of indices and uses the array sigil (C<@>):
+你也可以通过一个名为 I<数组分片> 的语法结构在列表上下文中访问一个数组。不同于对某数组元素
+进行标量访问，此操作使用一列下标以及数组印记（C<@>）：
 
 =begin programlisting
 
@@ -191,7 +175,7 @@ operation takes a list of indices and uses the array sigil (C<@>):
 
 =end programlisting
 
-You can assign to an array slice as well:
+你也可以对一个数组分片进行赋值：
 
 =begin programlisting
 
@@ -199,22 +183,20 @@ You can assign to an array slice as well:
 
 =end programlisting
 
-A slice can contain zero or more elements--including one:
+一个分片可以包含零个或多个元素────包括一个：
 
 =begin programlisting
 
-    # single-element array slice; function call in I<list> context
+    # 单元素数组分片，I<列表> 上下文中的函数调用
     @cats[-1] = get_more_cats();
 
-    # single-element array access; function call in I<scalar> context
+    # 单元素数组访问，I<标量> 上下文中的函数调用
     $cats[-1] = get_more_cats();
 
 =end programlisting
 
-The only syntactic difference between an array slice of one element and the
-scalar access of an array element is the leading sigil.  The I<semantic>
-difference is greater: an array slice always imposes list context.  Any array
-slice evaluated in scalar context will produce a warning:
+数组分片和单元素访问之间唯一的语法区别就是开头的印记。I<语义> 区别就比较大了：
+一个数组分片总是强制列表上下文。任何在标量上下文中求值的数组分片都会引发错误：
 
 =begin screen
 
@@ -222,94 +204,82 @@ slice evaluated in scalar context will produce a warning:
 
 =end screen
 
-An array slice imposes list context (L<context_philosophy>) on the expression
-used as its index:
+数组分片对用于下标的表达式强制列表上下文（L<context_philosophy>）：
 
 =begin programlisting
 
-    # function called in list context
+    # 函数调用于列表上下文
     my @cats = @cats[ get_cat_indices() ];
 
 =end programlisting
 
-=head2 Array Operations
+=head2 数组操作
 
-Managing array indices can be a hassle.  Because Perl 5 can expand or contract
-arrays as necessary, the language also provides several operations to treat
-arrays as stacks, queues, and the like.
+管理数组下标会是个麻烦。因为 Perl 5 可以按需扩展或收缩数组，语言同时提供了若干操作
+以将数组作为栈、队列，等对待。
 
 X<push>
 X<builtins; push>
 X<pop>
 X<builtins; pop>
 
-The C<push> and C<pop> operators add and remove elements from the tail of the
-array, respectively:
+C<push> 和 C<pop> 操作符各自在数组尾部添加和删除元素：
 
 =begin programlisting
 
     my @meals;
 
-    # what is there to eat?
+    # 这里有什么可以吃的？
     push @meals, qw( hamburgers pizza lasagna turnip );
 
-    # ... but the nephew hates vegetables
+    # ……但是侄儿不喜欢蔬菜
     pop @meals;
 
 =end programlisting
 
-You may C<push> as many elements as you like onto an array.  Its second
-argument is a list of values.  You may only C<pop> one argument at a time.
-C<push> returns the updated number of elements in the array.  C<pop> returns
-the removed element.
+你可以用 C<push> 向数组添加任何数量的元素。它的第二个参数是一个值列表。但你只能用 C<pop> 一次
+删除一个元素。C<push> 返回的是更新后数组中元素的个数。C<pop> 返回删除的元素。
 
 X<shift>
 X<builtins; shift>
 X<unshift>
 X<builtins; unshift>
 
-Similarly, C<unshift> and C<shift> add elements to and remove an element from
-the start of an array:
+类似的，C<unshift> 和 C<shift> 向数组开头添加和删除元素：
 
 =begin programlisting
 
-    # expand our culinary horizons
+    # 扩展我们的烹饪视野
     unshift @meals, qw( tofu curry spanakopita taquitos );
 
-    # rethink that whole soy idea
+    # 对豆类重新考虑
     shift @meals;
 
 =end programlisting
 
-C<unshift> prepends a list of zero or more elements to the start of the array
-and returns the new number of elements in the array.  C<shift> removes and
-returns the first element of the array.
+C<unshift> 将一个含零个或多个元素的列表前置于某数组开头并返回数组中元素最新个数。C<shift> 删除
+并返回数组的第一个元素。
 
 =begin sidebar
 
-Few programs use the return values of C<push> and C<unshift>.  Writing this
-chapter led to a patch to Perl 5 to optimize the use of C<push> in void
-context.
+很少有程序使用 C<push> 和 C<unshift> 的返回值。编写本章催生了一个优化 C<push> 在空上下文中使用
+的 Perl 5 补丁。
 
 =end sidebar
 
 X<splice>
 X<builtins; splice>
 
-C<splice> is another important--if less frequently used--array operator.  It
-removes and replaces elements from an array given an offset, a length of a list
-slice, and replacements.  Both replacing and removing are optional; you may
-omit either behavior.  The C<perlfunc> description of C<splice> demonstrates
-its equivalences with C<push>, C<pop>, C<shift>, and C<unshift>.
+C<splice> 是另一个重要的────可能较少使用────数组操作符。它按给出偏移量、列表分片长度以及
+替代物删除并替换数组元素。替换和删除都是可选的，你可以忽略这些行为。C<perlfunc> 中对 C<splice> 
+的描述演示了它和 C<push>、C<pop>、C<shift> 及 C<unshift> 的等价性。
 
-Arrays often contain elements to process in a loop; see L<looping_directives>
-for more detail about Perl 5 control flow and array processing.
+数组元素通常在循环中处理。有关 Perl 5 控制流程和数组处理的更多信息，请参见 L<looping_directives>。
 
 X<each>
 X<builtins; each>
 
-As of Perl 5.12, you can use C<each> to iterate over an array by index and
-value:
+在 Perl 5.12 中，你可以使用 C<each> 来将某数组迭代为键值对：
 
 =begin programlisting
 
@@ -321,12 +291,12 @@ value:
 
 =end programlisting
 
-=head2 Arrays and Context
+=head2 数组和上下文
 
 X<list context; arrays>
 
-In list context, arrays flatten into lists.  If you pass multiple arrays to a
-normal Perl 5 function, they will flatten into a single list:
+在列表上下文中，数组平整为列表。如果你将多个数组传递给一个常规 Perl 5 函数，它们会平整为
+单个列表：
 
 =begin programlisting
 
@@ -337,49 +307,41 @@ normal Perl 5 function, they will flatten into a single list:
 
     sub take_pets_to_vet
     {
-        # do not use!
+        # 不要这样用！
         my (@cats, @dogs) = @_;
         ...
     }
 
 =end programlisting
 
-Within the function, C<@_> will contain seven elements, not two.  Similarly,
-list assignment to arrays is I<greedy>.  An array will consume as many elements
-from the list as possible.  After the assignment, C<@cats> will contain
-I<every> argument passed to the function.  C<@dogs> will be empty.
+在此函数内，C<@_> 会包含七个元素而非二。与此类似，数组的列表赋值是 I<贪心的>。一个数组会从列表
+中消耗尽可能多的元素。赋值之后，C<@cats> 将包含传递给函数的 I<每一个> 参数。而 C<@dogs> 为空。
 
-This flattening behavior sometimes confuses novices who attempt to create
-nested arrays in Perl 5:
+平整行为有时会给想要在 Perl 5 中创建嵌套数组的新手带来疑惑：
 
 =begin programlisting
 
-    # creates a single array, not an array of arrays
+    # 创建单个数组，不是数组的数组
     my @array_of_arrays = ( 1 .. 10, ( 11 .. 20, ( 21 .. 30 ) ) );
 
 =end programlisting
 
-While some people may initially expect this code to produce an array where the
-first ten elements are the numbers one through ten and the eleventh element is
-an array containing the numbers eleven through 20 and an array containing the
-numbers twenty-one through thirty, this code instead produces an array
-containing the numbers one through 30, inclusive.  Remember that parentheses do
-not I<create> lists in these circumstances--they only group expressions.
+有些人起初会期望这段代码产生一个数组，它的头十个元素是一到十的数字，第十一个元素
+是一个数组，包含数字十一到二十以及内嵌另一个包含二十一到三十的数组。注意在这种情
+形下括号并不 I<创建> 列表────它只用来给表达式分组。
 
-The solution to this flattening behavior is the same for passing arrays to
-functions and for creating nested arrays (L<references>).
+解决平整问题的方法和给函数传递参数、创建嵌套数组的一样（L<references>）。
 
-=head2 Array Interpolation
+=head2 数组内插
 
 X<array interpolation>
 X<interpolation; arrays>
 X<$">
 X<$LIST_SEPARATOR>
 
-Arrays interpolate in double quoted strings as a list of the stringification of
-each item separated by the current value of the magic global C<$">.  The
-default value of this variable is a single space.  Its F<English.pm> mnemonic
-is C<$LIST_SEPARATOR>.  Thus:
+数组会作为字符串化的列表内插入双引号字符串，它的每一个元素由神奇的全局变量 C<$">
+的当前值分隔。此变量的默认值是一个空格。它的 F<English.pm> 助记形式是 C<$LIST_SEPARATOR>。
+因此：
 
 =begin programlisting
 
@@ -389,13 +351,11 @@ is C<$LIST_SEPARATOR>.  Thus:
 
 =end programlisting
 
-Temporarily localizing and assigning another value to C<$"> for debugging
-purposes is very handyN<Due credit goes to Mark-Jason Dominus for demonstrating
-this example several years ago>:
+临时局部化并将另外值赋给 C<$"> 是一个很好的调试用法。N<致谢：Mark-Jason Dominus 在几年前演示了本例中的用法>:
 
 =begin programlisting
 
-    # what's in this array again?
+    # 这个数组中有什么？
     {
         local $" = ')(';
         say "(@sweet_treats)";
@@ -403,7 +363,7 @@ this example several years ago>:
 
 =end programlisting
 
-... which produces the result:
+……这个例子产生如下结果：
 
 =begin screen
 
