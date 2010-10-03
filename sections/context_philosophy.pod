@@ -64,13 +64,8 @@ X<scalar context>
 
 X<list context>
 
-<<<<<<< .merge_file_8zrqwp
-将调用函数的结果赋值给一个数组或是列表，或者在一个列表中使用该结果，使得函数在
-I<列表上下文> 中求值：
-=======
-Assigning the results of calling the function to an array (L<arrays>) or a
-list, or using it in a list, evaluates the function in I<list context>:
->>>>>>> .merge_file_DB4kOj
+将调用函数的结果赋值给一个数组（L<arrays>）或是列表，或者在一个列表中使用该结果，使
+得函数在 I<列表上下文> 中求值：
 
 =begin programlisting
 
@@ -117,26 +112,14 @@ list, or using it in a list, evaluates the function in I<list context>:
 
 =end programlisting
 
-<<<<<<< .merge_file_8zrqwp
 上例 C<expensive_operation> 位于列表上下文，因为它被赋值到一个哈希中，而哈希赋值需要一
 键值对列表，导致在哈希赋值内的所有表达式在列表上下文中求值。
-=======
-C<expensive_operation> is in list context, because it's assigned to a
-hash, and hash assignments take a list of key/value pairs, which causes any
-expressions in that hash assignment to be evaulated in list context.
->>>>>>> .merge_file_DB4kOj
 
 X<operators; scalar>
 X<scalar>
 
-<<<<<<< .merge_file_8zrqwp
 后一个例子通常使期望该调用为标量上下文的新手程序员吃惊。相反，这是列表上下文，因为该上
 下文为哈希赋值所强制。使用 C<scalar> 操作符可以迫使其在标量上下文求值：
-=======
-The latter example often surprises novice programmers who expect scalar context
-for the call; instead, it is list context, because that is the context the hash
-assignment provides.  Use the C<scalar> operator to impose scalar context:
->>>>>>> .merge_file_DB4kOj
 
 =begin programlisting
 
@@ -183,15 +166,8 @@ X<numeric context>
 X<context; string>
 X<context; numeric>
 
-<<<<<<< .merge_file_8zrqwp
 C<eq> 操作符通过强制 I<字符串上下文>，按字符串对待它的操作数。C<==> 操作符则强制 I<数值上下文>。
-示例代码出错的原因在于，两个字符串在用作数字时候的值是 C<0>。
-=======
-The C<eq> operator treats its operands as strings by enforcing I<string
-context> on them.  The C<==> operator imposes I<numeric context>.  The example
-code fails because the value of both strings when treated as numbers is C<0>
-(L<numeric_coercion>).
->>>>>>> .merge_file_DB4kOj
+示例代码出错的原因在于，两个字符串在用作数字时候的值是 C<0>（L<numeric_coercion>）。
 
 X<boolean context>
 X<context; boolean>
