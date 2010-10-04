@@ -1,6 +1,6 @@
 =encoding utf8
 
-=head1 Names
+=head1 名称 
 
 Z<names>
 
