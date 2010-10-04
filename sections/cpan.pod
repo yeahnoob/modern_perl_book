@@ -1,6 +1,6 @@
 =encoding utf8
 
-=head1 The CPAN
+=head1 CPAN
 
 Z<cpan>
 
