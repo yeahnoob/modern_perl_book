@@ -1,87 +1,71 @@
+=encoding utf8
+
 =head1 The CPAN
 
 Z<cpan>
 
-Perl 5 is a pragmatic language.  It'll help you get your work done.  Yet the
-ever-pragmatic Perl community has extended that language and made their work
-available to the world.  If you have a problem to solve, chances are someone's
-already uploaded code to the CPAN for it.
+Perl 5 是一门实用的语言。它帮助你完成工作。恒久务实的 Perl 社区对语言进行了
+扩展，并将成果供给全世界使用。如果你有问题需要解决，别人很可能早就为此编写
+了代码并把它传到了CPAN 上。
 
-The line between a modern language and its libraries is fuzzy.  Is a language
-only syntax?  Is it the core libraries?  Is it the availability of external
-libraries and the ease at which you can use them within your own projects?
+一个现代化的编程语言和它的库之间的界限是模糊的。是什么成就了一门语言？区区语
+法吗？还是核心库？抑或其外部库的可用性，和因在自己的项目中使用它们而带来的方
+便？
 
 X<CPAN>
 
-Regardless of how you answer those questions for any other language, modern
-Perl programming makes heavy use of the CPAN (U<http://www.cpan.org/>).  The
-CPAN, or Comprehensive Perl Archive Network, is an uploading and mirroring
-system for redistributable, reusable Perl code.  It's one of--if not
-I<the>--largest archives of libraries of code in the world.
+不管对于其他语言你如何回答上述问题，现代化 Perl 编程大量用到 CPAN（U<http://www.cpan.org/>）。
+CPAN，或 Comprehensive Perl Archive Network，是一项为重新分发可重用 Perl 代码
+而设的上传、镜像系统。它是全世界库代码量 I<最大> 的存档，如果不是，加上“之一”。
 
 X<distribution>
 X<module>
 
-CPAN mirrors I<distributions>, which tend to be collections of reusable Perl
-code.  A single distribution can contain one or more I<modules>, or
-self-contained libraries of Perl code.  Each distribution lives in its own
-namespace on the CPAN and contains its own metadata.  You can build, install,
-test, and update each distribution.  Distributions may depend on other
-distributions.  For this reason, installing distributions through a CPAN client
-is often simpler than doing so manually.
+CPAN 镜像模块的 I<发行版>，意图成为可重用 Perl 代码的总集。单一发行版可能包含
+一个或多个 I<模块>，或是自包含的 Perl 库代码。每一个发行版生存于 CPAN 上各自的
+名称空间 并含有自身的元信息。你可以对每一个发行版进行构建、安装、测试和升级。
+发行版也可能互相 依赖。为此，从 CPAN 客户端安装这些发行版会比手动安装要容易得多。
 
 =begin sidebar
 
-The CPAN I<adds> hundreds of registered contributors and thousands of indexed
-modules in hundreds of distributions every month.  Those numbers do not take
-into account updates.  In late August 2010, search.cpan.org reported 8396
-uploaders, 85146 modules, and 20824 distributions.
+CPAN 每月 I<增加> 数以百计的注册贡献者，和诸多发行版内数以千计的被索引的模块。
+这些数字还没有将更新算在内。2010 年八月末，search.cpan.org 报告了 8396 个上传
+者，85146 个模块， 以及 20824 个发行版。
 
 =end sidebar
 
 X<search.cpan.org>
 
-The CPAN itself is merely a mirroring service.  Authors upload distributions
-containing modules, and the CPAN sends them to mirror sites, from which users
-and CPAN clients download, configure, build, test, and install distributions.
-Yet the CPAN has succeeded because of this simplicity, and because of the
-contributions of thousands of volunteers who've built on this distribution
-system to produce something greater.  In particular, community standards have
-evolved to identify the attributes and characteristics of well-formed CPAN
-distributions.  These include:
+CPAN 自身仅是一个镜像服务。作者们上传包含模块的发行版，CPAN 将它们送至镜像站点，
+用户和 CPAN 客户端可以从那里下载、配置、构建、测试和安装发行版。CPAN 的成功应归
+功于其简洁，还有数以千计的志愿贡献者基于 CPAN 创造更大的价值。尤其，社区标准经过
+革新，能够识别一组织精良的 CPAN 发行版的属性和特点。这些标准包括：
 
 =over 4
 
-=item Standards for installation to work with automated CPAN installers.
+=item 某安装能与 CPAN 自动安装工具协作的标准；
 
-=item Standards for metadata to describe what each distribution includes and
-any dependencies of the distribution.
+=item 描述每个发行版所含内容及其依赖的元信息标准；
 
-=item Standards for documentation and licensing to describe what the
-distribution does and how you may use it.
+=item 描述发行版功能和使用条款的文档及许可标准。
 
 =back
 
-Additional CPAN services provide comprehensive automated testing and reporting
-of every CPAN distribution for adherence to packaging and distribution
-guidelines and correctness of behavior on various platforms and versions of
-Perl.  Every CPAN distribution has its own ticket queue on
-U<http://rt.cpan.org/> for reporting bugs and working with authors.
-Distributions also have historical versions available on the CPAN, ratings,
-annotations for the documentation, and other useful information.  All of this
-is available from U<http://search.cpan.org/>.
+额外的 CPAN 服务提供了综合自动测试和报告每个 CPAN 发行版是否遵循打包和分发要求以
+及在各式平台、不同版本的 Perl 下是否工作正确。每个 CPAN 发行版在 U<http://rt.cpan.org/> 
+上有各自的单据队列，供缺陷报告以及和其他作者合作之用。发行版的历史遗留版本、评分、
+文档注解和其他有用的信息同样可以从 CPAN 获取。所有这些都可以通过 U<http://search.cpan.org/>
+得到。
 
 X<CPAN.pm>
 X<CPANPLUS>
 
-Modern Perl installations include two clients to connect to, search, download,
-build, test, and install CPAN distributions, CPAN.pm and CPANPLUS.  They behave
-equivalently; their use is a matter of taste.  This book recommends the use of
-CPAN.pm solely due to its ubiquity.
+摩登 Perl 安装版包含两个连接、搜索、下载、构建、测试和安装 CPAN 发行版的客户端，
+CPAN.pm 以及 CPANPLUS。他们行为相仿，使用何者只是喜好的区别。本书推荐使用 CPAN.pm 
+仅由于其普遍性。
 
-If you use a recent version of CPAN.pm (as of this writing, 1.9402 is the
-latest stable release), CPAN.pm configuration is largely decision-free.  For
-any complete installation of Perl, you may start the client with:
+如果你使用 CPAN.pm 的最近版本（截止写作时，1.9402 是最新的稳定版），CPAN.pm 的
+配置无须你 做过多决定。对于任一完整的 Perl 安装来说，你可以以如下方式启动此客户端：
 
 =begin programlisting
 
@@ -89,7 +73,7 @@ any complete installation of Perl, you may start the client with:
 
 =end programlisting
 
-To install a distribution:
+安装一个发行版：
 
 =begin programlisting
 
@@ -101,36 +85,30 @@ X<Eric Wilhelm>
 X<CPAN.pm; configuration>
 X<CPAN.pm; troubleshooting>
 
-Eric Wilhelm's excellent tutorial on configuring CPAN.pm
-(U<http://learnperl.scratchcomputing.com/tutorials/configuration/>) is worth
-reading twice, especially its section on troubleshooting.
+由 Eric Wilhelm 编写的优秀的 CPAN.pm 配置教程（U<http://learnperl.scratchcomputing.com/tutorials/configuration/>）
+值得反复阅读，特别是问题排除那一小节。
 
 =begin sidebar
 
-Even though the CPAN client is a core module for the Perl 5 distribution, you
-may also have to install standard development tools such as a C<make> utility
-and possibly a C compiler to install all of the distributions you want.
-Windows users, see Strawberry Perl (U<http://strawberryperl.com/>) and
-Strawberry Perl Professional.  Mac OS X users need their developer tools
-installed.  Unix and Unix-like users, consult your local system administrator.
+即便 CPAN 客户端是 Perl 5 发行版的核心模块，你还是需要安装例如 C<make> 之类的标准开发
+工具还可能外加一个 C 编译器来安装任何你想安装的发行版。Windows 用户请参考 Strawberry Perl 
+（U<http://strawberryperl.com/>）和 Strawberry Perl Professional。Mac OS X 用户需要安
+装 “开发者工具”。Unix 和类 Unix 用户请咨询你本地的系统管理员。
 
 =end sidebar
 
-For your work setting up a CPAN client and an environment to build and install
-distributions, you get access to libraries for everything from database access
-to profiling tools to protocols for almost every network device ever created to
-sound and graphics libraries and wrappers for shared libraries on your system.
+作为对你设置 CPAN 客户端和相应环境来构建和安装发行版的回报，你得到了可以完成任何任务的
+代码库的访问权────从数据库访问到能处理现存几乎所有网络设备的协议分析工具再到声音和图像
+处理库以及你系统上共享库的包装器。
 
-Modern Perl without the CPAN is just another language.  Modern Perl with the
-CPAN is amazing.
+没有了 CPAN 的摩登 Perl 仅是另一种平凡的语言。有了 CPAN 的摩登 Perl 则是惊人的。
 
 =begin sidebar
 
-Serious Perl developers often manage their own Perl library paths or even full
-installations.  Several projects help to make this possible.
+认真的 Perl 开发人员通常会管理他们自己的 Perl 库路径甚至是完整的安装版。若干项目有助
+达成这些目的。
 
-C<App::cpanminus> is a new CPAN client with goals of speed, simplicity, and
-zero configuration.  Installation is as easy as:
+C<App::cpanminus> 是一个新兴的 CPAN 客户端，以速度、简洁和零配置为目标。安装它简单到：
 
 =begin programlisting
 
@@ -139,8 +117,8 @@ zero configuration.  Installation is as easy as:
 
 =end programlisting
 
-C<App::perlbrew> is a system to manage and to switch between your own
-installations of multiple versions and configurations of Perl.  Installation is as easy as:
+C<App::perlbrew> 是一个可以安装管理多版本 Perl 的系统，允许你在版本和配置之间切换。安
+装它简单到：
 
 =begin programlisting
 
@@ -151,15 +129,11 @@ installations of multiple versions and configurations of Perl.  Installation is 
 
 =end programlisting
 
-The C<local::lib> CPAN distribution allows you to install and to manage
-distributions in your own user directory, rather than for the system as a
-whole.  This is an effective way to maintain CPAN distributions without
-affecting other users.  Installation is somewhat more involved than the
-previous two distributions.  See U<http://search.cpan.org/perldoc?local::lib>
-for more details.
+The C<local::lib> CPAN 发行版让你可以在自己的用户目录下安装和管理各类 CPAN 模块，而不
+必将它们一股脑儿装进系统。这是既维护 CPAN 发行版又不影响其他用户的有效方法。只是安装
+过程较前两个复杂。参见 U<http://search.cpan.org/perldoc?local::lib> 以获得更多细节。
 
-All three distributions projects tend to assume a Unix-like environment (such
-as a GNU/Linux distribution or even Mac OS X). Windows users, see the Padre
-all-in-one download (U<http://padre.perlide.org/download.html>).
+这三个发行版项目都倾向于假设它们会用于类 Unix 环境（比如某个 GNU/Linux 版本甚至是 Mac OS X）
+之下。Windows 用户可以参考 Padre 一体化下载（U<http://padre.perlide.org/download.html>）。
 
 =end sidebar
