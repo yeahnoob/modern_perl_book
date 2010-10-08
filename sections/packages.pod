@@ -1,23 +1,21 @@
-=head2 Packages
+=encoding utf8
+
+=head2 包 
 
 Z<packages>
 X<package>
 X<namespace>
 
-A I<namespace> in Perl is a mechanism which associates and encapsulates various
-named entities within a named category.  It's like your family name or a brand
-name, except that it implies no relationship between entities other than
-categorization with that name.  (Such a relationship often exists, but it does
-not have to exist.)
+Perl 中的 I<名称空间> 是一种机制，它将若干具名实体关联并封装于某具名分类之下。它就
+像你的姓或是某种品牌，只能反映出命名归类上的关系而非其他。（这类关系可以存在，但不
+是必须的。）
 
-A I<package> in Perl 5 is a collection of code in a single namespace.  In a
-sense, a package and a namespace are equivalent; the package represents the
-source code and the namespace represents the entity created when Perl parses
-that codeN<This distinction may be subtle.>.
+Perl 5 中的 I<包> 是单一名称空间下代码的集合。在某种意义上，包和名称空间是等价的；
+包代表源代码而名称空间代表当 Perl 分析这段代码时创建的实体。N<这是个微妙的区别>
 
 X<keywords; package>
 
-The C<package> keyword declares a package and a namespace:
+C<package> 关键字声明一个包和一个名称空间：
 
 =begin programlisting
 
@@ -31,34 +29,27 @@ The C<package> keyword declares a package and a namespace:
 
 X<namespaces; fully qualified>
 
-All global variables and functions declared or referred to after the package
-declaration refer to symbols within the C<MyCode> namespace.  With this code as
-written, you can refer to the C<@boxes> variable from the C<main> namespace
-only by its I<fully qualified> name, C<@MyCode::boxes>.  Similarly, you can
-call the C<add_box()> function only by C<MyCode::add_box()>.  A fully qualified
-name includes its complete package name.
+所有在包声明语句之后的对全局变量和函数的声明或引用，都指向位于 C<MyCode> 名称空间
+内的符号。如果代码是这样写的，那么你只能通过 I<完全限定> 名称────C<@MyCode::boxes>
+────来从 C<main> 名称空间访问 C<@boxes> 变量。相似地，你仅可以通过 C<MyCode::add_box()>
+来调用 C<add_box()> 函数。一个完全限定名称包括了完整包名。
 
-The default package is the C<main> package.  If you do not declare a package
-explicitly, whether in a one-liner on a command-line or in a standalone Perl
-program or even in a F<.pm> file on disk, the current package will be the
-C<main> package.
+默认包是 C<main> 包。如果你不明确声明一个包，无论是在命令行 one-liner 或在独立的
+Perl 程序甚至是磁盘上的 F<.pm> 文件，那么当前包就是 C<main> 包。
 
 X<packages; version>
 X<$VERSION>
 
-Besides a package name (C<main> or C<MyCode> or any other allowable
-identifier), a package has a version and three implicit methods, C<VERSION()>,
-C<import()> (L<importing>), and C<unimport()>.  C<VERSION()> returns the
-package's version number.
+除包名（C<main> 或是 C<MyCode> 或其他任何允许的标识符）外，一个包还拥有一个版本以及
+三个隐含的方法，分别是 C<VERSION()>、C<import()>（L<importing>）和 C<unimport()>。
+C<VERSION()> 返回一个包的版本。
 
-The package's version is a series of numbers contained in a package global
-named C<$VERSION>.  By convention, versions tend to be a series of integers
-separated by dots, as in C<1.23> or C<1.1.10>, where each segment is an
-integer, but there's little beyond convention.
+包版本是包含在名为 C<$VERSION> 的包全局变量中的一系列数字。按照惯例，版本号倾向于写
+成一系列由点分隔整数的形式，例如 C<1.23> 和 C<1.1.10>，其中每一段是一个整数，但通常
+就这样写。
 
-Perl 5.12 introduced a new syntax intended to simplify version numbers.  If you
-can write code that does not need to run on earlier versions of Perl 5, you can
-avoid a lot of unnecessary complexity:
+Perl 5.12 引入了一种简化版本号的新语法。如果你编写的代码不会在早先版本的 Perl 5 上
+运行，你可以避免不少不必要的复杂性：
 
 =begin programlisting
 
@@ -66,7 +57,7 @@ avoid a lot of unnecessary complexity:
 
 =end programlisting
 
-In 5.10 and earlier, the simplest way to declare the version of a package is:
+在 5.10 以及早期的版本中，声明包版本最简单的方式是：
 
 =begin programlisting
 
@@ -79,11 +70,9 @@ In 5.10 and earlier, the simplest way to declare the version of a package is:
 X<UNIVERSAL>
 X<VERSION()>
 
-The C<VERSION()> method is available to every package; they inherit it from the
-C<UNIVERSAL> base class.  It returns the value of C<$VERSION>.  You may
-override it if you wish, though there are few reasons to do so.  Obtaining the
-version number of a package is easiest through the use of the C<VERSION()>
-method:
+每个包都有 C<VERSION()> 方法；它们继承自 C<UNIVERSAL> 基类。它返回 C<$VERSION> 中
+的值。虽然没有什么理由这样做，但你还是可以按需重写此方法。使用 C<VERSION()> 方法
+是获取一个包版本号最简便的办法：
 
 =begin programlisting
 
@@ -94,20 +83,18 @@ method:
 
 =end programlisting
 
-=head3 Packages and Namespaces
+=head3 包和名称空间
 
 X<namespaces>
 
-Every C<package> declaration causes Perl to perform two tasks.  It creates a
-new namespace if that namespace does not already exist.  It also tells the
-parser to put all subsequent package global symbols (global variables and
-functions) into that namespace.
+每一句 C<package> 声明都会使 Perl 完成两件任务。如果名称空间不存在则创建它。
+它还告诉语法分析器将后续的包全局符号（全局变量和函数）放入该名称空间下。
 
 X<namespaces; open>
 X<open namespaces>
 
-Perl has I<open namespaces>.  You can add functions or variables to a namespace
-at any point, either with a new package declaration:
+Perl 有 I<开放式名称空间>。通过使用包声明语句，你在任何时候向一个名称空间添
+加函数和变量： 
 
 =begin programlisting
 
@@ -129,44 +116,39 @@ at any point, either with a new package declaration:
 
 =end programlisting
 
-... or by fully qualifying function names at the point of declaration:
-
+……或者在声明时使用完全限定的函数名称：
 
 =begin programlisting
 
-    # implicit
+    # 隐式
     package main;
 
     sub Pack::third_sub { ... }
 
 =end programlisting
 
-Perl 5 packages are so open that you can add to them at any time during
-compilation or run time, or from separate files.  Of course, that can be
-confusing, so avoid it when possible.
+Perl 5 是那么的开放以至于你可以在编译期、运行时的任何时刻或从其他文件向其中
+添加内容。当然，这样做使人迷惑，因此应尽量避免。
 
 X<multi-level namespaces>
 X<namespaces; multi-level>
 
-Namespaces can have as many levels as you like for organizational purposes.
-These are not hierarchical; there's no technical relationship between
-packages--only a semantic relationship to I<readers> of the code.
+名称空间可以按组织需要分为多个级别。这并不意味着继承关系，包与包之间也没有什
+么技术上的联系────仅对于这段代码的 I<阅读者> 来说有语义上的关系罢了。
 
-It's common to create a top-level namespace for a business or a project.  This
-makes a convenient organizational tool not only for reading code and
-discovering the relationships between components but also to organizing code
-and packages on disk.  Thus:
+常见的做法是为业务或项目创建一个顶层名称空间。这对于阅读代码和发现组件间关系
+来说变得方便，同时也为代码和包在磁盘上的组织提供便利。因此：
 
 =over 4
 
-=item * C<StrangeMonkey> is the project name
+=item * C<StrangeMonkey> 是项目名称；
 
-=item * C<StrangeMonkey::UI> contains the top-level user interface code
+=item * C<StrangeMonkey::UI> 包含顶层用户接口的代码；
 
-=item * C<StrangeMonkey::Persistence> contains the top-level data management code
+=item * C<StrangeMonkey::Persistence> 包含顶层数据管理代码；
 
-=item * C<StrangeMonkey::Test> contains the top-level testing code for the project
+=item * C<StrangeMonkey::Test> 包含为项目编写的顶层测试代码；
 
 =back
 
-... and so on.
+……等等。
