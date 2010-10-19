@@ -1,16 +1,16 @@
-=head0 Functions
+=encoding utf8
+
+=head0 函数
 
 X<function>
 X<subroutine>
 
-A I<function> (or I<subroutine>) in Perl is a discrete, encapsulated unit of
-behavior.  It may or may not have a name.  It may or may not consume incoming
-information.  It may or may not produce outgoing information.  It represents a
-type of control flow, where the execution of the program proceeds to another
-point in the source code.
+Perl 中的 I<函数>（或者 I<子过程>），是行为的一个离散又封闭的单元。它有也可能没
+有名称。它处理也可能不处理外来信息。它产出也可能不产出信息。它代表了一种类型的控
+制流程，即程序的执行过程转到源代码中的另一个点上。
 
-Functions are a prime mechanism for abstraction, encapsulation, and re-use in
-Perl 5; many other mechanisms build on the idea of the function.
+函数是 Perl 5 中抽象和封装以及可重用代码的首选机制；其余不少机制是基于函数这一理
+念建立的。
 
 L<functions>
 

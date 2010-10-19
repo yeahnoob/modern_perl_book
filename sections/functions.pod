@@ -1,11 +1,13 @@
-=head1 Functions
+=encoding utf8
+
+=head1 函数
 
 Z<functions>
 
 X<subroutines; declaration>
 X<functions; declaration>
 
-Use the C<sub> keyword to declare a function:
+可以使 C<sub> 关键字定义一个函数：
 
 =begin programlisting
 
@@ -13,15 +15,14 @@ Use the C<sub> keyword to declare a function:
 
 =end programlisting
 
-Now C<greet_me()> is available for invocation anywhere else within the program,
-provided that the symbol--the function's name--is visible.
+现在起 C<greet_me()> 可以在程序的其他任何地方被调用，假如本符号────即函数名────是
+可见的。
 
 X<forward declaration>
 X<functions; forward declaration>
 
-You do not have to I<define> a function at the point you declare it.  You may
-use a I<forward declaration> to tell Perl that you intend for the function to
-exist, then delay its definition:
+你不必在声明函数时 I<定义> 它。你可以使用这种 I<预先声明> 的方式告知 Perl 你希望此
+函数存在的意图，接着延后它的定义：
 
 =begin programlisting
 
@@ -32,18 +33,16 @@ exist, then delay its definition:
 
 =begin sidebar
 
-You do not have to declare Perl 5 functions before you use them, except in the
-special case where they modify I<how> the parser parses them.  See
-L<attributes>.
+你不必在使用 Perl 5 函数之前声明它，除非它修改了语法分析器分析它的 I<方式>。参见 L<attributes>。
 
 =end sidebar
 
-=head1 Invoking Functions
+=head1 函数调用
 
 X<subroutines; invoking>
 X<functions; invoking>
 
-To invoke a function, mention its name and pass an optional list of arguments:
+要调用一个函数，请在源代码中提及它的名称并将可选的参数列表传递给它：
 
 =begin programlisting
 
@@ -55,13 +54,12 @@ To invoke a function, mention its name and pass an optional list of arguments:
 
 =begin sidebar
 
-You can I<often> omit parameter-grouping parentheses if your program runs
-correctly with the C<strict> pragma enabled, but they provide clarity to the
-parser and, more importantly, the reader.
+如果你的程序在启用 C<strict> 后运行正常，则你 I<通常> 可以忽略用于分组参数的括号，但
+是它们会将代码意图清晰地展现给给语法分析器────以及更重要的────阅读者。
 
 =end sidebar
 
-You can, of course, pass multiple I<types> of arguments to a function:
+当然，你可以将多种 I<类型> 的参数传递给函数：
 
 =begin programlisting
 
@@ -71,9 +69,9 @@ You can, of course, pass multiple I<types> of arguments to a function:
 
 =end programlisting
 
-... though see the L<references> section for more details.
+……但也请参考引用 L<references> 一小节以获取更详细的内容。
 
-=head1 Function Parameters
+=head1 函数参数
 
 Z<function_parameters>
 
@@ -84,11 +82,9 @@ X<parameter flattening>
 X<flattening>
 X<parameters; flattening>
 
-Inside the function, all parameters exist in a single array, C<@_>.  If C<$_>
-corresponds to the English word I<it>, C<@_> corresponds to the word I<them>.
-Perl I<flattens> all incoming parameters into a single list.  The function
-itself either must unpack all parameters into any variables it wishes to use or
-operate on C<@_> directly:
+在函数内部，所有参数存在于一个数组中，即 C<@_>。如果 C<$_> 对应英语单词 I<it（“它”）>，
+那么 C<@_> 对应的就是单词 I<them（“它们”）>。Perl 将所有传入的参数 I<展开> 为单个列表。
+函数必须自行将参数解开为所需变量或着直接操作 C<@_>：
 
 =begin programlisting
 
@@ -105,8 +101,7 @@ operate on C<@_> directly:
 
 =end programlisting
 
-C<@_> behaves as does any other array in Perl.  You may refer to individual
-elements by index:
+C<@_> 表现得和 Perl 中其他数组一样。你可以用下标引用单个元素：
 
 =begin programlisting
 
@@ -121,10 +116,9 @@ elements by index:
 
 =end programlisting
 
-You may also C<shift>, C<unshift>, C<push>, C<pop>, C<splice>, and use list
-slices on C<@_>. Inside a function, the C<shift> and C<pop> operators operate
-on C<@_> implicitly in the same way that they operate on C<@ARGV> outside of
-any function:
+你也可以 C<shift>、C<unshift>、C<push>、C<pop>、C<splice> 并且在 C<@_> 上使用
+列表分片。在函数内部，C<shift> 和 C<pop> 隐含地对 C<@_> 进行操作，就像在函数外
+操作 C<@ARGV> 一样：
 
 =begin programlisting
 
@@ -138,15 +132,14 @@ any function:
 
 =begin sidebar
 
-While writing C<shift @_> may seem clearer initially, taking advantage of the
-implicit operand to C<shift> is idiomatic in Perl 5.
+虽然起初写下 C<shift @_> 看上去更清晰，但利用 C<shift> 的隐含操作数是 Perl 5 中
+的惯用语。
 
 =end sidebar
 
-Take care that assigning a scalar parameter from C<@_> requires C<shift>,
-indexed access to C<@_>, or lvalue list context parentheses.  Otherwise, Perl 5
-will happily evaluate C<@_> in scalar context for you and assign the number of
-parameters passed:
+注意从 C<@_> 中赋值一个标量变量需要 C<shift>、或者对 C<@_> 的下标访问、再或者左
+值列表上下文括号。否则，Perl 5 会高兴地替你在标量上下文中对 C<@_> 求值，并将参数
+个数赋值给此标量：
 
 =begin programlisting
 
@@ -158,8 +151,7 @@ parameters passed:
 
 =end programlisting
 
-List assignment of multiple parameters is often clearer than multiple lines of
-C<shift>.  Compare:
+多参数的列表赋值通常比多行 C<shift> 要来得清爽。请比较：
 
 =begin programlisting
 
@@ -174,7 +166,7 @@ C<shift>.  Compare:
 
 =end programlisting
 
-... to:
+……和：
 
 =begin programlisting
 
@@ -186,8 +178,7 @@ C<shift>.  Compare:
 
 =end programlisting
 
-Occasionally it's necessary to extract a few parameters from C<@_> and pass the
-rest to another function:
+偶尔会需要提取 C<@_> 中的部分参数并把其余的传递给另外函数：
 
 =begin programlisting
 
@@ -201,21 +192,18 @@ rest to another function:
 
 =end programlisting
 
-The dominant practice seems to be to use C<shift> only when your function must
-access a single parameter and list assignment when accessing multiple
-parameters.
+主导用法就是仅在函数需要访问单个参数使用 C<shift>，访问多个参数时使用列表赋值。
 
 =begin sidebar
 
-See the C<signatures>, C<Method::Signatures>, and C<MooseX::Method::Signatures>
-modules on the CPAN for declarative parameter handling.
+说明性的参数处理方法，请参见如下 CPAN 模块：C<signatures>、C<Method::Signatures>、
+C<MooseX::Method::Signatures>。
 
 =end sidebar
 
-=head2 Flattening
+=head2 参数展开
 
-The flattening of parameters into C<@_> happens on the caller side.  Passing a
-hash as an argument produces a list of key/value pairs:
+参数展开为 C<@_> 发生在调用方。把哈希作为参数传递给函数将产生一个键值对列表：
 
 =begin programlisting
 
@@ -239,16 +227,14 @@ hash as an argument produces a list of key/value pairs:
 
 =end programlisting
 
-The C<show_pets()> function works because the C<%pet_names_and_types> hash
-flattens into the list C<'Lucky', 'dog', 'Rodney', 'dog', 'Tuxedo', 'cat',
-'Petunia', 'cat'>. The hash assignment inside the function C<show_pets()> works
-essentially as the more explicit assignment to C<%pet_names_and_types> does.
+C<show_pets()> 函数的工作原理就是因为 C<%pet_names_and_types> 哈希展开为列表
+C<'Lucky', 'dog', 'Rodney', 'dog', 'Tuxedo', 'cat', 'Petunia', 'cat'>。C<show_pets()>
+函数内的哈希赋值工作原理基本上就和更为明确的 C<%pet_names_and_types> 赋值一样。
 
-This is often useful, but you must be clear about your intentions if you pass
-some arguments as scalars and others as flattened lists.  If you wish to make a
-C<show_pets_of_type()> function, where one parameter is the I<type> of pet to
-display, you must pass that type as the I<first> parameter (or use C<pop> to
-remove it from the end of C<@_>):
+通常很有用，但是当你将一部分参数作为标量传递、一部分参数作为展开列表传递时，你
+必须明确你的目的。如果你想编写一个 C<show_pets_of_type()> 函数，它的一个参数是
+要显示的宠物的 I<类型>，你必须将其作为 I<第一个> 参数（或使用 C<pop> 把它从 C<@_>
+的末尾移出）：
 
 =begin programlisting
 
@@ -276,16 +262,14 @@ remove it from the end of C<@_>):
 
 =end programlisting
 
-=head2 Slurping
+=head2 参数吸入
 
 Z<parameter_slurping>
 X<parameter slurping>
 
-As with any lvalue assignment to an aggregate, assigning to C<%pets> within the
-function I<slurps> all of the remaining values from C<@_>.  If the C<$type>
-parameter came at the end of C<@_>, Perl would attempt to assign an odd number
-of elements to the hash and would produce a warning.  You I<could> work around
-that:
+就像所有对集合的左值赋值，在函数内对 C<%pets> 的赋值会 I<吸入> 所有 C<@_> 中剩下
+的值。如果 C<$type> 参数位于 C<@_> 的末尾，Perl 将试图将奇数个元素赋值给哈希，并
+会产生警告。你 I<可以> 绕过它：
 
 =begin programlisting
 
@@ -299,18 +283,16 @@ that:
 
 =end programlisting
 
-... at the expense of some clarity.  The same principle applies when assigning
-to an array as a parameter, of course.  See L<references> for ways to avoid
-flattening and slurping when passing aggregate parameters.
+……但会以清晰为代价。当然，同样的原理也适用于赋值给一个数组并将其作为参数。在传递
+集合参数时，避免展开和吸入，请参考“引用”（L<references>）一节。
 
-=head2 Aliasing
+=head2 别名
 
 X<parameter aliasing>
 X<functions; aliasing parameters>
 
-One useful feature of C<@_> can surprise the unwary: it contains aliases to the
-passed-in parameters, until you unpack C<@_> into its own variables.  This
-behavior is easiest to demonstrate with an example:
+一个 C<@_> 的有用特性可能会使得那些粗心的人感到惊讶：在你将解开 C<@_> 为属于自己
+的变量之前，它包含了传入参数的别名。这个行为最容易用如下例子说明：
 
 =begin programlisting
 
@@ -327,15 +309,13 @@ behavior is easiest to demonstrate with an example:
 
 =end programlisting
 
-If you modify an element of C<@_> directly, you will modify the original
-parameter directly.  Be cautious.
+如果你直接修改了 C<@_> 中的某个元素，你将同时对原始参数进行直接修改。请谨慎些。
 
-=head1 Namespaces
+=head1 名称空间
 
-Every function lives in a namespace.  Functions in an undeclared
-namespace--that is, functions not declared after an explicit C<package ...>
-statement--live in the C<main> namespace.  You may specify a function's
-namespace outside of the current package at the point of declaration:
+每一个函数存在于某名称空间中。位于未声明名称空间中的函数函数────即，没有在一条
+明确的 C<package ...> 语句之后声明的函数────存在于 C<main> 名称空间。你可以在声
+明时为函数指定当前之外的名称空间：
 
 =begin programlisting
 
@@ -345,19 +325,15 @@ namespace outside of the current package at the point of declaration:
 
 =end programlisting
 
-Any prefix on the function's name which follows the package naming format
-creates the function and inserts the function into the appropriate namespace,
-but not the current namespace.  Because Perl 5 packages are open for
-modification at any point, you may do this even if the namespace does not yet
-exist, or if you have already declared functions in that namespace.
+任何符合包命名规则的函数名前缀会创建此函数并将其插入合适的名称空间中，而非
+当前的名称空间。由于 Perl 5 中包可以在任何时刻被修改，你甚至可以在名称空间
+未存在前、或该函数已在目标名称空间中声明时这样做。
 
-You may only declare one function of the same name per namespace. Otherwise
-Perl 5 wil warn you about subroutine redefinition.  If you're certain you want
-to I<replace> an existing function, disable this warning with C<no warnings
-'redefine'>.
+你仅可以在同一名称空间下为某名称声明一个函数。否则，Perl 5 将就子过程重定义
+发出警告。如果你确实想 I<替换> 一个已经存在的函数，可以通过 C<no warnings 'redefine'>
+来禁用这类警告。
 
-You may call functions in other namespaces by using their fully-qualified
-names:
+通过使用完全限定名称，你可以在其他名称空间内调用函数：
 
 =begin programlisting
 
@@ -367,24 +343,20 @@ names:
 
 =end programlisting
 
-Functions in namespaces are I<visible> outside of those namespaces in the sense
-that you can refer to them directly, but they are only I<callable> by their
-short names from within the namespace in which they are declared--unless you
-have somehow made them available to the current namespace through the processes
-of importing and exporting (L<exporting>).
+名称空间中的函数对外部是 I<可见的>，因为它们可以被直接地引用，但仅在它们可以在所
+定义的名称空间内使用其短名时称其为 I<可调用>────除非你通过导入导出机制使这些函数
+在当前名称空间内可用（L<exporting>）。
 
-=head2 Importing
+=head2 导入
 
 Z<importing>
 
 X<functions; importing>
 
-When loading a module with the C<use> keyword (L<modules>), Perl automatically
-calls a method named C<import()> on the provided package name.  Modules with
-procedural interfaces can provide their own C<import()> which makes some or all
-defined symbols available in the calling package's namespace.  Any arguments
-after the name of the module in the C<use> statement get passed to the module's
-C<import()> method.  Thus:
+当使用 C<use> 关键字加载模块时（L<modules>），Perl 自动调用所提供模块的 C<import()>
+方法。带有过程式接口的模块可以提供它们自己的 C<import()>，以使部分或全部经过定义的符
+号在调用者的名称空间中可用。所有 C<use> 语句内模块名后的参数会传递给模块的 C<import()>
+方法。即：
 
 =begin programlisting
 
@@ -392,8 +364,7 @@ C<import()> method.  Thus:
 
 =end programlisting
 
-... loads the F<strict.pm> module and calls C<< strict->import() >> with no
-arguments, while:
+……加载 F<strict.pm> 模块并不带参数地调用 C<< strict->import() >>，且：
 
 =begin programlisting
 
@@ -402,11 +373,10 @@ arguments, while:
 
 =end programlisting
 
-... loads the F<strict.pm> module, calls C<< strict->import( 'refs' ) >>, then
-calls C<< strict->import( 'subs', vars' ) >>.
+……加载 F<strict.pm> 模块，调用 C<< strict->import( 'refs' ) >>，接着再调用 
+C<< strict->import( 'subs', vars' ) >>。
 
-You may call a module's C<import()> method directly.  The previous code example
-is equivalent to:
+你可以直接调用某模块的 C<import()> 方法。前面的代码示例等价于：
 
 =begin programlisting
 
@@ -419,22 +389,18 @@ is equivalent to:
 
 =end programlisting
 
-Be aware that the C<use> keyword adds an implicit C<BEGIN> block around these
-statements so that the C<import()> call happens I<immediately> after the parser
-has compiled the entire statement.  This ensures that any imported symbols are
-visible when compiling the rest of the program.  Otherwise, any functions
-imported from other modules but not declared in the current file would look
-like undeclared barewords and C<strict> would complain.
+注意，C<use> 关键字向这些语句添加了一个隐式的 C<BEGIN> 块使得 C<import()> 调用
+在语法分析器编译完整个语句后 I<立即> 执行。这样便保证在编译后续部分时所有导入符
+号可见。否则，任何从其他模块导入而未在当前文件定义的函数将看上去像是为声明的裸字
+使 C<strict> 发出抱怨。
 
-=head1 Reporting Errors
+=head1 报告错误
 
 X<caller>
 
-Within a function, you can get information about the context of the call with
-the C<caller> operator.  If passed no arguments, it returns a three element
-list containing the name of the calling package, the name of the file
-containing the call, and the line number of the package on which the call
-occurred:
+在函数之内，你可以通过 C<caller> 操作符得到有关本次调用的上下文信息。如果不加
+参数，它返回三个元素的列表，包括调用包的名称、包含本次调用的文件名、本次调用发
+生的包内行号：
 
 =begin programlisting
 
@@ -455,16 +421,13 @@ occurred:
 
 =end programlisting
 
-You may pass a single, optional integer argument to C<caller()>.  If provided,
-Perl will look back through the caller of the caller of the caller that many
-times and provide information about that particular call.  In other words, if
-C<show_call_information()> used C<caller(0)>, it would receive information
-about the call from C<main()>.  If it used C<caller(1)>, it would receive
-information about the call from the start of the program.
+你可以向 C<caller()> 传递单个可选的整数参数。如此，Perl 将按给出的层数回查调用
+者的调用者的调用者，并提供该次调用的相关信息。换句话说，如果 C<show_call_information()>
+中用到 C<caller(0)>，它将收到来自 C<main()> 的调用信息。如果它使用 C<caller(1)>，
+则会收到程序开始之初的调用信息。
 
-While providing this optional parameter lets you inspect the callers of
-callers, it also provides more return values, including the name of the
-function and the context of the call:
+提供此可选参数可以让你检查调用者的调用者，同时它也会返回更多值，包括函数
+的名称，和调用的上下文：
 
 =begin programlisting
 
@@ -480,15 +443,12 @@ X<Carp>
 X<Carp; croak>
 X<Carp; carp>
 
-The standard C<Carp> module uses this technique to great effect for reporting
-errors and throwing warnings in functions; its C<croak()> throws an exception
-reported from the file and line number of its caller.  When used in place of
-C<die> in library code, C<croak()> can throw an exception due to incorrect
-usage from the point of use.  C<Carp>'s C<carp()> function reports a warning
-from the file and line number of its caller (L<producing_warnings>).
+标准 C<Carp> 模块使用这个技巧来增强错误报告和函数警告的效果，其中的 C<croak()>
+抛出由调用者在某文件某行报告的异常。当在库代码中代替 C<die> 使用，C<croak()> 会
+因不正确的使用方法而就地抛出异常。C<Carp> 中的 C<carp()> 函数从文件中发出警告并
+报告有问题的行号（L<producing_warnings>）。
 
-This behavior is most useful when validating parameters or preconditions of a
-function, when you want to indicate that the calling code is wrong somehow:
+此行为在验证参数或函数先决条件时候最为有用，例如意图指出调用代码的错误时：
 
 =begin programlisting
 
@@ -504,13 +464,11 @@ function, when you want to indicate that the calling code is wrong somehow:
 
 =end programlisting
 
-=head2 Validating Arguments
+=head2 验证参数
 
-Defensive programming often benefits from checking types and values of
-arguments for appropriateness before performing further processing.  By
-default, Perl 5 provides few built-in mechanisms for doing so (and don't expect
-L<prototypes> to help). You can check that the I<number> of parameters passed
-to a function is correct by evaluating C<@_> in scalar context:
+防御性编程通常得益于针对参数类型和值的检查，以便做出后续处理。Perl 5 为此
+提供了一些默认内置机制（别指望 L<prototypes> 对此有所帮助）。你可以通过在
+标量上下文中对 C<@_> 求值来检查传递给函数的参数 I<个数> 是否正确：
 
 =begin programlisting
 
@@ -524,26 +482,23 @@ to a function is correct by evaluating C<@_> in scalar context:
 
 =end programlisting
 
-Type checking is more difficult, because of Perl's operator-oriented type
-conversions (see L<context_philosophy>).  In cases where you need more
-strictness, consider the CPAN module C<Params::Validate>.
+Perl 面向操作符的类型转换（参见“上下文哲学”一节 L<context_philosophy>）使得类型
+检查更为困难。如果你确实想变得更加严格，请考虑 CPAN 模块 C<Params::Validate>。
 
-=head1 Advanced Functions
+=head1 高级函数
 
-Functions may seem simple, but you can do much, much more with them (see
-L<closures> and L<anonymous_functions> for more details).
+函数也需看上去简单，但你可以做的还有很多很多（参见闭包 L<closures> 和匿名函数 L<anonymous_functions> 
+以获得更多细节）。
 
-=head2 Context Awareness
+=head2 上下文认知
 
 X<context>
 X<wantarray>
 X<keywords; wantarray>
 
-Perl 5's builtins know whether you've invoked them in void, scalar, or list
-context.  So too can your functions know their calling contexts.  The
-misnamedN<See C<perldoc -f wantarray> to verify.> C<wantarray> keyword returns
-C<undef> to signify void context, a false value to signify scalar context, and
-a true value to signify list context.
+Perl 5 内置函数了解你是在空、标量还是列表上下文中调用它们。你编写的函数也可以知
+晓它们各自的调用上下文。被错误命名的 N<参见 C<perldoc -f wantarray> 以确认> C<wantarray>
+关键字返回 C<undef> 表明空上下文，假值表明标量上下文，真值则表明列表上下文。
 
 =begin programlisting
 
@@ -561,46 +516,36 @@ a true value to signify list context.
 
 =end programlisting
 
-This can be useful for functions which might produce expensive return values to
-avoid doing so in void context.  Some idiomatic functions return a list in list
-context and an array reference in scalar context (or the first element of the
-list).  Even so, there's no single best recommendation for the use or avoidance
-of C<wantarray>; sometimes it's clearer to write separate functions which
-clearly indicate their expected uses and return values.
+这在避免可能产生昂贵返回值的函数在空上下文中返回结果时很有用。一些惯用语函数在列
+表上下文中返回列表并在标量上下文中返回数组引用（或列表中的第一个元素）。即便如此，
+也没有什么针对使用 C<wantarray> 与否的好建议；一些时候还是单独编写返回所需类型值
+的函数来得清楚。
 
 =begin sidebar
 
-With that said, Robin Houston's C<Want> and Damian Conway's
-C<Contextual::Return> distributions from the CPAN offer many possibilities for
-writing powerful and usable interfaces.
+话虽如此，CPAN 上的 Robin Houston 的 C<Want> 和 Damian Conway 的 C<Contextual::Return> 
+发行版为编写强大而可用的接口提供了种种可能。
 
 =end sidebar
 
-=head2 Recursion
+=head2 递归
 
 Z<recursion>
 X<recursion>
 X<call frame>
 X<functions; call frame>
 
-Every call to a function in Perl creates a new I<call frame>.  This is an
-internal data structure which represents the call itself: in effect, incoming
-parameters, the point to which to return, and all of the control of the program
-leading up to the point of the call.  As well, it captures the lexical
-environment of the specific and current invocation of the function.  This means
-that a function can I<recur>; it can call itself.
+在 Perl 中每一次函数调用都创建一个新的 I<调用帧>。这是一种代表调用本身的内部数据
+结构：实际上就是，传入参数、返回点、步入此调用点前的所有程序控制流程。它同样捕获
+了本次函数调用的特定词法环境。这意味着一个函数可以 I<递归>，它可以调用自己。
 
-Recursion is a deceptively simple concept, but it can seem daunting if you
-haven't encountered it before.  Consider a case where you want to find an
-element in a sorted array.  You I<could> iterate through every element of the
-array individually, looking for the target, but on average, you'll have to look
-at half of the elements of the array every time.
+递归是一个带迷惑性但又简单的概念，如果之前你没有碰到过，它看上去令人望而却步。考
+虑你如何在一个经过排序的数组中查找某个元素。你 I<可以> 迭代整个数组中的每个元素，
+在其中查找目标，但是平均起来，你每次只需查找数组中半数元素。
 
-Another approach is to divide the array in half.  Pick the element at the
-midpoint, compare, then see if you have to divide the lower half or the upper
-half and continue.  You can write this algorithm with a loop yourself, or you
-could let Perl manage all of the state and tracking necessary with a recursive
-algorithm.  That might look something like:
+另一中方法就是将数组分开两半。选取中间值，比较，看接下去是否应该将较小的那部分进
+行折半还是对较大部分，接着继续。你可以用循环来编写上述算法，或者，你可以通过递归
+让 Perl 接管所有状态和跟踪所需变量。看上去可能会像这样：
 
 =begin programlisting
 
@@ -624,41 +569,38 @@ algorithm.  That might look something like:
     {
         my ($item, @array) = @_;
 
-        # break recursion if there are no elements to search
+        # 如果没有元素可以查找则跳出递归
         return unless @array;
 
-        # bias down, if there are an odd number of elements
+        # 折半，如果有奇数个元素则向下取整
         my $midpoint = int( (@array / 2) - 0.5 );
         my $miditem  = $array[ $midpoint ];
 
-        # return true if the current element is the target
+        # 如果当前元素就是目标则返回真
         return 1 if $item  == $miditem;
 
-        # return false if the current element is the only element
+        # 如果只剩一个元素则返回假
         return   if @array == 1;
 
-        # split the array down and recurse
+        # 划分数组并用较小分支递归
         return B<elem_exists>( $item, @array[0 .. $midpoint] )
             if $item < $miditem;
 
-        # split the array up and recurse
+        # 划分数组并用较大分支递归
         return B<elem_exists>( $item, @array[$midpoint + 1 .. $#array] );
     }
 
 =end programlisting
 
-This isn't necessarily the best algorithm for searching a sorted list, but it
-demonstrates recursion.  Again, you I<can> write this code in a procedural way;
-but some algorithms are much clearer recursively.
+这并非是搜索已排序列表的最好的算法，但它演示了递归。再次说明，你 I<可以> 按过程
+式方法编写这段代码，但是某些算法采用递归时更清晰。
 
-=head2 Lexicals
+=head2 词法相关
 
-Every new invocation of a function creates its own I<instance> of a lexical
-scope.  In the case of the recursive example, even though the declaration of
-C<elem_exists()> creates a single scope for the lexicals C<$item>, C<@array>,
-C<$midpoint>, and C<$miditem>, every I<call> to C<elem_exists()>, even
-recursively, has separate storage for the values of those lexical variables.
-You can demonstrate that by adding debugging code to the function:
+每一次对函数的新调用创建自身词法作用域的 I<实例>。拿递归为例，虽然 C<elem_exists()>
+的声明为 C<$item>、C<@array>、C<$midpoint> 和 C<$miditem> 创建的单独的词法作用域，对
+C<elem_exists()> 的每一次 I<调用>，即便是递归，也将词法变量的值分开存放。你可以通过
+添加如下调试代码来展示这一特性：
 
 =begin programlisting
 
@@ -676,43 +618,37 @@ You can demonstrate that by adding debugging code to the function:
 
 =end programlisting
 
-The output demonstrates that not only can C<elem_exists()> call itself safely,
-but the lexical variables do not interfere with each other.
+这段代码的输出显示了 C<elem_exists()> 不仅可以安全地调用自身，而且词法变量之间也不会
+冲突。
 
-=head2 Tail Calls
+=head2 尾部调用
 
 Z<tail_calls>
 X<recursion; guard conditions>
 
-One I<drawback> of recursion is that you must get your return conditions
-correct, or else your function will call itself an infinite number of times.
-This is why the C<elem_exists()> function has several C<return> statements.
+递归的一个 I<缺点> 就是你必须将返回条件编写正确，否则函数将无限次调用自身。这
+就是为什么 C<elem_exists()> 函数拥有若干 C<return> 语句。
 
-Perl offers a helpful warning when it detects what might be runaway recursion:
-C<Deep recursion on subroutine>.  The limit is 100 recursive calls, which can
-be too few in certain circumstances but too many in others.  Disable this
-warning with C<no warnings 'recursion'> in the scope of the recursive call.
+当它检测到失控的递归时，Perl 提供了有用的警告：C<Deep recursion on subroutine>。
+限制是 100 次递归调用，对某些情况可能太少而其他情况下又太多。你可以在递归调用作
+用域内通过 C<no warnings 'recursion'> 来禁用这一警告。
 
 X<functions; tail call elimination>
 
-Because each call to a function requires a new call frame, as well as space for
-the call to store its own lexical values, highly-recursive code can use more
-memory than iterative code.  A feature called I<tail call elimination> can
-help.
+因为对函数的每一次调用都需要新建调用帧，外加自身词法变量值的存储，高度递归的代码
+比迭代用去的内存更多。一个名为 I<尾部调用消除> 的特性有助解决此问题。
 
 =begin sidebar
 
-Tail call elimination may be most obvious when writing recursive code, but it
-can be useful in any case of a tail call.  Many programming language
-implementations support automatic tail call elimination.
+尾部调用消除也许在编写递归代码时最为明确，但它在含尾部调用的任何情况下都有用处。
+许多编程语言实现支持自动进行这个过程。
 
 =end sidebar
 
 X<tail calls>
 X<functions; tail calls>
 
-A I<tail call> is a call to a function which directly returns that function's
-results.  The lines:
+I<尾部调用> 就是调用一个函数然后直接返回这个函数的结果。下列几行：
 
 =begin programlisting
 
@@ -725,15 +661,13 @@ results.  The lines:
 
 =end programlisting
 
-... which return the results of the recursive C<elem_exists()> calls directly,
-are candidates for tail call elimination.  This elimination avoids returning to
-the current call and then returning to the parent call.  Instead, it returns to
-the parent call directly.
+……直接返回递归调用 C<elem_exists()> 的结果，就是尾部调用消除的候选代码。这个消除
+的过程避免了先将结果返回给本次调用再返回父调用。取而代之的是它直接将结果返回给父
+调用。
 
-Perl 5 supports manual tail call elimination, but Yuval Kogman's
-C<Sub::Call::Tail> is worth exploring if you find yourself with highly
-recursive code or code that could benefit from tail call elimination.
-C<Sub::Call::Tail> is appropriate for tail calls of non-recursive code:
+Perl 5 支持手动进行尾部调用消除，但如果你觉得高度递归的代码可以很好地利用尾部调
+用消除的优势，那么 Yuval Kogman 的 C<Sub::Call::Tail> 值得研究。C<Sub::Call::Tail>
+对非递归的尾部调用同样适用：
 
 =begin programlisting
 
@@ -749,8 +683,8 @@ C<Sub::Call::Tail> is appropriate for tail calls of non-recursive code:
 
 =end programlisting
 
-In this example, you can replace the C<return> with the new C<tail> keyword
-with no functional changes (yet more clarity and improved performance):
+本例中，你可以将 C<return> 改为新的 C<tail> 关键字并无须做出函数层面的修改（它
+更加清晰，也提升了性能）：
 
 =begin programlisting
 
@@ -761,23 +695,21 @@ with no functional changes (yet more clarity and improved performance):
 X<goto>
 X<functions; goto>
 
-If you really I<must> perform your own manual tail call elimination, a special
-form of the C<goto> keyword exists.  Unlike the form which can often lead to
-spaghetti code, the C<goto> function form replaces the current function call
-with a call to another function.  You may use a function by name or by
-reference.  You must always set C<@_> yourself manually, if you want to pass
-different arguments:
+如果你确实 I<必须> 手动进行尾部调用消除，则你可以使用 C<goto> 关键字的一个特殊形
+式。不像通常导致通心粉式代码的那种形式，C<goto> 的函数形式将当前函数调用替换为对
+另一个函数的调用。可以使用函数名称或引用。如果你想传递不同的参数，则必须手动设置
+C<@_>：
 
 =begin programlisting
 
-        # split the array down and recurse
+        # 划分数组并递归（较小部分）
         if ($item < $miditem)
         {
             @_ = ($item, @array[0 .. $midpoint]);
             B<goto &elem_exists;>
         }
 
-        # split the array up and recurse
+        # 划分数组并递归（较大部分）
         else
         {
             @_ = ($item, @array[$midpoint + 1 .. $#array] );
@@ -786,65 +718,56 @@ different arguments:
 
 =end programlisting
 
-The comparative cleanliness of the CPAN versions is obvious.
+相比较而言，代码 CPAN 版本的清爽程度可见一斑。
 
-=head1 Pitfalls and Misfeatures
+=head1 缺陷和设计失误
 
 X<functions; pitfalls>
 X<functions; misfeatures>
 
-Not all features of Perl 5 functions are always helpful.  In particular,
-L<prototypes> rarely do what you mean.  They have their uses, but you can avoid
-them outside of a few cases.
+所有 Perl 5 函数的特性并非都是有用的。特别的，原型 L<prototypes> 很少完成你想让它做的事。
+它们有它们的用途，但是除了个别情况下，你可以避免使用它们。
 
 X<functions; Perl 4>
 X<functions; Perl 1>
 
-As well, Perl 5 still supports old-style invocations of functions, carried over
-from older versions of Perl.  While you may now invoke Perl functions by name,
-previous versions of Perl required you to invoke them with a leading ampersand
-(C<&>) character.  Perl 1 required you to use the C<do> keyword:
+从早期 Perl 版本直接接手，Perl 5 仍支持旧式函数调用。虽然现在你可以直接通过名称调用函数，
+但前期版本的 Perl 要求你用前置的 C<&> 字符调用函数。Perl 1 要求你使用 C<do> 关键字：
 
 =begin programlisting
 
-    # outdated style; avoid
+    # 过时风格；避免使用
     my $result = &calculate_result( 52 );
 
-    # Perl 1 style
+    # Perl 1 风格
     my $result = do calculate_result( 42 );
 
-    # crazy mishmash; really truly avoid
+    # 疯狂的混杂调用，真的应该避免
     my $result = do &calculate_result( 42 );
 
 =end programlisting
 
-While they're visually noisy, with vestigial syntax, the leading ampersand form
-performs other behavior which can occasionally surprise you.  First, it
-disables prototype checking (as if that often mattered).  Second, if you do not
-pass arguments explicitly, it I<implicitly> passes the contents of C<@_>
-unmodified.  Both can lead to surprising behavior.
+相比退化的语法，除了看上去是噪音外，前置 & 形式的其他行为偶尔会使你惊奇。第一，
+它禁用原型检查（好像这常常很重要）。第二，如果你不明确地传递参数，它会 I<隐式地>
+将 C<@_> 的内容不加修改地传给函数。两者都可导致意外的结果。
 
-A final pitfall comes from leaving the parentheses off of function calls.  The
-Perl 5 parser uses several heuristics to resolve ambiguity of barewords and the
-number of parameters passed to a function, but occasionally those heuristics
-guess wrong.  While it's often wise to remove extraneous parentheses, compare
-the readability of these two lines of code:
+最后一个缺陷来自于函数调用时不写括号。Perl 5 的语法分析器使用若干启发式方法解决
+裸字的歧义以及传递给函数参数的个数，但是这些猜测偶尔会出错。虽然移去无关括号通常
+很明智，但请比较下列两行代码的可读性：
 
 =begin programlisting
 
     ok( elem_exists( 1, @elements ), 'found first element in array' );
 
-    # warning; contains a subtle bug
+    # 警告；包含一细微的缺陷
     ok elem_exists 1, @elements, 'found first element in array';
 
 =end programlisting
 
-The subtle bug in the second form is that the call to C<elem_exists()> will
-gobble up the test description intended as the second argument to C<ok()>.
-Because C<elem_exists()> uses a slurpy second parameter, this may go unnoticed
-until Perl produces warnings about comparing a non-number (the test
-description, which it cannot convert into a number) with the element in the
-array.
+第二行中细微的缺陷就是对 C<elem_exists()> 的调用将本应作为 C<ok()> 第二个参数的
+测试描述贪婪地吞入。因为 C<elem_exists()> 的第二个参数是吸入式的，这种情况可能一
+直不为人知直到 Perl 产生有关将非数字（测试描述，它不能被转换为数字）和数组中某元
+素进行比较的警告。
 
-This is admittedly an extreme case, but it is a case where proper
-parenthesization can clarify code and make subtle bugs obvious to the reader.
+这诚然是一个特例，但说明了正确地加括号可以使代码清晰并使得细微的缺陷在阅读者面前
+展露无遗。
