@@ -1,22 +1,22 @@
-=head1 Anonymous Functions
+=encoding utf8
+
+=head1 匿名函数
 
 Z<anonymous_functions>
 
 X<anonymous function>
 X<functions; anonymous>
 
-An I<anonymous function> is a function without a name.  It behaves like a named
-function--you can invoke it, pass arguments to it, return values from it, copy
-references to it--it can do anything a named function can do.  The difference
-is that it has no name.  You always deal with anonymous functions by reference
-(see L<references> and L<function_references>).
+I<匿名函数> 就是没有名字的函数。它的行为和那些有名字的函数一样————你可以调用它，
+也可以把参数传递给它，从其中返回结果，复制引用给它————它可以做到任何具名函数可以
+做到的事。区别就是它没有名字。你可以用引用来处理匿名函数（参见引用 L<references> 
+和函数引用 L<function_references>）。
 
-=head2 Declaring Anonymous Functions
+=head2 声明匿名函数
 
-You may never declare an anonymous function on its own; you must construct it
-and assign it to a variable, invoke it immediately, or pass it as an argument
-to a function, either explicitly or implicitly.  Explicit creation uses the
-C<sub> keyword with no name:
+你不能独立地声明一个匿名函数；你必须在构造完成后将它复制给一个变量，或直接调用它，
+再就是将它作为参数传递给另一个函数，显式或是隐式地。使用 C<sub> 关键字而不加命名
+将显式地创建一个匿名函数：
 
 =begin programlisting
 
@@ -26,8 +26,7 @@ C<sub> keyword with no name:
 
 X<dispatch table>
 
-A common Perl 5 idiom known as a I<dispatch table> uses hashes to associate
-input with behavior:
+一个名为 I<分派表> 的 Perl 5 惯用语，使用哈希将输入和行为关联起来：
 
 =begin programlisting
 
@@ -52,15 +51,14 @@ input with behavior:
 
 =end programlisting
 
-The C<dispatch()> function takes arguments of the form C<(2, 'times', 2)> and
-returns the result of evaluating the operation.
+C<dispatch()> 函数以 C<(2, 'times', 2)> 的形式接受参数并且返回对操作求值后的
+结果。
 
-You may use anonymous functions in place of function references.  To Perl,
-they're equivalent.  Nothing I<necessitates> the use of anonymous functions to
-perform these mathematical operations, but for functions this short, there's
-little drawback to writing them this way.
+你可以在使用函数引用的地方用匿名函数。对于 Perl 来说，两者是等价的。没有什么
+I<迫使> 使用匿名函数来进行这些数学操作，但对这类短小的函数来说，写成这样也没
+有什么不好。
 
-You may rewrite C<%dispatch> as:
+你可以将 C<%dispatch> 重写为：
 
 =begin programlisting
 
@@ -68,7 +66,7 @@ You may rewrite C<%dispatch> as:
     (
         plus     => \&add_two_numbers,
         minus    => \&subtract_two_numbers,
-        # ... and so on
+        # ……等等
     );
 
     sub add_two_numbers      { $_[0] + $_[1] }
@@ -77,23 +75,19 @@ You may rewrite C<%dispatch> as:
 
 =end programlisting
 
-... but the decision to do so depends more on maintainability concerns, safety,
-and your team's coding style than any language feature.
+……相比因语言特性而做出这样的决定，到不如说是出于对代码可维护性，或是安全，再或
+是团队编程风格的考虑。
 
 =begin sidebar
 
-A benefit of indirection through the dispatch table is that it provides some
-protection against calling functions without verifying that it's safe to call
-those functions.  If your dispatch function blindly assumed that the string
-given as the name of the operator corresponded directly to the name of a
-function to call, a malicious user could conceivably call any function in any
-other namespace by crafting an operator name of
-C<'Internal::Functions::some_malicious_function'>.
+因间接通过分派表而带来的一个好处是，它对未经验证调用函数提供了一定的保护————调用
+这些函数安全多了。如果你的分派函数盲目地假设那些字符串直接对应到某操作应该调用的
+函数名，那么可以想象通过将 C<'Internal::Functions::some_malicious_function'> 修
+整为操作名，一个恶意用户可以调用任何其他名称空间的任何函数。
 
 =end sidebar
 
-You may also create anonymous functions on the spot when passing them as
-function parameters:
+你也可以在将匿名函数作为参数传递的过程中创建它们：
 
 =begin programlisting
 
@@ -113,14 +107,12 @@ function parameters:
 
 =end programlisting
 
-=head2 Anonymous Function Names
+=head2 匿名函数名称
 
 X<anonymous functions; names>
 
-There is one instance in which you can identify the difference between a
-reference to a named function and an anonymous function--anonymous functions do
-not (normally) have names.  This may sound subtle and silly and obvious, but
-introspection shows the difference:
+存在可以鉴别一个引用是指向具名函数还是匿名函数的特例————匿名函数（正常情况下）没
+有名称。这听上去很玄乎很傻也很明显，内省可以现实这个区别：
 
 =begin programlisting
 
@@ -145,18 +137,16 @@ introspection shows the difference:
 
 =end programlisting
 
-The result may be surprising:
+结果可能令人惊讶：
 
     Called from ShowCaller::B<main> in ShowCaller at anoncaller.pl : 20
     Called from ShowCaller::B<__ANON__> in ShowCaller at anoncaller.pl : 17
 
-The C<__ANON__> in the second line of output demonstrates that the anonymous
-function has no name that Perl can identify.  Even though this can be difficult
-to debug, there are ways around this anonymity.
+输出第二行中的 C<__ANON__> 展示了匿名函数没有 Perl 可以识别的名称。即使这样会难以调试，
+但还是有方法可以绕过它的隐匿性。
 
-The CPAN module C<Sub::Identify> provides a handful of functions useful to
-inspect the names of functions, given references to them.  C<sub_name()> is the
-most immediately obvious:
+CPAN 模块 C<Sub::Identify> 提供了一系列有用的函数来对传入函数引用的名称进行检查。
+C<sub_name()> 便是不二之选：
 
 =begin programlisting
 
@@ -172,9 +162,8 @@ most immediately obvious:
 
 =end programlisting
 
-As you might imagine, the lack of identifying information complicates debugging
-anonymous functions.  The CPAN module C<Sub::Name> can help.  Its C<subname()>
-function allows you to attach names to anonymous functions:
+正如你想象的那样，名称的缺少使得调试匿名函数更加复杂。CPAN 模块 C<Sub::Name> 可以
+帮助你。它的 C<subname()> 函数允许你将名称附加在匿名函数上：
 
 =begin programlisting
 
@@ -192,28 +181,24 @@ function allows you to attach names to anonymous functions:
 
 =end programlisting
 
-This program produces:
+这个程序产生如下输出：
 
     __ANON__
     pseudo-anonymous
     pseudo-anonymous
     __ANON__
 
-Be aware that both references refer to the same underlying anonymous function.
-Calling C<subname()> on C<$anon> and returning into C<$named> modifies that
-function, so any other reference to this function will see the same name
-C<pseudo-anonymous>.
+注意这两个引用都指向同一个底层函数。用 C<$anon> 调用 C<subname()> 并且将结果
+返回给 C<$named> 将修改该函数，因此其他指向这个函数的引用将见到相同的名字，即
+C<pseudo-anonymous>。
 
-=head2 Implicit Anonymous Functions
+=head2 隐式匿名函数
 
 X<anonymous functions; implicit>
 
-All of these anonymous function declarations have been explicit.  Perl 5 allows
-implicit anonymous functions through the use of prototypes (L<prototypes>).
-Though this feature exists nominally to enable programmers to write their own
-syntax such as that for C<map> and C<eval>, an interesting example is the use
-of I<delayed> functions that don't look like functions.  Consider the CPAN
-module C<Test::Exception>:
+所有这些匿名函数声明都是显式的。Perl 5 通过原型（L<prototypes>）允许隐式匿名函数。
+虽然这个特性的存在名义上是为了让程序员为诸如 C<map> 和 C<eval> 编写自己的语法，一
+个有趣的例子就是对 I<延迟> 函数的使用看上去不像函数那样。考虑 CPAN 模块 C<Test::Exception>：
 
 =begin programlisting
 
@@ -228,8 +213,8 @@ module C<Test::Exception>:
 
 =end programlisting
 
-Both C<lives_ok()> and C<throws_ok()> take an anonymous function as their first
-arguments.  This code is equivalent to:
+C<lives_ok()> 和 C<throws_ok()> 都接受一个匿名函数作为它们的第一个参数。这段代码
+等价于：
 
 =begin programlisting
 
@@ -241,18 +226,17 @@ arguments.  This code is equivalent to:
 
 =end programlisting
 
-... but is slightly easier to read.
+……只不过更加易读罢了。
 
 =begin sidebar
 
-Note the I<lack> of a comma following the final curly brace of the implicit
-anonymous function in the implicit version.  This is occasionally a confusing
-wart on otherwise helpful syntax, courtesy of a quirk of the Perl 5 parser.
+注意隐式版本中匿名函数最后的大括号后 I<没有> 逗号。相比其他一些好用的语法来说，
+有时候这是一个令人疑惑的疙瘩，是 Perl 5 语法分析器古怪的好意。
 
 =end sidebar
 
-The implementation of both functions does not care which mechanism you use to
-pass function references.  You can pass named functions by reference as well:
+这两个函数的实现都不关心你是用何种机制传递函数引用的。你也可以按引用传递一个具
+名函数：
 
 =begin programlisting
 
@@ -268,7 +252,7 @@ pass function references.  You can pass named functions by reference as well:
 
 =end programlisting
 
-... but you may I<not> pass them as scalar references:
+……但你 I<不> 能将他们当作标量引用传递：
 
 =begin programlisting
 
@@ -287,10 +271,9 @@ pass function references.  You can pass named functions by reference as well:
 
 =end programlisting
 
-... because the prototype changes the way the Perl 5 parser interprets this
-code.  It cannot determine with 100% clarity I<what> C<$croak> and C<$add> will
-contain when it evaluates the C<throws_ok()> or C<lives_ok()> calls, so it
-produces an error:
+……因为原型改变了 Perl 5 语法分析器解释这段代码的方式。在对 C<throws_ok()> 或是
+C<lives_ok()> 的调用进行求值时，它不能 100% 清楚地确定 C<$croak> 和 C<$add> 含
+有 I<什么内容>，因此它会产生一条错误信息：
 
 =begin screen
 
@@ -300,6 +283,5 @@ produces an error:
 
 =end screen
 
-This feature is occasionally useful despite its drawbacks.  The syntactic
-clarity available by promoting bare blocks to anonymous functions can be
-helpful, but use it sparingly and document the API with care.
+不提缺点，这个特性偶尔也有其用处。虽然通过将裸代码块提升为匿名函数带来了语法上
+的清晰，但请有节制地使用并小心编写好 API 文档。
