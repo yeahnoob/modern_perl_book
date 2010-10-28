@@ -1,13 +1,13 @@
+=encoding utf8
+
 =head1 AUTOLOAD
 
 Z<autoload>
 
-You do not have to define I<every> function and method anyone will ever call.
-Perl provides a mechanism by which you can intercept calls to functions and
-methods which do not yet exist.  You can use this to define only those
-functions you need, or to provide interesting error messages and warnings.
+你没有必要为调用而定义 I<每一个> 函数和方法。Perl 提供了一种机制，通过它你可以
+截获不存在方法的调用。这样你就可以只定义所需的函数或提供有趣的错误信息和警告。
 
-Consider the program:
+考虑如下程序：
 
 =begin programlisting
 
@@ -19,8 +19,8 @@ Consider the program:
 
 =end programlisting
 
-When you run it, Perl will throw an exception due to the call to the undefined
-function C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
+当运行它时，Perl 将因调用未定义的函数 C<bake_pie()> 而抛出一个异常。现在添加一个
+名为 C<AUTOLOAD()> 的函数：
 
 =begin programlisting
 
@@ -28,10 +28,9 @@ function C<bake_pie()>.  Now add a function called C<AUTOLOAD()>:
 
 =end programlisting
 
-Nothing obvious will happen, except that there is no error.  The presence of a
-function named C<AUTOLOAD()> in a package tells Perl to call that function
-whenever normal dispatch for that function or method fails.  Change the
-C<AUTOLOAD()> to emit a message to demonstrate this:
+除了错误不再出现，没有发生任何明显改变。在某个包中，名为 C<AUTOLOAD()> 函数的出现
+告诉 Perl 无论是正常分派或方法缺失时都调用它。可以将 C<AUTOLOAD()> 稍作修改，显示
+一个消息来演示这一点：
 
 =begin programlisting
 
@@ -39,16 +38,16 @@ C<AUTOLOAD()> to emit a message to demonstrate this:
 
 =end programlisting
 
-=head2 Basic Features of AUTOLOAD
+=head2 AUTOLOAD 的基本功能
 
-The C<AUTOLOAD()> function receives the arguments passed to the undefined
-function in C<@_> directly.  You may manipulate these arguments as you like:
+C<AUTOLOAD()> 函数直接在 C<@_> 中接到传递给未定义函数的参数。你可以按喜好修改
+这些参数：
 
 =begin programlisting
 
     sub AUTOLOAD
     {
-        # pretty-print the arguments
+        # 将参数美化输出
         B<local $" = ', ';>
         B<say "In AUTOLOAD(@_)!">
     }
@@ -57,8 +56,7 @@ function in C<@_> directly.  You may manipulate these arguments as you like:
 
 X<$AUTOLOAD>
 
-The I<name> of the undefined function is available in the pseudo-global
-variable C<$AUTOLOAD>:
+未定义函数的 I<名称> 可以从伪全局变量 C<$AUTOLOAD> 得到：
 
 =begin programlisting
 
@@ -66,17 +64,16 @@ variable C<$AUTOLOAD>:
     {
         B<our $AUTOLOAD;>
 
-        # pretty-print the arguments
+        # 将参数美化输出
         local $" = ', ';
         say "In AUTOLOAD(@_) B<for $AUTOLOAD>!"
     }
 
 =end programlisting
 
-The C<our> declaration (L<our>) scopes this variable to the body of
-C<AUTOLOAD()>.  The variable contains the fully-qualified name of the undefined
-function.  In this case, the function is C<main::bake_pie>.  A common idiom is
-to remove the package name:
+C<our> 声明（L<our>）将此变量的作用域限制在 C<AUTOLOAD()> 的代码体内。这个变量
+包含了未定义函数的完全限定名称。就此例来说，这个函数是 C<main::bake_pie>。一个
+常见的惯用语可以用来去掉包名：
 
 =begin programlisting
 
@@ -84,14 +81,14 @@ to remove the package name:
     {
         B<my ($name) = our $AUTOLOAD =~ /::(\w+)$/;>
 
-        # pretty-print the arguments
+        # 将参数美化输出
         local $" = ', ';
         say "In AUTOLOAD(@_) B<for $name>!"
     }
 
 =end programlisting
 
-Finally, whatever C<AUTOLOAD()> returns, the original call receives:
+最终，无论 C<AUTOLOAD()> 返回什么，最初的调用都会收到：
 
 =begin programlisting
 
@@ -101,10 +98,9 @@ Finally, whatever C<AUTOLOAD()> returns, the original call receives:
 
 =end programlisting
 
-So far, these examples have merely intercepted calls to undefined functions.
-You have other options.
+目前为止，这些例子只是截获了对未定义函数的调用。还有其他的路可走。
 
-=head2 Redispatching Methods in AUTOLOAD()
+=head2 在 AUTOLOAD() 中重分派方法
 
 X<AUTOLOAD; redispatch>
 X<AUTOLOAD; delegation>
@@ -113,9 +109,8 @@ X<delegation>
 X<OO; proxying>
 X<proxying>
 
-A common pattern in OO programming is to I<delegate> or I<proxy> certain
-methods in one object to another, often contained in or otherwise accessible
-from the former.  This is an interesting and effective approach to logging:
+面向对象编程中一个常见的模式就是将某方法 I<委托> 或 I<代理> 给另一个对象，通
+常包含在前者内或可以从中访问到。这是一个记录日志有趣且有效的方法：
 
 =begin programlisting
 
@@ -138,19 +133,17 @@ from the former.  This is an interesting and effective approach to logging:
 
 =end programlisting
 
-This C<AUTOLOAD()> logs the method call.  Its real magic is a simple pattern;
-it dereferences the proxied object from a blessed scalar reference, extracts
-the name of the undefined method, then invokes the method of that name on the
-proxied object, passing the given arguments.
+这段 C<AUTOLOAD()> 的代码记录方法调用。它的神奇之处就在于一个简单的模式；它从
+经 bless 的标量引用中对被代理对象进行解引用，提取未定义方法的名称，然后调用被
+代理对象中的方法，传递参数给它。
 
-=head2 Generating Code in AUTOLOAD()
+=head2 在 AUTOLOAD() 中生成代码
 
 X<AUTOLOAD; code installation>
 
-That double-dispatch trick is useful, but it is slower than necessary.  Every
-method call on the proxy must go through normal dispatch and fail, then end up
-in C<AUTOLOAD()>.  You can instead install new methods into the proxy class as
-the program needs them:
+那个双重分派的技巧很有用，但比要求的要慢一些。每一次代理的方法调用必须通过常规
+分派，失败，最后落入 C<AUTOLOAD()>。因为程序需要它们，作为代替，你可以将新方法
+安装到代理类中：
 
 =begin programlisting
 
@@ -174,27 +167,21 @@ the program needs them:
 
 =end programlisting
 
-The body of the previous C<AUTOLOAD()> has become an anonymous function.  The
-code creates a closure (L<closures>) bound over the I<name> of the undefined
-method.  Then it installs that closure in the appropriate symbol table so that
-all subsequent dispatch to that method will find the created closure and will
-avoid C<AUTOLOAD()>.  Finally, it invokes the method directly and returns the
-result.
+之前 C<AUTOLOAD()> 的代码体变为了一个匿名函数。这段代码创建绑定未定义函数 I<名称>
+的闭包（L<closures>）。接着它在合适的符号表内安装该闭包，使得方法的后续分派能够找
+到已经创建的闭包而避开 C<AUTOLOAD()>。最后，它直接调用该方法，返回结果。
 
-Though this approach is cleaner and almost always more transparent than
-handling the behavior directly in C<AUTOLOAD()>, the code I<called> by
-C<AUTOLOAD()> may detect that dispatch has gone through C<AUTOLOAD()>.  In
-short, C<caller()> will reflect the double-dispatch of both techniques shown so
-far.  This may be an issue; certainly you can argue that it's an encapsulation
-violation to care, but it's also an encapsulation violation to let the details
-of I<how> an object provides a method to leak out into the wider world.
+虽然这个方法更为清爽且几乎总是比直接在 C<AUTOLOAD()> 处理调用行为来得更透明，但被
+C<AUTOLOAD()> I<调用> 的代码也许会检测到分派过程经过了 C<AUTOLOAD()>。简单说来，C<caller()>
+将反映出目前两种双重分派的技巧。这便可能成为一个问题；诚然你可以争辩这是一种打破闭
+包的行为，必须被关注，但是让一个对象 I<如何> 提供方法的内幕泄露到宽广的世界中去，也
+算得上是违反闭包原则了。
 
 X<tailcall>
 X<goto; tailcall>
 
-Another idiom is to use a tailcall (L<tailcalls>) to I<replace> the current
-invocation of C<AUTOLOAD()> from C<caller()>'s memory with a call to the
-destination method:
+另一种惯用语就是使用尾部调用（L<tailcalls>）从 C<caller()>（调用者的）
+“记忆”中把当前对 C<AUTOLOAD()> 的调用 I<替换> 为目标方法：
 
 =begin programlisting
 
@@ -211,11 +198,10 @@ destination method:
 
 =end programlisting
 
-This has the same effect as invoking C<$method> directly, except that
-C<AUTOLOAD()> will no longer appear in the list of calls available from
-C<caller()>, so it looks like the generated method was simply called directly.
+这样做和直接调用 C<$method> 等效。C<AUTOLOAD()> 不会出现在 C<caller()> 的调用列表中，
+因此看上去就像生成的方法被直接调用一般。
 
-=head2 Drawbacks of AUTOLOAD
+=head2 AUTOLOAD 的缺点
 
 Z<autoload_drawbacks>
 
@@ -226,14 +212,12 @@ X<subs>
 X<pragmas; subs>
 X<functions; predeclaration>
 
-C<AUTOLOAD()> can be a useful tool in certain circumstances, but it can be
-difficult to use properly.  Consider other techniques, such as C<Moose> and
-other abstractions, instead.
+在某些情况下，C<AUTOLOAD()> 的确是一个有用的工具，但它也会变得难以正确使用。请考虑使
+用其他的技巧，比如 C<Moose> 及其他抽象来代替。
 
-The naE<iuml>ve approach to generating methods at runtime means that the
-C<can()> method will not report the right information about the capabilities of
-objects and classes.  You can solve this in several ways; one of the easiest is
-to predeclare all functions you plan to AUTOLOAD with the C<subs> pragma:
+运行时生成方法的朴素手段意味着 C<can()> 方法将不能正确地报告有关类和对象能力的相关信
+息。你可以用几种方法解决这个问题；其中最简单的一个就是用 C<subs> 编译命令预定义所有
+打算让 AUTOLOAD 处理的函数：
 
 =begin programlisting
 
@@ -241,10 +225,10 @@ to predeclare all functions you plan to AUTOLOAD with the C<subs> pragma:
 
 =end programlisting
 
-That technique has the advantage of documenting your intent but the
-disadvantage that you have to maintain a static list of functions or methods.
+这个技巧的好处是可以让你记录下你的意图，但坏处则是你必须维护一个静态的函数、方法名
+称表。
 
-You can also provide your own C<can()> to generate the appropriate functions:
+你也可以提供你自己的 C<can()> 方法来生成合适的函数：
 
 =begin programlisting
 
@@ -252,11 +236,11 @@ You can also provide your own C<can()> to generate the appropriate functions:
     {
         my ($self, $method) = @_;
 
-        # use results of parent can()
+        # 是用上级 can() 方法的结果
         my $meth_ref = $self->SUPER::can( $method );
         return $meth_ref if $meth_ref;
 
-        # add some filter here
+        # 添加过滤器
         return unless $self->should_generate( $method );
 
         $meth_ref = sub { ... };
@@ -275,33 +259,28 @@ You can also provide your own C<can()> to generate the appropriate functions:
 
 =end programlisting
 
-Depending on the complexity of your needs, you may find it easier to maintain a
-data structure such as a package-scoped hash which contains acceptable names of
-methods to generate.
+根据需求的复杂程度，你也许会发现维护一个类似包含所缺方法名称的包作用域哈希之
+类的数据结构更为简单。
 
-Be aware that certain methods you do not intend to provide may go through
-C<AUTOLOAD()>.  A common culprit is C<DESTROY()>, the destructor of objects.
-The simplest approach is to provide a C<DESTROY()> method with no
-implementation; Perl will happily dispatch to this and ignore C<AUTOLOAD()>
-altogether:
+注意某些原本不欲提供的方法也可能通过 C<AUTOLOAD()>。一个常见的罪犯便是 C<DESTROY()>，
+对象的析构器。最简便的方法就是提供一个不含实现的 C<DESTROY()> 方法；Perl 将高兴地分派
+此方法并将 C<AUTOLOAD()> 一起忽略：
 
 =begin programlisting
 
-    # skip AUTOLOAD()
+    # 跳过 AUTOLOAD()
     sub DESTROY {}
 
 =end programlisting
 
 =begin sidebar
 
-Special methods such as C<import()>, C<unimport()>, and C<VERSION()> never go
-through C<AUTOLOAD()>.
+如 C<import()>、C<unimport()> 和 C<VERSION()> 等特殊方法绝不会通过 C<AUTOLOAD()>。
 
 =end sidebar
 
-If you mix functions and methods in a single namespace which inherits from
-another package which provides its own C<AUTOLOAD()>, you may get a strange
-error message:
+如果你在一个继承某自行提供 C<AUTOLOAD()> 的包的名称空间内混用函数和方法，你可能会
+得到一个怪异的错误消息：
 
 =begin screen
 
@@ -309,9 +288,7 @@ error message:
 
 =end screen
 
-This occurs when you try to call a function which does not exist in a package
-which inherits from a class which contains its own C<AUTOLOAD()>.  This is
-almost never what you intend.  The problem compounds in several ways: mixing
-functions and methods in a single namespace is often a design flaw, inheritance
-and C<AUTOLOAD()> get complex very quickly, and reasoning about code when you
-don't know what methods objects can perform is difficult.
+这会发生在当你尝试调用一个包内不存在的方法而所继承的类有包含它自己的 C<AUTOLOAD()> 时。
+这绝不是你的意图。这个问题由多个原因混合而成：在单个名称空间内混用函数和方法通常是一个
+设计缺陷，继承以及 C<AUTOLOAD()> 会很快地变得复杂，并且，在你不知道对象可以执行何种方
+法时，推理一段代码是很困难的。
