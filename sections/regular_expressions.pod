@@ -1,8 +1,10 @@
+=encoding utf8
+
 Z<regular_expressions>
 
-=head1 Literals
+=head1 字面值
 
-The simplest regexes are simple substring patterns:
+最简单的正则表达式就是简单的子字符串模式：
 
 =begin programlisting
 
@@ -21,27 +23,22 @@ X<operators; !~>
 X<regular expressions; atom>
 X<atom>
 
-The match operator (C<//> or, more formally, C<m//>) contains a regular
-expression--in this example, C<hat>.  Even though that reads like a word, it
-means "the C<h> character, followed by the C<a> character, followed by the C<t>
-character, appearing anywhere in the string."  Each character in C<hat> is an
-I<atom> in the regex: an indivisible unit of the pattern.  The regex binding
-operator (C<=~>) is an infix operator (L<fixity>) which applies the regular
-expression on its right to the string produced by the expression on its left.
-When evaluated in scalar context, a match evaluates to a true value if it
-succeeds.
+匹配操作符（C<//> 或者，更为正式的 C<m//>）中包含一正则表达式————在这个例子中是
+C<hat>。即使读上去像一个单词，它的意思其实是“C<h> 字符，后接 C<a> 字符，再接 C<t>
+字符，出现在该字符串的任何地方”。在 C<hat> 中的每一个字符都是一个正则表达式中的 
+I<原子>：该模式独立的单元。正则表达式绑定操作符（C<=~>）是一个中缀操作符（L<fixity>）
+，它将位于其右的正则表达式应用于左边由表达式产生的字符串。当在标量上下文中求值时，
+一个成功的匹配将得到真值。
 
-The negated form of the binding operator (C<!~>) evaluates to a false value if
-the match succeeds.
+绑定操作符的否定形式（C<!~>）在匹配成功时得到一个假值。
 
-=head1 The qr// Operator and Regex Combinations
+=head1 qr// 操作符和正则表达式组合
 
 X<operators; qr//>
 X<regular expressions; qr//>
 X<regular expressions; first-class>
 
-Regexes are first-class entities in modern Perl when created with the C<qr//>
-operator:
+在现代化的 Perl 中，当由 C<qr//> 操作符创建时，正则表达式是第一级实体：
 
 =begin programlisting
 
@@ -52,12 +49,12 @@ operator:
 
 =begin sidebar
 
-The C<like()> function from C<Test::More> works much like C<is()>, except that
-its second argument is a regular expression object produced by C<qr//>.
+来自 C<Test::More> 的 C<like()> 函数的工作就像 C<is()> 一样，除了它的第
+二个参数是一个由 C<qr//> 产生的正则表达式对象。
 
 =end sidebar
 
-You may interpolate and combine them into larger and more complex patterns:
+你可以通过内插和组合将他们变为更大更复杂的模式：
 
 =begin programlisting
 
@@ -66,28 +63,26 @@ You may interpolate and combine them into larger and more complex patterns:
 
     say 'Found a hat in a field!' if $name =~ /B<$hat$field>/;
 
-    # or
+    # 或
 
     like( $name, qr/B<$hat$field>/, 'Found a hat in a field!' );
 
 =end programlisting
 
-=head1 Quantifiers
+=head1 量词
 
 X<regular expressions; quantifiers>
 X<operators; index>
 
-Regular expressions are far more powerful than previous examples have
-demonstrated; you can search for a literal substring within a string with the
-C<index> operator.  Using the regex engine for that is like flying your
-autonomous combat helicopter to the corner store to buy spare cheese.
+正则表达式比前例演示的更为强大；你可以使用 C<index> 操作符在字符串内搜索
+子字符串字面值。但用正则表达式引擎达成这项任务就像驾驶自治区战斗直升机去
+拐角小店购买备用奶酪。
 
 X<regex quantifiers>
 X<regex quantifiers; zero or one>
 
-Regular expressions get more powerful through the use of I<regex quantifiers>,
-which allow you to specify how often a regex component may appear in a matching
-string.  The simplest quantifier is the I<zero or one quantifier>, or C<?>:
+通过使用 I<正则表达式量词>，正则表达式可以变得更为强大，使你能够指定一个正则表达式
+组件在匹配字符串中出现的频率。最简单的量词是 I<零个或一个量词>，或者说 C<?>：
 
 =begin programlisting
 
@@ -98,16 +93,13 @@ string.  The simplest quantifier is the I<zero or one quantifier>, or C<?>:
 
 =end programlisting
 
-Any atom in a regular expression followed by the C<?> character means "match
-zero or one of this atom."  This regular expression matches if there are zero
-C<a> characters immediately following a C<c> character and immediately
-preceding a C<t> character.  It also matches if there is one and only one C<a>
-character between the C<c> and C<t> characters.
+在正则表达式中，任意原子后接 C<?> 字符意味着“匹配此原子零次或一次”。这个正则表
+达式匹配 C<c> 后立即跟随零个 C<a> 字符再接一个 C<t> 字符。它同时也匹配在 C<c>
+和 C<t> 字符间有一个 C<a>。
 
 X<regex quantifiers; one or more>
 
-The I<one or more quantifier>, or C<+>, matches only if there is at least one
-of the preceding atom in the appropriate place in the string to match:
+I<一个或多个量词>，或者说 C<+>，在字符串中只匹配量词前原子至少出现一次的情况：
 
 =begin programlisting
 
@@ -122,13 +114,11 @@ of the preceding atom in the appropriate place in the string to match:
 
 =end programlisting
 
-There is no theoretical limit to the number of quantified atoms which can
-match.
+能匹配多少原子没有什么理论上的限制。
 
 X<quantifiers; zero or more>
 
-The I<zero or more quantifier> is C<*>; it matches if there are zero or more
-instances of the quantified atom in the string to match:
+I<零个或多个量词> 是 C<*>；它匹配量化原子在字符串中出现的零个或多个实例：
 
 =begin programlisting
 
@@ -142,16 +132,13 @@ instances of the quantified atom in the string to match:
 
 =end programlisting
 
-This may seem useless, but it combines nicely with other regex features to
-indicate that you don't care about what may or may not be in that particular
-position in the string to match.  Even so, I<most> regular expressions benefit
-from using the C<?> and C<+> quantifiers far more than the C<*> quantifier, as
-they avoid expensive backtracking and express your intent more clearly.
+这看上去可能不很有用，但是它和其他正则表达式功能可以组合得很好，让你不必关心在
+特定位置是否出现某模式。即便如此，I<大多数> 正则表达式从使用 C<?> 和 C<+> 量词
+中获益远多于 C<*> 量词，因为它们可以避免昂贵的回溯，并将你的意图表达得更为清晰。
 
 X<numeric quantifiers>
 
-Finally, you can specify the number of times an atom may match with I<numeric
-quantifiers>. C<{n}> means that a match must occur exactly I<n> times.
+最后，你可以通过 I<数值量词> 指定某原子匹配的次数。C<{n}> 意味着确切匹配 I<n> 次。
 
 =begin programlisting
 
@@ -162,8 +149,7 @@ quantifiers>. C<{n}> means that a match must occur exactly I<n> times.
 
 =end programlisting
 
-C<{n,}> means that a match must occur at least I<n> times, but may occur more
-times:
+C<{n,}> 意味着匹配次数必须至少为 I<n> 次，同时可以匹配更多次数：
 
 =begin programlisting
 
@@ -177,8 +163,7 @@ times:
 
 =end programlisting
 
-C<{n,m}> means that a match must occur at least I<n> times and cannot occur
-more than I<m> times:
+C<{n,m}> 意味着必须至少匹配 I<n> 次且不多于 I<m> 次：
 
 =begin programlisting
 
@@ -191,14 +176,13 @@ more than I<m> times:
 
 =end programlisting
 
-=head1 Greediness
+=head1 贪心性
 
 X<greedy quantifiers>
 X<quantifiers; greedy>
 
-The C<+> and C<*> quantifiers by themselves are I<greedy quantifiers>; they
-match as much of the input string as possible.  This is particularly pernicious
-when matching "any amount of anything" with C<.*>:
+就 C<+> 和 C<*> 自身来说，它们是 I<贪心量词>；它们尽可能多地匹配输入字符串。在利
+用 C<.*> 来匹配“任何数量的任何字符”时尤其有害：
 
 =begin programlisting
 
@@ -211,10 +195,9 @@ when matching "any amount of anything" with C<.*>:
 
 =end programlisting
 
-Greedy quantifiers always try to match as much of the input string as possible
-I<first>, backing off only when it's obvious that the match will not succeed.
-You may not be able to fit all of the results into the four boxes in 7 Down if
-you go looking for "loam" with:
+贪心量词总是试图 I<先行> 匹配尽可能多的输入字符串，仅在匹配明显不成功时回退。如
+果你用如下方式查找单词“loam（土壤）”，你将无法把所有结果塞进 7 Down 的四个盒子
+里面：
 
 =begin programlisting
 
@@ -222,12 +205,10 @@ you go looking for "loam" with:
 
 =end programlisting
 
-You'll get C<Alabama>, C<Belgium>, and C<Bethlehem> for starters.  The soil
-might be nice there, but they're all too long--and the matches start in the
-middle of the words.
+作为新手，你将得到 C<Alabama>、C<Belgium> 以及 C<Bethlehem>。那里的土壤也许不错，
+但是它们全都太长了————并且，匹配是从单词的中间开始的。
 
-Turn a greedy quantifier into a non-greedy quantifier by appending the C<?>
-quantifier:
+让贪心量词变成非贪心量词只需在其后加上 C<?> 量词：
 
 =begin programlisting
 
@@ -235,11 +216,9 @@ quantifier:
 
 =end programlisting
 
-When given a non-greedy quantifier, the regular expression engine will prefer
-the I<shortest> possible potential match, and will increase the number of
-characters identified by the C<.*?> token combination only if the current
-number fails to match.  Because C<*> matches zero or more times, the minimal
-potential match for this token combination is zero characters:
+当给予非贪心量词，正则表达式引擎将偏向 I<最短的>、可能的潜在匹配，并仅在目前
+数目无法满足匹配要求时，增加由 C<.*?> 标记组合识别的字符数量。由于 C<*> 匹配
+零或更多次，对应这个标记组合的最小潜在匹配是零个字符：
 
 =begin programlisting
 
@@ -247,7 +226,7 @@ potential match for this token combination is zero characters:
 
 =end programlisting
 
-Use the C<+> quantifier to match one or more items:
+使用 C<+> 量词可以匹配某项一次或多次：
 
 =begin programlisting
 
@@ -259,48 +238,43 @@ Use the C<+> quantifier to match one or more items:
 
 =end programlisting
 
-The C<?> quantifier modifier also applies to the C<?> (zero or one matches)
-quantifier as well as the range quantifiers.  In every case, it causes the
-regex to match as little of the input as possible.
+C<?> 量词修饰符也可以应用于 C<?>（零或一次匹配）和范围量词。在每种情况下，它使
+得正则表达式尽可能地少匹配。
 
-The greedy modifiers C<.+> and C<.*> are tempting but dangerous.  If you write
-regular expression with greedy matches, test them thoroughly with a
-comprehensive and automated test suite with representative data to lessen the
-possibility of unpleasant surprises.
+贪心修饰符 C<.+> 和 C<.*> 是诱人但危险的。如果你编写了贪心匹配正则表达式，请用
+综合自动化测试套件和代表性数据完整地测试它，以将产生令人不快结果的可能性降到最
+小。
 
-=head1 Regex Anchors
+=head1 正则表达式锚点
 
 X<regex anchors>
 X<anchors; start of string>
 
-I<Regex anchors> force a match at a specific position in a string.  The I<start
-of string anchor> (C<\A>) ensures that any match will start at the beginning of
-the string:
+I<正则表达式锚点> 强制在字符串某位置进行匹配。I<字符串开头锚点>（C<\A>）确保任
+何匹配都将从字符串开头开始：
 
 =begin programlisting
 
-    # also matches "lammed", "lawmaker", and "layman"
+    # 也匹配 "lammed"、"lawmaker" 和 "layman"
     my $seven_down = qr/\Al${letters_only}{2}m/;
 
 =end programlisting
 
 X<anchors; end of string>
 
-The I<end of line string anchor> (C<\Z>) ensures that any match will I<end> at
-the end of the string.
+I<字符串末尾锚点>（C<\Z>）确保任何匹配都将 I<结束> 于字符串末尾：
 
 =begin programlisting
 
-    # also matches "loom", which is close enough
+    # 也匹配 "loom"，它足够接近
     my $seven_down = qr/\Al${letters_only}{2}m\Z/;
 
 =end programlisting
 
 X<word boundary metacharacter>
 
-The I<word boundary metacharacter> (C<\b>) matches only at the boundary between
-a word character (C<\w>) and a non-word character (C<\W>).  Thus to find
-C<loam> but not C<Belgium>, use the anchored regex:
+I<单词边界元字符>（C<\b>）仅匹配一单词字符 (C<\w>) 和另一非单词字符 (C<\W>) 
+之间的边界。因此，查找 C<loam> 而非 C<Belgium>，可以使用加锚点的正则表达式：
 
 =begin programlisting
 
@@ -310,20 +284,19 @@ C<loam> but not C<Belgium>, use the anchored regex:
 
 =begin sidebar
 
-Like Perl, there's more than one way to write a regular expression.  Consider
-choosing the most expressive and maintainable one.
+与 Perl 类似，达成某个目的的正则表达式也有许多写法。请考虑从中挑出最有表达力
+也是最易维护的一个。
 
 =end sidebar
 
-=head1 Metacharacters
+=head1 元字符
 
 X<regular expressions; metacharacters>
 X<regular expressions; .>
 
-Regular expressions get more powerful as atoms get more general.  For example,
-the C<.> character in a regular expression means "match any character except a
-newline".  If you wanted to search a list of dictionary words for every word
-which might match 7 Down ("Rich soil") in a crossword puzzle, you might write:
+正则表达式随着原子的一般化而变得更为强大。举例来说，在正则表达式内，C<.> 字符
+的意思是“匹配除换行外的任意字符”。玩填字游戏时，如果你想在一个单词列表里查找每
+一个匹配的 7 Down（“Rich soil”），你可以这样写：
 
 =begin programlisting
 
@@ -338,11 +311,9 @@ which might match 7 Down ("Rich soil") in a crossword puzzle, you might write:
 
 X<regular expressions; \w>
 
-Of course, if your list of potential matches were anything other than a list of
-words, this metacharacter could cause false positives, as it also matches
-punctuation characters, whitespace, numbers, and many other characters besides
-word characters.  The C<\w> metacharacter represents all alphanumeric
-characters (in a Unicode sense--L<unicode>) and the underscore:
+当然，如果你的候选匹配列表由单词外的东西构成，这个元字符可能导致假阳性，因为它同时
+匹配标点符号、空格、数字以及其他的非单词字符。C<\w> 元字符代表所有字母数字符（按 Unicode
+处理————L<unicode>）还有下划线：
 
 =begin programlisting
 
@@ -352,12 +323,11 @@ characters (in a Unicode sense--L<unicode>) and the underscore:
 
 X<regular expressions; \d>
 
-The C<\d> metacharacter matches digits--not just 0-9 as you expect, but any
-Unicode digit:
+C<\d> 元字符匹配数字————不是你预期的 0-9，而是 Unicode 数字：
 
 =begin programlisting
 
-    # not a robust phone number matcher
+    # 并非一个健壮的电话号码匹配器
     next unless $potential_phone_number =~ /B<\d>{3}-B<\d>{3}-B<\d>{4}/;
     say "I have your number: $potential_phone_number";
 
@@ -365,8 +335,7 @@ Unicode digit:
 
 X<regular expressions; \s>
 
-Use the C<\s> metacharacter to match whitespace, whether a literal space, a tab
-character, a carriage return, a form-feed, or a newline:
+可以使用 C<\s> 元字符匹配空白，无论是字面空格、制表符、硬回车、换页符或者换行：
 
 =begin programlisting
 
@@ -378,19 +347,17 @@ X<regular expressions; \W>
 X<regular expressions; \D>
 X<regular expressions; \S>
 
-These three metacharacters have negated forms.  To match any character
-I<except> a word character, use C<\W>.  To match a non-digit character, use
-C<\D>.  To match anything but whitespace, use C<\S>.
+这些元字符也有否定形式。要匹配 I<除> 单词外的其他字符，使用 C<\W>。要匹配非数字
+字符，使用 C<\D>。要匹配非空白字符，使用 C<\S>。
 
-The regex engine treats all metacharacters as atoms.
+正则表达式引擎将所有元字符作为原子对待。
 
-=head1 Character Classes
+=head1 字符类
 
 X<character classes>
 
-If the range of allowed characters in these four groups isn't specific enough,
-you can specify your own I<character classes> by enclosing them in square
-brackets:
+如果允许字符的范围在上述四组里不够具体，通过把它们用中括号围起，你可以自行指定
+I<字符类>：
 
 =begin programlisting
 
@@ -401,16 +368,14 @@ brackets:
 
 =begin sidebar
 
-The curly braces around the name of the scalar variable C<$vowels> helps
-disambiguate the variable name.  Without that, the parser would interpret the
-variable name as C<$vowelst>, which either causes a compile-time error about an
-unknown variable or interpolates the contents of an existing C<$vowelst> into
-the regex.
+标量变量名 C<$vowels> 外的大括号帮助对变量名称消歧。如果没有它，语法分析器将把
+变量名解释为 C<$vowelst>，这样不是因未知变量导致编译期错误就是把已存在 C<$vowelst>
+变量的内容内插进正则表达式。
 
 =end sidebar
 
-If the characters in your character set form a contiguous range, you can use
-the hyphen character (C<->) as a shortcut to express that range.
+如果字符集内的字符构成了一个连续的范围，你可以使用连字符（C<->）作为表达该范围的
+快捷方式。
 
 =begin programlisting
 
@@ -418,8 +383,7 @@ the hyphen character (C<->) as a shortcut to express that range.
 
 =end programlisting
 
-Move the hyphen character to the start or end of the class to include it in the
-class:
+将连字符添加到字符类的开头或结尾可以将其包括进此字符类中：
 
 =begin programlisting
 
@@ -427,7 +391,7 @@ class:
 
 =end programlisting
 
-... or escape it:
+……或对其进行转义：
 
 =begin programlisting
 
@@ -435,10 +399,8 @@ class:
 
 =end programlisting
 
-Just as the word and digit class metacharacters (C<\w> and C<\d>) have
-negations, so too you can negate a character class.  Use the caret (C<^>) as
-the first element of the character class to mean "anything I<except> these
-characters":
+就像单词和数字类元字符（C<\w> 和 C<\d>）有自己的否定形式，你也可以否定一个字
+符类。用插入符号（C<^>）作为字符类的第一个元素意味着“I<除> 这些外的所有字符”：
 
 =begin programlisting
 
@@ -448,16 +410,15 @@ characters":
 
 =begin sidebar
 
-Use a caret anywhere but this position to make it a member of the character
-class.  To include a hyphen in a negated character class, place it after the
-caret or at the end of the class, or escape it.
+在此之外使用插入符号使其成为该字符类的一个成员。要在否定字符类里包含一个连字符，
+可以将它放在插入符号后，或者在字符类的最后，再或者对其转义。
 
 =end sidebar
 
-=head1 Capturing
+=head1 捕获
 
-It's often useful to match part of a string and use it later; perhaps you want
-to extract an address or an American telephone number from a string:
+通常的做法是先匹配字符串的一部分并在稍后对其进行处理；也许你想从一个字符串中提取
+一个地址或美国电话号码：
 
 =begin programlisting
 
@@ -469,21 +430,19 @@ to extract an address or an American telephone number from a string:
 
 =begin sidebar
 
-Parentheses in regular expressions are metacharacters; C<$area_code> escapes
-them.
+正则表达式中的括号是元字符；C<$area_code> 对它们进行了转义。
 
 =end sidebar
 
-=head2 Named Captures
+=head2 具名捕获
 
 Z<named_captures>
 X<captures>
 X<named captures>
 X<captures; named>
 
-Given a string, C<$contact_info>, which contains contact information, you can
-apply the C<$phone_number> regular expression and I<capture> any matches into a
-variable with I<named captures>:
+给出一个字符串，C<$contact_info>，包含有联系信息，你可以将 C<$phone_number> 正则表
+达式应用其上并通过 I<具名捕获> 来将任何匹配结果 I<捕获> 并存入变量中：
 
 =begin programlisting
 
@@ -494,8 +453,8 @@ variable with I<named captures>:
 
 =end programlisting
 
-The capturing construct can look like a big wad of punctuation, but it's fairly
-simple when you can recognize it as a single chunk:
+捕捉结构可能看上去像是一大个摇晃的标点，当你可以将其作为整体认读时，它还是比较
+简单的：
 
 =begin programlisting
 
@@ -503,27 +462,22 @@ simple when you can recognize it as a single chunk:
 
 =end programlisting
 
-The parentheses enclose the entire capture.  The C<< ?< name > >> construct
-must follow the left parenthesis.  It provides a name for the capture buffer.
-The rest of the construct within the parentheses is a regular expression.  If
-and when the regex matches this fragment, Perl stores the captured portion of
-the string in the magic variable C<%+>: a hash where the key is the name of the
-capture buffer and the value is the portion of the string which matched the
-buffer's regex.
+括号包围了整个捕获。C<< ?< name > >> 结构必须紧跟左括号。它为捕获缓冲区提供了名
+称。此结构位于括号内的其余部分是一个正则表达式。如果当正则表达式匹配该片段，Perl
+将字符串被捕获的部分存储在神奇变量 C<%+> 中：一个以捕获缓冲区名为键、匹配正则表
+达式的字符串部分为值的哈希。
 
-Parentheses are special to Perl 5 regular expressions; by default they perform
-the same grouping behavior as parentheses do in regular Perl code.  They also
-enclose one or more atoms to capture whatever portion of the matched string
-they match.  To use literal parentheses in a regular expression, you must
-preface them with a backslash, just as in the C<$area_code> variable.
+对于 Perl 5 正则表达式来说，括号是特殊的；默认和常规的 Perl 代码一样，它们的行为
+就是进行分组。它们也将匹配部分组成的一个或多个原子包围在内。要在正则表达式内使用
+字面括号，你必须添加反斜杠，就像 C<$area_code> 变量里那样。
 
-=head2 Numbered Captures
+=head2 编号捕获
 
 X<numbered captures>
 X<captures; numbered>
 
-Named captures are new in Perl 5.10, but captures have existed in Perl for many
-years.  You may encounter I<numbered captures> as well:
+具名捕获是 Perl 5.10 的新功能，但捕获早已在 Perl 中存在了许多年头。你也会碰到 
+I<编号捕获>：
 
 =begin programlisting
 
@@ -534,31 +488,25 @@ years.  You may encounter I<numbered captures> as well:
 
 =end programlisting
 
-The parentheses enclose the fragment to capture, but there is no regex
-metacharacter giving the I<name> of the capture.  Instead, Perl stores the captured
-substring in a series of magic variables starting with C<$1> and continuing for
-as many capture groups are present in the regex.  The I<first> matching capture
-that Perl finds goes into C<$1>, the second into C<$2>, and so on.  Capture
-counts start at the I<opening> parenthesis of the capture; thus the first left
-parenthesis begins the capture into C<$1>, the second into C<$2>, and so on.
+括号把要捕获片段包围在内，但是没有正则表达式元字符给出捕获的 I<名称>。作为代替，
+Perl 将捕获的子字符串存放在一系列以 C<$1> 开头的神奇变量中，并延续至正则表达式
+中提供所有捕获组。Perl 找到的 I<第一个> 匹配捕获存放在 C<$1>，第二个存放在 C<$2>，
+等等。捕获计数起始于捕获的 I<开> 括号；因而第一个左括号将捕获存入 C<$1>，第二个
+存入 C<$2>，等等。
 
-While the syntax for named captures is longer than for numbered captures, it
-provides additional clarity.  You do not have to count the number of opening
-parentheses to figure out whether a particular capture is C<$4> or C<$5>, and
-composing regexes from smaller regexes is much easier, as they're less
-sensitive to changes in position or the presence or absence of capturing in
-individual atoms.
+虽然具名捕获的语法比编号捕获来得长一些，但它提供了额外的清晰度。你不需要统计开
+括号的的个数来指出某捕获会被存入 C<$4> 还是 C<$5>，并且基于较短的正则表达式编写
+更长的正则表达式相对容易一些，因为它们通常对位置的变更或是否出现在单个原子中不
+那么敏感。
 
 =begin sidebar
 
-Name collisions are still possible with named captures, though that's less
-frequent than number collisions with numbered captures.  Consider avoiding the
-use of captures in regex fragments; save it for top-level regexes.
+具名捕获中仍可能发生名称冲突，虽然和发生在编号捕获中的编号冲突相比较少。考虑避免
+在正则表达式片段中使用捕获；将它们留给顶层正则表达式。
 
 =end sidebar
 
-Numbered captures are less frustrating when you evaluate a match in list
-context:
+当你将一处匹配在列表上下文中求值时，编号捕获相对不那么令人沮丧：
 
 =begin programlisting
 
@@ -569,12 +517,11 @@ context:
 
 =end programlisting
 
-Perl will assign to the lvalues in order of the captures.
+Perl 将按捕获顺序赋值给左值：
 
-=head1 Grouping and Alternation
+=head1 成组和选项
 
-Previous examples have all applied quantifiers to simple atoms.  They can also
-apply to more complex subpatterns as a whole:
+前面的例子将全部量词应用于简单原子上。它们也可以应用于一个更为复杂的子模式整体：
 
 =begin programlisting
 
@@ -586,7 +533,7 @@ apply to more complex subpatterns as a whole:
 
 =end programlisting
 
-If you expand the regex manually, the results may surprise you:
+如果手动扩展该正则表达式，结果可能令你感到惊讶：
 
 =begin programlisting
 
@@ -595,7 +542,7 @@ If you expand the regex manually, the results may surprise you:
 
 =end programlisting
 
-This still matches, but consider a more specific pattern:
+这样仍然匹配，但考虑一个更为具体的模式：
 
 =begin programlisting
 
@@ -611,8 +558,7 @@ This still matches, but consider a more specific pattern:
 X<alternation>
 X<regex alternation>
 
-Some regexes need to match one thing or another.  Use the I<alternation>
-metacharacter (C<|>) to do so:
+一些正则表达式不是匹配这项就是匹配另一项。使用 I<选项> 元字符 (C<|>) 即可：
 
 =begin programlisting
 
@@ -624,8 +570,7 @@ metacharacter (C<|>) to do so:
 
 =end programlisting
 
-The alternation metacharacter indicates that either preceding fragment may
-match.  Be careful about what you interpret as a regex fragment, however:
+选项元字符意味着匹配前述任一片段。但请注意解释为正则表达式片段的内容：
 
 =begin programlisting
 
@@ -635,16 +580,14 @@ match.  Be careful about what you interpret as a regex fragment, however:
 
 =end programlisting
 
-It's possible to interpret the pattern C<rice|beans> as meaning C<ric>,
-followed by either C<e> or C<b>, followed by C<eans>--but that's incorrect.
-Alternations always include the I<entire> fragment to the nearest regex
-delimiter, whether the start or end of the pattern, an enclosing parenthesis,
-another alternation character, or a square bracket.
+模式 C<rice|beans> 可能会解释为 C<ric>，后接 C<e> 或 C<b>，再跟上 C<eans>
+————但是，这是不正确的。选项总是将离正则表达式分隔符最近的算作 I<整个> 片
+段，无论该分隔符是模式开头和结尾，外围的括号，还是另一个选项字符或者中括号。
 
 X<non-capturing groups>
 
-To reduce confusion, use named fragments in variables (C<$rice|$beans>) or
-grouping alternation candidates in I<non-capturing groups>:
+为了减少迷惑性，可以像变量 (C<$rice|$beans>) 这样使用具名片段，或者将候选项
+包括在 I<非捕获分组> 中：
 
 =begin programlisting
 
@@ -652,46 +595,38 @@ grouping alternation candidates in I<non-capturing groups>:
 
 =end programlisting
 
-The C<(?:)> sequence groups a series of atoms but suppresses capturing
-behavior.  In this case, it groups three alternatives.
+C<(?:)> 序列将一系列原子成组但跳过捕获行为。此例中，它包括了三个选项。
 
 =begin sidebar
 
-If you print a compiled regular expression, you'll see that its stringification
-includes an enclosing non-capturing group; C<qr/rice|beans/> stringifies as
-C<(?-xism:rice|beans)>.
+如果你打印一个编译后的正则表达式，你将看到它的字符串化形式包含在一个非捕获分组
+内；C<qr/rice|beans/> 字符串化为 C<(?-xism:rice|beans)>。
 
 =end sidebar
 
-=head1 Other Escape Sequences
+=head1 其他转义序列
 
 X<regex metacharacters>
 X<metacharacters; regex>
 
-Perl interprets several characters in regular expressions as I<metacharacters>,
-which represent something different than their literal characters.  Square
-brackets always denote a character class and parentheses group and optionally
-capture pattern fragments.
+Perl 将正则表达式内的若干字符解释为 I<元字符>，它们代表不同于他们字面形式的意义。
+中括号总是标示一个字符类，括号则将片段成组且可选地进行捕获。
 
 X<escape>
 X<metacharacters; escaping>
 
-To match a I<literal> instance of a metacharacter, I<escape> it with a backslash
-(C<\>).  Thus C<\(> refers to a single left parenthesis and C<\]> refers to a
-single right square bracket.  C<\.> refers to a literal period character
-instead of the "match anything but an explicit newline character" atom.
+要匹配一个元字符的 I<字面> 实例，可以用反斜杠（C<\>）对其进行 I<转义>。因此，C<\(>
+意指单个左括号而 C<\]> 意指单个右中括号。C<\.> 指的是一个字面点号，而非“匹配除换行符
+外所有字符”的原子。
 
-Other useful metacharacters that often need escaping are the pipe character
-(C<|>) and the dollar sign (C<$>).  Don't forget about the quantifiers either:
-C<*>, C<+>, and C<?> also qualify.
+其他通常需要转义的有用的元字符是管道符（C<|>）和美元符号（C<$>）。同时不要忘记量词：
+C<*>、C<+> 和 C<?>。 
 
 X<metacharacters; disabling>
 
-To avoid escaping everything (and worrying about forgetting to escape
-interpolated values), use the I<metacharacter disabling characters>.  The C<\Q>
-metacharacter disables metacharacter processing until it reaches the C<\E>
-sequence.  This is especially useful when taking match text from a source you
-don't control when writing the program:
+为避免处处转义（和担心忘记转义内插的值），可以使用 I<元字符禁用字符>。C<\Q> 元字符
+禁用对元字符的处理直到它碰到 C<\E> 序列。当取用你无法控制的正则表达式来匹配文本时，
+这个个功能尤其有用：
 
 =begin programlisting
 
@@ -701,35 +636,30 @@ don't control when writing the program:
 
 =end programlisting
 
-The C<$literal_text> argument can contain anything--the string C<** ALERT **>,
-for example.  With C<\Q> and C<\E>, Perl will not interpret the zero-or-more
-quantifier as a quantifier.  Instead, it will parse the regex as C<\*\* ALERT
-\*\*> and attempt to match literal asterisk characters.
+C<$literal_text> 参数可以包含任何内容————例如字符串 C<** ALERT **>。使用 C<\Q> 
+和 C<\E>，Perl 不会将“零或多个”量词解释为量词。相反，它会将此正则表达式解释为
+C<\*\* ALERT \*\*> 并试图匹配字面星号。
 
 =begin note
 
-Be cautious when processing regular expressions from untrusted user input.
-It's possible to craft a malicious regular expression which can perform an
-effective denial-of-service attack against your program.
+在处理来自不可信任的用户输入时须特别小心。构造一个恶意正则表达式对你的程序进行
+有效的拒绝服务攻击是完全可以办到的。
 
 =end note
 
-=head1 Assertions
+=head1 断言
 
 X<regex assertions>
 
-The regex anchors (C<\A> and C<\Z>) are a form of I<regex assertion>, which
-requires that a condition is present but doesn't actually match a character in
-the string.  That is, the regex C<qr/\A/> will I<always> match, no matter what
-the string contains.  The metacharacters C<\b> and C<\B> are also assertions.
+正则表达式锚点（C<\A> 和 C<\Z>）是一种 I<正则表达式断言> 的形式，字符串需要满足
+此条件，但并不实际匹配字符串中的某个字符。就是说，正则表达式 C<qr/\A/> 将 I<一直>
+匹配，无论字符串内容为何。元字符 C<\b> 和 C<\B> 也是断言。
 
 X<regex assertions; zero-width>
 X<zero-width assertions>
 
-I<Zero-width assertions> match a I<pattern>, not just a condition in the
-string.  Most importantly, they do not consume the portion of the pattern that
-they match.  For example, to find a cat on its own, you might use a word
-boundary assertion:
+I<零宽度断言> 匹配一个 I<模式>，不仅仅是一个字符串中的条件。最重要的是，它们不消耗
+它们匹配模式中的位置。例如，你只要找一只“cat（猫）”，你可以是用单词边界断言：
 
 =begin programlisting
 
@@ -740,8 +670,7 @@ boundary assertion:
 X<regex assertions; zero-width negative look-ahead>
 X<zero-width negative look-ahead assertion>
 
-... but if you want to find a non-disastrous feline, you might use a
-I<zero-width negative look-ahead assertion>:
+……但如果想找一非灾难性的“cat”，你也许会用到 I<零宽度否定前瞻断言>:
 
 =begin programlisting
 
@@ -749,13 +678,12 @@ I<zero-width negative look-ahead assertion>:
 
 =end programlisting
 
-The construct C<(?!...)> matches the phrase C<cat> only if the phrase
-C<astrophe> does not immediately follow.
+C<(?!...)> 结构仅在 C<astrophe> 不紧随其后时匹配短语 C<cat>。
 
 X<regex assertions; zero-width positive look-ahead>
 X<zero-width positive look-ahead assertion>
 
-The I<zero-width positive look-ahead assertion>:
+I<零宽度否定前瞻断言>：
 
 =begin programlisting
 
@@ -763,10 +691,9 @@ The I<zero-width positive look-ahead assertion>:
 
 =end programlisting
 
-... matches the phrase C<cat> only if the phrase C<astrophe> immediately
-follows.  This may seem useless, as a normal regular expression can accomplish
-the same thing, but consider if you want to find all non-catastrophic words in
-the dictionary which start with C<cat>.  One possibility is:
+……仅在短语 C<astrophe> 紧随其后时匹配 I<cat>。这看上去不怎么有用，一个普通的正
+则表达式就能完成同样的任务，但考虑下述情况，如果你想在字典中查找所有非“catastrophic”
+但以 C<cat> 开头的单词。一种可能的情况是：
 
 =begin programlisting
 
@@ -781,21 +708,18 @@ the dictionary which start with C<cat>.  One possibility is:
 
 =end programlisting
 
-Because the assertion is zero-width, it consumes none of the source string.
-Thus the anchored C<.*\Z> pattern fragment must be present; otherwise the
-capture would only capture the C<cat> portion of the source string.
+因为断言宽度为零，它不消耗源字符串。因此，带锚点的 C<.*\Z> 模式片段必须出现；否则
+就只将捕获源字符串中的 C<cat> 部分。
 
 X<regex assertions; zero-width positive look-behind>
 X<zero-width positive look-behind assertion>
 X<regex assertions; zero-width negative look-behind>
 X<zero-width negative look-behind assertion>
 
-Zero-width look-behind assertions also exist.  Unlike the look-ahead
-assertions, the patterns of these assertions must have fixed widths; you may
-not use quantifiers in these patterns.
+零宽度后顾断言也是存在的。不像前瞻断言那样，这些断言的模式的长度必须固定；你不可
+以在这些模式中使用量词。
 
-To assert that your feline never occurs at the start of a line, you might use
-the I<zero-width negative look-behind assertion>:
+要对你的猫绝不会出现在行首做出断言，你可以使用 I<零宽度否定后顾断言>：
 
 =begin programlisting
 
@@ -803,9 +727,8 @@ the I<zero-width negative look-behind assertion>:
 
 =end programlisting
 
-... where the construct C<< (?<!...) >> contains the fixed-width pattern.
-Alternately, you could express that the C<cat> must always occur immediately
-after a space character with the I<zero-width positive look-behind assertion>:
+……此处的 C<< (?<!...) >> 结构包含定长模式。特别的，你可以用  I<零宽度肯定后顾断言> 
+表达 C<cat> 必须总是立即出现在空格符之后：
 
 =begin programlisting
 
@@ -813,20 +736,18 @@ after a space character with the I<zero-width positive look-behind assertion>:
 
 =end programlisting
 
-... where the construct C<< (?<=...) >> contains the fixed-width pattern.  This
-approach can be useful when performing a global regex match with the C<\G>
-modifier, but it's an advanced feature you likely won't use often.
+……此处的 C<< (?<=...) >> 结构包含定长模式。这种方式在用 C<\G> 修饰符进行全局正则表
+达式匹配时非常有用，但这是一个你不会经常用到的高级特性。
 
-=head1 Regex Modifiers
+=head1 正则表达式修饰符
 
 X<regex modifiers>
 X<regular expressions; modifiers>
 X</i>
 X<regular expressions; case-insensitive>
 
-The regular expression operators allow several modifiers to change the behavior
-of matches.  These modifiers appear at the end of the match, substitution, and
-C<qr//> operators.  For example, to enable case-insensitive matching:
+正则表达式操作符允许若干修饰符改变匹配的行为。这些修饰符出现在匹配、替换和 C<qr//>
+操作符的结尾。例如，要启用大小写不敏感的匹配：
 
 =begin programlisting
 
@@ -837,12 +758,11 @@ C<qr//> operators.  For example, to enable case-insensitive matching:
 
 =end programlisting
 
-The first C<like()> will fail, because the strings contain different letters.
-The second C<like()> will pass, because the C</i> modifier causes the regex to
-ignore case distinctions.  C<M> and C<m> are equivalent in the second regex due
-to the modifier.
+第一个 C<like()> 会失败，因为这些字符串包含不同的字母。第二个 C<like()> 将通过，因
+为 C</i> 修饰符使得正则表达式忽略大小写的区别。因修饰符的关系，C<M> 和 C<m> 在第二
+例中是等价的。
 
-You may also embed regex modifiers within a pattern:
+你也可以在模式中内嵌修饰符：
 
 =begin programlisting
 
@@ -850,10 +770,9 @@ You may also embed regex modifiers within a pattern:
 
 =end programlisting
 
-The C<(?i)> syntax enables case-insensitive matching only for its enclosing
-group: in this case, the entire C<feline> capture group.  You may use multiple
-modifiers with this form (provided they make sense for a portion of a pattern).
-You may also disable specific modifiers by preceding them with C<->:
+C<(?i)> 语法仅为它所包围的组启用大小写不敏感匹配：此例中，即整个 C<feline> 捕获组。
+你可以以此形式使用多个修饰符（在模式合适的部分）。你也可以通过前缀 C<-> 来禁用特定
+的修饰符：
 
 =begin programlisting
 
@@ -864,41 +783,37 @@ You may also disable specific modifiers by preceding them with C<->:
 X</m>
 X<regular expressions; multiline>
 
-The multiline operator, C</m>, allows the C<^> and C<$> anchors match at any
-start of line or end of line within the string.
+多行操作符，C</m>，允许 C<^> 和 C<$> 锚点匹配字符串中任意行开头和结尾。
 
 X</s>
 X<regular expressions; single line>
 
-The C</s> modifier treats the source string as a single line such that the C<.>
-metacharacter matches the newline character.  Damian Conway suggests a mnemonic
-that C</m> modifies the behavior of I<multiple> regex metacharacters, while
-C</s> modifies the behavior of a I<single> regex metacharacter.
+C</s> 修饰符将源字符串作为一行对待，如此 C<.> 元字符便匹配换行符。Damian Conway 
+对助记符提出建议，C</m> 修改 I<多个(multiple)> 正则表达式元字符的行为，而 C</s>
+修改 I<单个(single)> 正则表达式元字符的行为。
 
 X</x>
 X<regular expressions; extended readability>
 
-The C</x> modifier allows you to embed additional whitespace and comments
-within patterns without changing their meaning.  With this modifier in effect,
-the regex engine treats whitespace and the comment character (C<#>) and
-everything following as comments; it ignores them.  This allows you to write
-much more readable regular expressions:
+C</x> 修饰符允许你在模式中内嵌额外的空白和注释而不会改变它们的原意。此修饰符生效时，
+正则表达式引擎将空白和注释字符（C<#>）及其后的内容统统作为注释并忽略它们。这允许你编
+写更可读的正则表达式：
 
 =begin programlisting
 
     my $attr_re = qr{
-        ^                     # start of line
+        ^                     # 行首
 
-        # miscellany
+        # 杂项
         (?:
-          [;\n\s]*            # blank spaces and spurious semicolons
-          (?:/\*.*?\*/)?      # C comments
+          [;\n\s]*            # 空白和伪分号
+          (?:/\*.*?\*/)?      # C 注释 
         )*
 
-        # attribute marker
+        # 属性标记
         ATTR
 
-        # type
+        # 类型
         \s+
         (   U?INTVAL
           | FLOATVAL
@@ -910,15 +825,13 @@ much more readable regular expressions:
 
 =end programlisting
 
-This regex isn't I<simple>, but comments and whitespace improve its
-readability.  Even if you compose regexes together from compiled fragments, the
-C</x> modifier can still improve your code.
+这个正则表达式不 I<简单>，但注释和空白提高了它的可读性。即便你利用已编译的片段一起
+编写正则表达式，C</x> 修饰符还是能够帮助提高你的代码质量。
 
 X</g>
 X<regular expressions; global match>
 
-The C</g> modifier performs a regex globally throughout a string.  This makes
-sense when used with a substitution:
+C</g> 修饰符对字符串从头到脚执行某正则表达式行为。它和替换一起使用时候比较合理：
 
 =begin programlisting
 
@@ -931,10 +844,9 @@ sense when used with a substitution:
 X<\G>
 X<regexes; global match anchor>
 
-When used with a match--not a substitution--the C<\G> metacharacter allows you
-to process a string within a loop one chunk at a time.  C<\G> matches at the
-position where the most recent match ended.  To process a poorly-encoded file
-full of American numbers in logical chunks, you might write:
+当和匹配一起使用时────并非替换────C<\G> 元字符允许你在循环中按块处理字符串。C<\G>
+在最近一次匹配结束的位置进行匹配。为了按逻辑块处理一个全是美国电话号码的不正确编码
+文件，你可以编写：
 
 =begin programlisting
 
@@ -945,20 +857,16 @@ full of American numbers in logical chunks, you might write:
 
 =end programlisting
 
-Be aware that the C<\G> anchor will take up at the last point in the string
-where the previous iteration of the match occurred.  If the previous match
-ended with a greedy match such as C<.*>, the next match will have less
-available string to match.  The use of lookahead assertions can become very
-important here, as they do not consume the available string to match.
+注意 C<\G> 锚点将从字符串中前一次迭代匹配的那一点开始着手。如果前一次匹配以诸如 C<.*>
+之类的贪心匹配结束，则接下来的可以用于匹配的部分将减少。前瞻断言的使用在这里很重要，
+因为它们不消耗欲匹配的字符串。
 
 X</e>
 X<regular expressions; substitution evaluation>
 
-The C</e> modifier allows you to write arbitrary Perl 5 code on the right side
-of a substitution operation.  If the match succeeds, the regex engine will run
-the code, using its return value as the substitution value.  The earlier global
-substitution example could be more robust about replacing some or all of an
-unfortunate protagonist's name with:
+C</e> 修饰符允许你在替换操作右边写入任意 Perl 5 代码。如果成功匹配，正则表达式引擎将运
+行这段代码，并用它的返回值作为替换的值。前面的全局替换例子中，替换不幸主角姓名的部分可
+以变得更加健壮：
 
 =begin programlisting
 
@@ -969,7 +877,5 @@ unfortunate protagonist's name with:
 
 =end programlisting
 
-You may add as many C</e> modifiers as you like to a substitution.  Each
-additional occurrence of this modifier will perform another evaluation of the
-result of the expression, though only Perl golfers tend to use C</ee> or
-anything more complex.
+你可以向一次替换操作添加任意多的 C</e> 修饰符。每一处额外的修饰符将对表达式的结果进行又
+一次的求值，通常只有 Perl 高尔夫手才会使用 C</ee> 以及更加复杂的语句。
