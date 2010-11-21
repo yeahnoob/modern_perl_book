@@ -1,15 +1,15 @@
+=encoding utf8
+
 =head1 Moose
 
 Z<moose>
 X<moose>
 
-Moose is a more complete object system for Perl 5.  It builds on the existing
-Perl 5 system, and provides simpler defaults, better integration, and advanced
-features from several other languages, including Smalltalk, Common Lisp, and
-Perl 6.  It's still worth learning the default Perl 5 object system, if only to
-write very simple programs where Moose is inappropriate or to maintain legacy
-code, but Moose is currently the best way to write object-oriented code in
-modern Perl 5.
+Moose 是一个专为 Perl 5 提供的更为完整的对象系统。它基于现有的 Perl 5 对象系统
+创建，并提供了更为简单的默认操作、更好的集成、以及来自其它语言────包括 Smalltalk、
+Common Lisp 和 Perl 6────的更为先进的特性。如果你只想编写一些简单的程序、维护陈年
+代码或者 Moose 不适用时，Perl 5 的对象系统仍然值得一学，但 Moose 是目前为止在现代
+化 Perl 5 中编写面向对象程序的最佳途径。
 
 X<object orientation>
 X<object oriented programming>
@@ -18,19 +18,16 @@ X<OOP>
 X<objects>
 X<classes>
 
-I<Object orientation>, or I<object oriented programming>, is a way of managing
-programs by categorizing their components into discrete, unique entities.
-These are I<objects>.  In Moose terms, each object is an instance of a
-I<class>, which serves as a template to describe any data the object contains
-as well as its specific behaviors.
+I<面向对象>，或 I<面向对象程序设计>，是一种程序编排方法，它将组件分块为离散的唯一
+的实体。这些实体称为 I<对象>。用 Moose 的术语来说，每一个对象是某一个 I<类> 的实例，
+类作为模版描述了对象包含的数据和专属的行为。
 
-=head2 Classes
+=head2 类
 
 X<classes>
 X<package>
 
-A class in Perl 5 stores class data.  It may have a name.  By default, Perl 5
-classes use packages to provide namespaces:
+Perl 5 中的类存储类数据。类可以有一个名称。默认地，Perl 5 类使用包来提供名称空间：
 
 =begin programlisting
 
@@ -45,9 +42,8 @@ classes use packages to provide namespaces:
 X<instance>
 X<OO; instances>
 
-This C<Cat> class appears to do nothing, but Moose does a lot of work to define
-the class and register it with Perl.  With that done, you can create objects
-(or I<instances>) of the C<Cat> class:
+C<Cat> 类看上去没有做任何事，但 Moose 却做这做那以定义此类并向 Perl 注册它。完成
+之后，你可以创建 C<Cat>（猫）类的对象（或 I<实例>）：
 
 =begin programlisting
 
@@ -56,19 +52,16 @@ the class and register it with Perl.  With that done, you can create objects
 
 =end programlisting
 
-The arrow syntax should look familiar.  Just as an arrow dereferences a
-reference, an arrow calls a method on an object or class.
+箭头语法看上去不会那么陌生。就像解引用，此处箭头调用一个类或对象的方法。
 
-=head2 Methods
+=head2 方法
 
 X<method>
 X<invocant>
 
-A I<method> is a function associated with a class.  It resembles a
-fully-qualified function call in a superficial sense, but it differs in two
-important ways.  First, a method call always has an I<invocant> on which to
-perform the method.  In the case of creating the two C<Cat> objects, the name
-of the class (C<Cat>) is the invocant:
+I<method> 就是和一个类关联的函数。表面上看起来，它就像一个完全限定的函数调用，但
+有两点重要的区别。第一，方法调用总是对执行方法 I<被调用者> 进行的。按创建两个 C<Cat>
+对象的例子，类的名称（C<Cat>）就是被调用者：
 
 =begin programlisting
 
@@ -79,13 +72,11 @@ of the class (C<Cat>) is the invocant:
 X<dispatch>
 X<method dispatch>
 
-Second, a method call always involves a I<dispatch> strategy.  The dispatch
-strategy describes how the object system decides I<which> method to call.  This
-may seem obvious when there's only a C<Cat>, but method dispatch is fundamental
-to the design of object systems.
+第二，一处方法调用总是引发 I<分派> 策略。分派策略描述了对象系统如何决定调用 I<哪些>
+方法。在只有一个 C<Cat> 对象时看上去很显然，但方法分派是对象系统设计的基本要求。
 
-The invocant of a method in Perl 5 is its first argument.  For example, the
-C<Cat> class could have a C<meow()> method:
+Perl 5 中方法的被调用者是方法的第一个参数。举例来说，C<Cat> 类可以拥有一个名为 C<meow()>
+（喵）的方法：
 
 =begin programlisting
 
@@ -103,8 +94,7 @@ C<Cat> class could have a C<meow()> method:
 
 =end programlisting
 
-Now all C<Cat> instances can wake you up in the morning because they haven't
-eaten yet:
+现在所有 C<Cat> 实例都会因尚未进食而在清晨苏醒：
 
 =begin programlisting
 
@@ -118,11 +108,10 @@ eaten yet:
 X<class method>
 X<methods; class>
 
-By convention, invocants in Perl methods are lexical variables named C<$self>,
-but this is merely pervasive convention.  The example implementation of
-C<meow()> does not use the invocant, so it's irrelevant once method dispatch
-has completed.  In that sense, C<meow()> is like C<new()>; you can safely use
-the name of the class (C<Cat>) as its invocant.  This is a I<class method>:
+按照惯例，Perl 中方法的被调用者是一个名为 C<$self> 的词法变量，但这仅仅是一个
+普遍的惯例。C<meow()> 方法的示例实现没有用到被调用者，因此一旦方法分派完毕就
+毫不相关了。按此，C<meow()> 就像 C<new()>；你可以安全地用类名（C<Cat>）作为被
+调用者。这是一个 I<类方法>：
 
 =begin programlisting
 
@@ -130,7 +119,7 @@ the name of the class (C<Cat>) as its invocant.  This is a I<class method>:
 
 =end programlisting
 
-=head2 Attributes
+=head2 属性
 
 X<attributes (objects)>
 X<objects; attributes>
@@ -138,15 +127,14 @@ X<instance data>
 X<state>
 X<objects; state>
 
-Every object in Perl 5 is unique.  Objects can contain I<attributes>, or
-private data associated with each object.  You may also hear this described as
-I<instance data> or I<state>.
+Perl 5 中每一个对象都是唯一的。对象可以包含 I<属性>，或者说和每一个对象关联的私
+有数据。你也可能听到它被描述为 I<实例数据> 或 I<状态>。
 
 X<attributes; typed>
 X<attributes; ro>
 X<attributes; read only>
 
-To define object attributes, describe them as part of the class:
+要定义对象属性，可以将它们描述为类的一部分：
 
 =begin programlisting
 
@@ -160,10 +148,9 @@ To define object attributes, describe them as part of the class:
 
 =end programlisting
 
-In English, that line of code means "C<Cat> objects have a C<name> attribute.
-It's readable but not writable, and it's a string."  That single line of code
-creates an accessor method (C<name()>) and allows you to pass a C<name>
-parameter to the constructor:
+在英语中，那行代码的意思是“C<Cat> 对象有一个 C<name> 属性。它可读但不可写，并
+且它是字符串。”该行代码创建了一个访问器方法（C<name()>）且允许你可以向构造函数
+传递一个 C<name> 参数：
 
 =begin programlisting
 
@@ -179,8 +166,7 @@ parameter to the constructor:
 
 X<attributes; untyped>
 
-Attributes do not I<need> to have types, in which case Moose will skip all of
-the verification and validation for you:
+属性的类型并非 I<必需>，在此情况下，Moose 将为你跳过核查和验证的部分：
 
 =begin programlisting
 
@@ -197,15 +183,12 @@ the verification and validation for you:
 
 =end programlisting
 
-This can be more flexible, but it can also lead to strange errors if someone
-tries to provide invalid data for an attribute.  The balance between
-flexibility and correctness depends on your local coding standards and the type
-of errors you want to catch.
+这样更为灵活，但在某人尝试对属性提供无效数据时便会导致奇怪的错误。灵活性和正确性
+之间的平衡取决于当时的编码标准以及欲捕获的错误类型。
 
 =begin sidebar
 
-The Moose documentation uses parentheses to separate an attribute name from its
-characteristics:
+Moose 的文档使用括号来分隔属性名称和它的特征：
 
 =begin programlisting
 
@@ -213,8 +196,8 @@ characteristics:
 
 =end programlisting
 
-Perl parses both that form and the form used in this book the same way.  You
-I<could> achieve the same effect by writing either:
+Perl 对此形式和本书所用的形式做相同的语法分析。你 I<可以> 编写如下任一代码来实现
+相同的功能：
 
 =begin programlisting
 
@@ -223,8 +206,8 @@ I<could> achieve the same effect by writing either:
 
 =end programlisting
 
-... but in this case, extra punctuation adds clarity.  The approach of the
-Moose documentation is most useful when dealing with multiple characteristics:
+……但在这种情况下，额外的标点使程序更加清晰。Moose 文档中使用的方法在处理多项特征
+时尤其有用：
 
 =begin programlisting
 
@@ -232,16 +215,15 @@ Moose documentation is most useful when dealing with multiple characteristics:
         is         => 'ro',
         isa        => 'Str',
 
-        # advanced Moose options; perldoc Moose
+        # 高级 Moose 选项；perldoc Moose
         init_arg   => undef,
         lazy_build => 1,
     );
 
 =end programlisting
 
-... but for the sake of simplicity of introduction, this book prefers to use
-less punctuation.  Perl gives you the flexibility to choose whichever approach
-makes the intent of your code most clear.
+……出于介绍的简易性，本书倾向于使用标点符号较少的形式。Perl 给你以灵活性，让你
+可以自由选择使代码更为清晰的编码方式。
 
 =end sidebar
 
@@ -251,9 +233,8 @@ X<attributes; read-write>
 X<mutator>
 X<methods; mutator>
 
-If you mark an attribute as readable I<and> writable (with C<< is => rw >>),
-Moose will create a I<mutator> method--a method you can use to change the value
-of an attribute:
+如果你将某属性标记为可读 I<且> 可写（用 C<< is => rw >>），Moose 将创建一个 I<突变>
+方法────你可以用它改变属性的值：
 
 =begin programlisting
 
@@ -275,7 +256,7 @@ of an attribute:
 
 =end programlisting
 
-Trying to use a C<ro> accessor as a mutator will throw an exception:
+尝试将 C<ro> 访问器用作突变方法将抛出一个异常：
 
 =begin screen
 
@@ -285,40 +266,31 @@ Cannot assign a value to a read-only accessor at ....
 
 =begin sidebar
 
-When should you use C<ro> and when C<rw>?  It's a matter of design,
-convenience, and purity.  One school of thought (L<immutability>) suggests
-making all instance data C<ro> and passing all relevant data into the
-constructor.  In the C<Cat> example, C<age()> might still be an accessor, but
-the constructor could take the I<year> of the cat's birth and calculate the age
-itself based on the current year, rather than relying on someone to update the
-age of all cats manually.
+何时使用 C<ro> 何时使用 C<rw>？这是关系到设计、便捷和代码纯度的事情。有一派意见
+（L<immutability>）认为所有实例数据都应该采用 C<ro> 并将相关数据都传递给构造函
+数。在 C<Cat> 一例中，C<age()> 仍可以是一个访问器，但构造函数可以取得猫出生的 I<年份>
+并根据当前日期自行计算出年龄，而非依赖于手动更新猫的年龄。
 
-This approach helps to consolidate all validation code and helps to ensure that
-all created objects have valid data.  These are design goals worth considering,
-though Moose does not enforce any particular philosophy in this area.
+此方式有助于巩固验证代码的效果并保证所有创建的对象只包含有效的数据。这些设计目标
+值得考虑，尽管在这方面 Moose 并不强制采用特定的哲学。
 
 =end sidebar
 
-Now that individual objects can have their own instance data, the value of
-object orientation may be more obvious.  An object is a bookmark for the data
-it contains as well as the behavior appropriate to that data.  An object is a
-collection of named data and behaviors.  A class is the description of the data
-and behaviors that instances of that class possess.
+既然独立的对象可以各自拥有实例数据，面向对象的价值就更加明显了。一个对象是其包含
+数据，同时也是适用于这些数据的行为的书签。一个对象是具名数据和行为的集合。一个类
+是对该类实例持有的数据和行为的一个描述。
 
-=head2 Encapsulation
+=head2 封装
 
 X<encapsulation>
 
-Moose allows you to declare I<which> attributes class instances possess as well
-as how to treat those attributes.  The examples shown so far do not describe
-I<how> to store those attributes.  This information is available if you really
-need it, but the declarative approach can actually improve your programs.  In
-this way, Moose encourages I<encapsulation>, or hiding the internal details of
-an object from external uses of that object.
+Moose 允许你声明类的实例可以持有 I<哪些> 属性，以及如何处理这些属性。目前为止的
+例子尚未描述 I<如何> 存储这些属性。如果真的需要了解，这些信息是可以获取的，但是
+直接说明的方式可以实际地改进你的程序。由此，Moose 鼓励 I<封装>，或者说对对象的
+外界使用隐藏内部细节。
 
-Consider a change to the age of a C<Cat>; instead of requesting that directly
-from the constructor, calculate the age of a C<Cat> based on the year of its
-birth:
+考虑对 C<Cat> 做出年龄修改；并不直接对构造函数请求，而是通过出生年份来计算一只 C<Cat>
+（猫）的年龄：
 
 =begin programlisting
 
@@ -340,26 +312,21 @@ birth:
 
 =end programlisting
 
-While the syntax for I<creating> C<Cat> objects has changed, the syntax for
-I<using> C<Cat> objects has not.  The C<age()> method does the same thing it
-has always done, at least as far as all code outside of the C<Cat> class
-understands.  I<How> it does that has changed, but that is a detail internal to
-the C<Cat> class--encapsulated within that class itself.
+虽然 I<创建> C<Cat> 对象的语法变了，但 I<使用> C<Cat> 对象的语法却没有。C<age()> 方法
+始终完成它应该完成的任务，至少就 C<Cat> 类之外的代码而言可以理解其行为。它 I<如何> 完
+成任务的方式已经改变，但这属于 C<Cat> 类的内部细节────由该类封装于自身内。
 
 =begin sidebar
 
-The old syntax for I<creating> C<Cat> objects could remain in place; customize
-the generated C<Cat> constructor to allow passing an C<age> parameter and
-calculate C<birth_year> appropriately from that.  See C<perldoc
-Moose::Manual::Attributes>.
+之前用于 I<创建> C<Cat> 对象的语法仍可以原地不动；定制生成的 C<Cat> 构造函数以允许向其
+传递 C<age> 参数，并由此计算正确的 C<birth_year>。请参看 C<perldoc Moose::Manual::Attributes>。
 
 =end sidebar
 
 X<attributes; default values>
 
-This new approach to calculating C<Cat> ages has another advantage; you can use
-I<default attribute values> to reduce the code necessary to create a C<Cat>
-object:
+这个计算 C<Cat> 年龄的新方式有着另外的优势；你可以使用 I<默认属性值> 来减少创建 C<Cat>
+类所需的代码量：
 
 =begin programlisting
 
@@ -374,10 +341,9 @@ object:
 
 =end programlisting
 
-The C<default> keyword on an attribute takes a function reference which returns
-the default value for that attribute when constructing a new object.  If the
-constructor does not receive an appropriate value for that attribute, the
-object gets that default value instead.  Now you can create a kitten:
+属性上的 C<default> 关键字接受一函数引用，该引用在对象构造之时返回此属性的默认
+值。如果构造函数并未接收此属性某一合适的值，则该对象获得替代的默认值。现在你可
+以这样创建一只小猫：
 
 =begin programlisting
 
@@ -385,32 +351,27 @@ object gets that default value instead.  Now you can create a kitten:
 
 =end programlisting
 
-... and that kitten will have an age of C<0> until next year.
+……并且在明年之前这只小猫的年龄都将为 C<0>。
 
 =begin sidebar
 
-You can also use a simple value, such as a number or string, as a default
-value.  Use a function reference when you need to calculate something unique
-for each object, including a hash or array reference.
+你也可以使用一个简单的值，诸如数字或字符串，来作为默认值。当你需要为每一个对象
+计算某些唯一值（包括哈希或数组引用）时，使用函数引用。
 
 =end sidebar
 
-=head3 Polymorphism
+=head3 多态
 
-A program which deals with one type of data and one type of behavior on that
-data benefits little from the use of objects.  A well-designed object-oriented
-program should be capable of managing many types of data.  When well designed
-classes encapsulate specific details of objects into the appropriate places,
-something curious happens to the rest of the program: it has the opportunity to
-become I<less> specific.
+那行仅处理单一类型数据以及基于此数据之上单一行为的程序从对象的使用中获益不多。
+一个经过良好设计的面向对象程序应有能力处理各种类型的数据。当设计精良的类在合
+适处封装特定对象的细节时，会神奇地影响后续程序：一旦有机会，它可以选择变得
+I<不那么> 具体。
 
-In other words, moving the specifics of the details of what the program knows
-about individual C<Cat>s (the attributes) and what the program knows that
-C<Cat>s can do (the methods) into the C<Cat> class means that code that deals
-with C<Cat> instances can happily ignore I<how> C<Cat> does what it does.
+换句话说，将程序了解的 C<Cat> 对象个体特征（属性）和它能做的事（方法）这类具
+体细节从程序中移入 C<Cat> 类中意味着处理 C<Cat> 实例的代码可以快乐地忽略 C<Cat> 
+对象 I<如何> 做它该做的事。
 
-This is clearer with an example.  Consider a function which describes an
-object:
+用例子说话。考虑一个描述对象的函数：
 
 =begin programlisting
 
@@ -427,88 +388,72 @@ object:
 
 X<polymorphism>
 
-It's obvious (in context) that you can pass a C<Cat> object to this function
-and get sane results.  It's less obvious that you can pass other types of
-objects and get sane results.  This is an important object orientation property
-called I<polymorphism>, where you can substitute an object of one class for an
-object of another class if they provide the same external interface in the same
-way.
+很明显（在上下文中），你可以向此函数传入一个 C<Cat> 对象并得到合理的结果。不
+那么明显的是，你也可以传入其他对象并得到合理的结果。这是一个称为 I<多态> 的重
+要面向对象属性，你可以用一个类的对象替换另一个类的对象，只要它们以同样的方式
+提供相同的外部接口。
 
 X<genericity>
 
-Any object of any class which provides the C<name()>, C<age()>, and C<diet()>
-accessors will work with this function.  The function is sufficiently generic
-that any object which respects this interface is a valid parameter.
+任何提供 C<name()>、C<age()> 和 C<diet()> 访问器的对象都可以正常使用此函数。
+这个函数足够通用，每一个遵循接口的对象都是一个合法的参数。
 
 =begin sidebar
 
 X<duck typing>
 
-Some languages and environments require a formal relationship between two
-classes before allowing a program to substitute instances of one class for
-another.  Perl 5 provides ways to enforce these checks, but it does not require
-them.  Its default ad-hoc system lets you treat any two instances with methods
-of the same name as equivalent enough.  Some people call this I<duck typing>,
-in the theory that any object which can C<quack()> is sufficiently duck-like
-that you can treat it as a duck.
+一些语言和环境在程序互换实例之前要求两者间建立正式的关系。Perl 5 提供了多个方法
+来强制进行这类检查，但并不要求这样做。它默认的特殊系统让你可以足够等同地对待两个
+拥有同名方法的实例。一些人称其为 I<duck typing>，此说法认为任何对象只要能 C<quack()>
+（“叫”）就足够像鸭子，因而你可以将其作为鸭子对待。
 
 =end sidebar
 
-The benefit of the genericity in C<show_vital_stats()> is that neither the
-specific I<type> nor the implementation of the object provided matters.  Any
-invocant is valid if it supports three methods, C<name()>, C<age()>, and
-C<diet()> which take no arguments and each return something which can
-concatenate in a string context.  You may have a hundred different classes in
-your code, none of which have any obvious relationship between each other, but
-if they conform to this expectation of behavior, they will work with this
-method.
+在 C<show_vital_stats()> 中体现的泛型的好处不是特定的 I<类型> 也非对象的实现起
+决定作用。任何被调用者只要提供三个方法 C<name()>、C<age()> 和 C<diet()>────它们
+不带参数，它们的返回值可以在字符串上下文中拼接，那么它就是一个合法的参数。你的代
+码中也许会包含成上百个类，它们之间也可以没有任何明显的关系，但如果它们符合预期的
+行为，那么此方法就可以正常工作。
 
-This is an improvement over writing specific functions to extract and display
-this information for even a fraction of those hundred classes.  This genericity
-requires less code, and using a well-defined interface as the mechanism to
-access this information means that any of those hundred classes can calculate
-that information in any way possible.  The details of those calculations is
-where it matters most: in the bodies of the methods in the classes themselves.
+对于为那么多类（哪怕是其中一部分）编写特定的函数提取并显示这类信息来说，这是一种
+质的提升。这个泛化的方法只需更少的代码，并使用经过良好定义的接口作为访问这些信息
+的机制，意味着上百个类可以各自采用任何可行的办法计算这些信息。计算方法的细节则位
+于它们的岗位上：在各个类各自的方法体内。
 
-Of course, the mere existence of a method called C<name()> or C<age()> does not
-by itself imply the behavior of that object.  A C<Dog> object may have an
-C<age()> which is an accessor such that you can discover C<$rodney> is 8 but
-C<$lucky> is 3.  A C<Cheese> object may have an C<age()> method that lets you
-control how long to stow C<$cheddar> so that it becomes sharp; in other words,
-C<age()> may be an accessor in one class but not in another:
+当然，仅出现名为 C<name()> 或是 C<age()> 的方法并不暗示对象的行为。一个 C<Dog> 
+对象也可以包含 C<age()> 访问器，它可以让你了解 C<$rodney> 8 岁了而 C<$lucky> 是
+3 岁。C<Cheese> 对象也可以含有 C<age()> 方法，让你控制堆放 C<$cheddar> 多久使得
+奶酪味道更重；换句话说，C<age()> 可以在一个类中是访问器而在另一个类中不是：
 
 =begin programlisting
 
-    # how old is the cat?
+    # 这只猫几岁了？
     my $years = $zeppie->age();
 
-    # store the cheese in the warehouse for six months
+    # 把这批奶酪在仓库里存六个月
     $cheese->age();
 
 =end programlisting
 
-Sometimes it's useful to know I<what> an object does.  In other words, you need to understand its type.
+有时候了解一个对象 I<做什么> 很有用。就是说，你要了解它的类型。
 
-=head2 Roles
+=head2 角色
 
 Z<roles>
 
-A I<role> is a named collection of behavior and state.  A class is like a role,
-with the vital difference that you can instantiate a class, but not a role.
-While a class is primarily a mechanism for organizing behaviors and state into
-a template for objects, a role is primarily a mechanism for organizing
-behaviors and state into a named collection.
+I<角色> 是一个具名行为和状态的集合。类就像是一个角色，它们之间重要的区别就是你
+可以对一个类进行实例化，但角色就不行。对于对象来说，类是将行为和状态组织为模版
+主要机制，而角色便是将行为和状态组织为具名集合的主要机制。
 
-In short, a role is something a class does.
+简单说来，角色和类是类似的。
 
-The difference between some sort of C<Animal>--with a C<name()>, an C<age()>,
-and a preferred C<diet()>--and C<Cheese>--which can C<age()> in storage--may be
-that the C<Animal> performs a C<LivingBeing> role, while the C<Cheese> performs
-a C<Storable> role.
+某些 C<Animal>（动物）────有 C<name()>（名称）、有 C<age()>（年龄）和偏好的 C<diet()>
+（食物）和 C<Cheese>（奶酪）────可以在仓库 C<age()>（陈化）────的区别在于 C<Animal> 
+可以饰演 C<LivingBeing> 的角色，而 C<Cheese> 则饰演 C<Storable> 的角色。
 
-While you I<could> check that every object passed into C<show_vital_stats()> is
-an instance of C<Animal>, you lose some genericity that way.  Instead, check
-that the object I<performs> the C<LivingBeing> role:
+虽然你 I<可以> 检查传入 C<show_vital_stats()> 的每一个对象是否是 C<Animal> 类的实例，
+这样你便失去了部分泛型的特质。你可以用检查该对象是否 I<饰演> C<LivingBeing> 角色来代
+替：
 
 =begin programlisting
 
@@ -522,9 +467,8 @@ that the object I<performs> the C<LivingBeing> role:
 
 =end programlisting
 
-Anything which performs this role must supply the C<name()>, C<age()>, and
-C<diet()> methods.  This does not happen automatically; the C<Cat> class must
-explicitly mark that it performs the role:
+任何饰演此角色的对象必须提供 C<name()>、C<age()> 和 C<diet()> 方法。这并不会自动发
+生；C<Cat> 类必须明确标明它可以饰演此角色：
 
 =begin programlisting
 
@@ -545,24 +489,21 @@ explicitly mark that it performs the role:
 
 X<roles; composition>
 
-That single line has two functions.  First, it tells Moose that the class
-performs the named role.  Second, it composes the role into the class.  This
-process checks that the class I<somehow> provides all of the required methods
-and all of the required attributes without potential collisions.
+那行代码有两个左右。第一，它告知 Moose 该类饰演具名角色。第二，它将角色合成到类中。
+该步骤检查类是否 I<以某种方式> 提供了所需的所有方法和属性并避免了潜在的冲突。
 
-The C<Cat> class provides C<name()> and C<diet()> methods as accessors to named
-attributes.  It also declares its own C<age()> method.
+C<Cat> 类为具名属性提供了作为访问器的 C<name()> 和 C<diet()> 方法。它同时声明了自
+身的  C<age()> 方法。
 
 =begin sidebar
 
-The C<with> keyword used to apply roles to a class must occur I<after>
-attribute declaration so that composition can identify any generated accessor
-methods.
+使用 C<with> 关键字向类添加角色，其语句必须出现在属性声明 I<之后>，使得该合成过
+程可以识别任何生成的访问器方法。
 
 =end sidebar
 
-Now all C<Cat> instances will return true when queried if they provide the
-C<LivingBeing> role and C<Cheese> objects should not:
+当被问及它们是否提供 C<LivingBeing> 角色时，并非所有的 C<Cat> 实例会返回真，并且
+C<Cheese> 对象不应如此：
 
 =begin programlisting
 
@@ -571,11 +512,9 @@ C<LivingBeing> role and C<Cheese> objects should not:
 
 =end programlisting
 
-This design approach may seem like extra bookkeeping, but it separates the
-I<capabilities> of classes and objects from the I<implementation> of those
-classes and objects.  The special behavior of the C<Cat> class, where it stores
-the birth year of the animal and calculates the age directly, could itself be a
-role:
+这个设计手法看上去可能像是多余的记账，但它从类和对象的 I<实现> 中分离出了它们的
+I<能力>。C<Cat> 类的特殊行为，即存储动物的出生年份并直接计算年龄，本身就可以是一
+个角色：
 
 =begin programlisting
 
@@ -598,8 +537,8 @@ role:
 
 =end programlisting
 
-Moving this code out of the C<Cat> class into a separate role makes it
-available to other classes.  Now C<Cat> can perform both roles:
+将这段代码从 C<Cat> 类中移出到一个分离的角色中使其也可以用于其它类中。现在，
+C<Cat> 对象可以饰演两个角色：
 
 =begin programlisting
 
@@ -617,21 +556,17 @@ available to other classes.  Now C<Cat> can perform both roles:
 X<allomorphism>
 X<roles; allomorphism>
 
-The implementation of the C<age()> method supplied by the
-C<CalculateAgeFromBirthYear> satisfies the requirement of the C<LivingBeing>
-role, and the composition succeeds.  Checking that objects perform the
-C<LivingBeing> role remains unchanged, regardless of I<how> objects perform
-this role.  A class could choose to provide its own C<age()> method or obtain
-it from another role; that doesn't matter.  All that matters is that it
-contains one.  This is I<allomorphism>.
+由 C<CalculateAgeFromBirthYear> 提供的 C<age()> 方法的实现满足 C<LivingBeing>
+角色的需要，使之成功合成。无论对象 I<如何> 扮演此角色，对对象是否扮演 C<LivingBeing> 
+角色的检查结果仍然不变。一个类可以选择提供它自己的 C<age()> 方法或从其它角色中获
+得一份，这并不重要。重要的是它包含此方法。这就是 I<同质异晶性>.
 
-=head3 Roles and DOES()
+=head3 角色和 DOES()
 
 X<DOES()>
 X<Moose; DOES()>
 
-Applying a role to a class means that the class and its instances will return
-true when you call the C<DOES()> method on them:
+对一个类应用一个角色意味着你在调用该类和它的实例的 C<DOES()> 方法时返回真：
 
 =begin programlisting
 
@@ -639,35 +574,29 @@ true when you call the C<DOES()> method on them:
 
 =end programlisting
 
-=head2 Inheritance
+=head2 继承
 
 Z<inheritance>
 
 X<inheritance>
 X<Moose; inheritance>
 
-Another feature of Perl 5's object system is I<inheritance>, where one class
-specializes another.  This establishes a relationship between the two classes,
-where the child inherits attributes and behavior of the parent.  As with two
-classes which provide the same role, you may substitute a child class for its
-parent.  In one sense, a subclass provides the role implied by the existence of
-its parent class.
+Perl 5 对象系统的另一个特性就是 I<继承>，即一个类将另一个类专门化。这在两个类间
+建立起一种关系，其中子类从父类继承属性和行为。就两个提供同一角色的类来说，你可以
+用子类替换父类。在某种意义上说，一个子类通过其父类的存在隐式地提供了某角色。
 
 =begin sidebar
 
-Recent experiments in role-based systems in Perl 5 demonstrate that you can
-replace almost every use of inheritance in a system with roles.  The decision
-to use either one is largely a matter of familiarity.  Roles provide
-composition-time safety, better type checking, better-factored and less coupled
-code, and finer-grained control over names and behaviors, but inheritance is
-more familiar to users of other languages.  The design question is whether one
-class truly I<extends> another or whether it provides additional (or, at least,
-I<different>) behavior.
+Perl 5 中最近基于角色的对象系统实验显示，在一个系统中几乎所有用到继承的地方都可
+以用角色来替代。决定使用何者大体上是熟悉程度的事。角色提供了合成时安全，更好的类
+型检查，组织良好且更低耦合的代码，可对名称和行为做出细粒度的控制，但继承对其他语
+言的用户来说更为熟悉。设计上的问题就是一派是否确实扩展了另一派或者说它是否提供了
+额外（或者，至少是，I<不同>）的行为。
 
 =end sidebar
 
-Consider a C<LightSource> class which provides two public attributes
-(C<candle_power> and C<enabled>) and two methods (C<light> and C<extinguish>):
+考虑 C<LightSource>（光源）类，它提供了两个公共属性（C<candle_power> 和 C<enabled>）
+以及两个方法（C<light> 和 C<extinguish>）：
 
 =begin programlisting
 
@@ -698,16 +627,14 @@ Consider a C<LightSource> class which provides two public attributes
 
 =begin sidebar
 
-The C<_writer> option to the C<enabled> attribute creates a private accessor
-usable within the class to set the value.
+C<enabled> 属性的 C<_writer> 选项创建了一个私有访问器，可在类内部用于设置值。
 
 =end sidebar
 
-=head3 Inheritance and Attributes
+=head3 继承和属性
 
-Subclassing C<LightSource> makes it possible to define a super candle which
-behaves the same way as C<LightSource> but provides a hundred times the amount
-of light:
+创建 C<LightSource> 的子类使得定义一支行为和 C<LightSource> 相似、但提供亮度百倍
+于常的超级蜡烛成为可能：
 
 =begin programlisting
 
@@ -725,21 +652,17 @@ of light:
 
 X<Moose; extends>
 
-The C<extends> syntax takes a list of class names to use as parents of the
-current class.  The C<+> at the start of the C<candle_power> attribute name
-indicates that the current class extends the declaration of the attribute.  In
-this case, the super candle overrides the default value of the light source, so
-any new C<SuperCandle> created has a light value of 100 candles.  The other
-attribute and both methods are available on C<SuperCandle> instances; when you
-invoke C<light> or C<extinguish> on such an instance, Perl will look in
-C<LightSource::SuperCandle> for the method, then in the list of parents of the
-class. Ultimately it finds them in C<LightSource>.
+C<extends> 语法结构接受一个类名称列表作为当前类的父类。位于 C<candle_power> 属性
+名称前的 C<+> 指出当前类扩展了此属性的定义。在这种情况下，超级蜡烛覆盖了光源的默
+认值，因此任何新建的 C<SuperCandle> 的亮度值为 100 支蜡烛。另一个属性以及两个方法
+对 C<SuperCandle> 实例也是可用的；当你在这样一个实例上调用 C<light> 或 C<extinguish>
+Perl 会先在 C<LightSource::SuperCandle> 内查找这些方法，然后是父类列表。最终它在
+C<LightSource> 里找到了它们。
 
 X<Moose; attribute inheritance>
 
-Attribute inheritance works in a similar fashion, except that the act of
-I<constructing> the instance makes all of the appropriate attributes available
-in the proper fashion (see C<perldoc Class::MOP>).
+属性继承的工作方式与此类似，除了 I<构造> 此实例的行为使得所有适当的属性按正确的方式
+提供（参见 C<perldoc Class::MOP>）。
 
 X<methods; resolution>
 X<method resolution order>
@@ -748,22 +671,17 @@ X<multiple inheritance>
 X<objects; inheritance>
 X<objects; multiple inheritance>
 
-Method dispatch order is easy to understand in the case of single-parent
-inheritance.  When a class has multiple parents (I<multiple inheritance>),
-dispatch is less obvious.  By default, Perl 5 provides a depth-first strategy
-of method resolution.  It searches the class of the I<first> named parent and
-all of its parents recursively before searching the classes of the subsequent
-named parents.  This behavior is often confusing; avoid using multiple
-inheritance until you understand it and have exhausted all other alternatives.
-See C<perldoc mro> for more details about method resolution and dispatch
-strategies.
+单重继承的方法分派顺序理解起来比较简单。当一个类拥有多个父类时（I<多重继承>），分派
+便不那么显然了。默认的，Perl 5 提供了深度优先的方法解析策略。它先搜索类的 I<首个> 具
+名父类，接着在搜索后续具名父类之前递归地搜索此类的所有父类。这个行为通常令人迷惑；在
+你理解多重继承之前请避免使用它，并尽可能采用其他替代手段。参见 C<perldoc mro> 以获取
+有关方法解析和分派策略的更多细节。
 
-=head3 Inheritance and Methods
+=head3 继承和方法
 
 X<Moose; override method>
 
-You may override methods in subclasses.  Imagine a light that you cannot
-extinguish:
+你可以在子类中覆盖父类的方法。设想一个你无法熄灭的光源：
 
 =begin programlisting
 
@@ -779,14 +697,11 @@ extinguish:
 
 =end programlisting
 
-All calls to the C<extinguish> method for objects of this class will do
-nothing.  Perl's method dispatch system will find this method and will not look
-for any methods of this name in any of the parent classes.
+所有对此类的 C<extinguish> 方法的调用将毫无作用。Perl 的方法分派系统将先找到这个
+方法并且不会再在父类中查找与此同名的其他方法。
 
-Sometimes an overridden method needs behavior from its parent as well.  The
-C<override> command tells Moose that the subclass deliberately overrides the
-named method.  The C<super()> function is available to dispatch from the
-overriding method to the overridden method:
+有时候覆盖后方法也需要来自父类同名方法的某些行为。C<override> 命令告诉 Moose，该
+子类故意覆盖此具名方法。C<super()> 函数可以用来从覆盖方法分派到被覆盖方法：
 
 =begin programlisting
 
@@ -821,25 +736,21 @@ overriding method to the overridden method:
 
 =end programlisting
 
-This subclass adds a warning when trying to light or extinguish a light source
-that already has the current state.  The C<super()> function dispatches to the
-nearest parent's implementation of the current method, per the normal Perl 5
-method resolution order.
+这个子类在点亮和熄灭一个已经处于当前状态的光源时增加了一条警告。C<super()> 函数
+在遵守正常 Perl 5 方法解析顺序的同时将当前方法分派到最近的父类实现中。
 
 =begin sidebar
 
-You can achieve the same behavior by using Moose method modifiers.  See
-C<perldoc Moose::Manual::MethodModifiers>.
+你可以用 Moose 的方法修饰符实现相同的行为。参见 C<perldoc Moose::Manual::MethodModifiers>。
 
 =end sidebar
 
-=head3 Inheritance and isa()
+=head3 继承和 isa()
 
 X<isa()>
 X<Moose; isa()>
 
-Inheriting from a parent class means that the child class and all of its
-instances will return true when you call the C<isa()> method on them:
+从父类继承意味着子类及其所有实例在调用其上 C<isa()> 方法时返回真：
 
 =begin programlisting
 
@@ -848,16 +759,14 @@ instances will return true when you call the C<isa()> method on them:
 
 =end programlisting
 
-=head2 Moose and Perl 5 OO
+=head2 Moose 和 Perl 5 OO
 
 X<moose; versus Perl 5 OO>
 
-Moose provides many features you'd otherwise have to build for yourself with
-the default object orientation of Perl 5.  While you I<can> build everything
-you get with Moose yourself (see L<blessed_references>), or cobble it together
-with a series of CPAN distributions, Moose is a coherent package which just
-works, includes good documentation, is part of many successful projects, and is
-under active development by an attentive and talented community.
+Moose 提供了许多原本需要你自行在 Perl 5 的默认对象模型中实现的特性。虽然你 I<可以>
+自行构建来自 Moose 的全部特性（参见 L<blessed_references>），或者用一系列 CPAN 发行
+包修修补补地实现，但 Moose 是一个合适且连贯的包，包括了优秀的文档，且是许多成功项目
+的一部分，还有，它正由一个善解人意且有才的社区积极地开发着。
 
 X<metaprogramming>
 X<Moose; MOP>
@@ -865,13 +774,10 @@ X<Moose; metaprogramming>
 X<Class::MOP>
 X<Class::MOP::Class>
 
-By default, with Moose objects you do not have to worry about constructors and
-destructors, accessors, and encapsulation.  Moose objects can extend and
-work with objects from the vanilla Perl 5 system.  You also get
-I<metaprogramming>--a way of accessing the implementation of the system through
-the system itself--and the concomitant extensibility.  If you've ever wondered
-which methods are available on a class or an object or which attributes an
-object supports, this metaprogramming information is available with Moose:
+默认地，Moose 对象不需要你担心构造器、析构器、访问器和封装。Moose 对象可以扩展并
+和来自平淡无奇的 Perl 5 对象系统的对象协同工作。你同时也得到了 I<元编程>────一种
+通过系统自身访问系统实现的方式────以及随附的扩展性。如果你曾考虑过某类或对象上可
+以调用什么方法或者对象支持什么属性，这类元编程信息可以通过 Moose 得到：
 
 =begin programlisting
 
@@ -887,7 +793,7 @@ object supports, this metaprogramming information is available with Moose:
 
 =end programlisting
 
-You can even see which classes extend a given class:
+你甚至可以知道那些类扩展了一个给定的类：
 
 =begin programlisting
 
@@ -899,15 +805,14 @@ You can even see which classes extend a given class:
 
 =end programlisting
 
-See C<perldoc Class::MOP::Class> for more information about metaclass
-operations and C<perldoc Class::MOP> for Moose metaprogramming information.
+请分别参阅 C<perldoc Class::MOP::Class>、C<perldoc Class::MOP> 以获取有关元类操作符、
+Moose 元编程的更多信息。
 
 X<metaprogramming; MOP>
 X<MOP>
 
-Moose and its I<meta-object protocol> (or MOP) offers the possibility of a
-better syntax for declaring and working with classes and objects in Perl 5.
-This is valid Perl 5 code:
+Moose 和它的 I<元对象协议>（或称 MOP）为一个更好的、用于在 Perl 5 中操作类和对象的
+语法提供了可能。如下是合法的 Perl 5 代码：
 
 =begin programlisting
 
@@ -937,24 +842,20 @@ This is valid Perl 5 code:
 X<MooseX::Declare>
 X<Devel::Declare>
 
-The C<MooseX::Declare> extension from the CPAN uses a clever module called
-C<Devel::Declare> to add new syntax to Perl 5, specifically for Moose.  The
-C<class>, C<role>, and C<method> keywords reduce the amount of boilerplate
-necessary to write good OO code in Perl 5.  Note specifically the declarative
-nature of this example, as well as the now unnecessary C<my $self = shift;>
-line at the start of the C<age> method.
+来自 CPAN 的 C<MooseX::Declare> 扩展使用了一个称为 C<Devel::Declare> 的聪明的模块
+向 Perl 5 添加新语法，特别是为了 Moose。C<class>、C<role> 和 C<method> 关键字减少
+了在 Perl 5 中编写良好的面向对象代码所需的样版数量。特别注意本例称述性的本质，还有
+现在 C<age> 方法开头的 C<my $self = shift;> 代码行不是必须的。
 
 =begin sidebar
 
-The Perl 5 core provides support for C<Devel::Declare> as of Perl 5.12, but the
-module is not a core module.
+自 Perl 5.12 起，Perl 5 核心提供了对 C<Devel::Declare> 的支持，但这个模块不是核心
+模块。
 
 =end sidebar
 
-One drawback of this approach is that you must be able to install CPAN modules
-(or a custom Perl 5 distribution such as Strawberry Perl or Strawberry Perl
-Professional which may include them for you), but in comparison to Perl 5's
-built-in object orientation, the advantage in cleanliness and simplicity of
-Moose should be obvious.
+采用这整个方案的一个缺点是你必须能够安装 CPAN 模块（或使用诸如 Strawberry Perl 或
+Strawberry Perl Professional 之类定制的 Perl 5 发行版，它们会替你包括这些），但和
+Perl 5 的内置面向对象比较，Moose 在清晰和简洁方面的优势应是明显的。
 
-See C<perldoc Moose::Manual> for more information on using Moose.
+参见 C<perldoc Moose::Manual> 以获取有关使用 Moose 的更多信息。
