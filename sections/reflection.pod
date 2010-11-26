@@ -1,27 +1,25 @@
-=head1 Reflection
+=encoding utf8
+
+=head1 反射
 
 Z<reflection>
 
 X<reflection>
 X<introspection>
 
-I<Reflection> (or I<introspection>) is the process of asking a program about
-itself as it runs.  Even though you can write many useful programs without ever
-having to use reflection, techniques such as metaprogramming
-(L<code_generation>) benefit from a deeper understanding of which entities are
-in the system.
+I<反射>（或称 I<内省>）是运行期间向一个程序询问其自身情况的过程。即便你可以在不
+使用反射的情况下编写不少有用的程序，一些诸如元编程（L<code_generation>）等技术
+从深刻了解系统中的实体获益良多。
 
-C<Class::MOP> (L<class_mop>) simplifies many reflection tasks for object
-systems, but many useful programs do not use objects pervasively, and many
-useful programs do not use C<Class::MOP>.  Several idioms (L<idioms>) exist for
-performing reflection effectively in the absence of such a formal system.
+C<Class::MOP>（L<class_mop>）简化了许多对象系统中的反射任务，但是很多有用的程序
+并非彻底面向对象，很多程序也不会用到 C<Class::MOP>。因为没有一个正规的系统，Perl
+中存在着一些有效进行反射的惯用语（L<idioms>）。
 
-=head2 Checking that a Package Exists
+=head2 检查一个包是否存在
 
-To check that a package exists somewhere in the system--that is, if some code
-somewhere has executed a C<package> directive with a given name--check that the
-package inherits from C<UNIVERSAL> by testing that the package can perform the
-C<can()> method:
+为检查一个包是否存在在系统之中────即，如果一段代码在某一点执行了一条带包名称的
+C<package> 指令────就是检查它是否从 C<UNIVERSAL> 继承下来，这可以通过检查该包是
+否能够执行 C<can()> 方法来实现：
 
 =begin programlisting
 
@@ -29,33 +27,28 @@ C<can()> method:
 
 =end programlisting
 
-Although you I<may> use packages with the names C<0> and C<''>N<...  only if
-you define them symbolically, as these are I<not> identifiers forbidden by the
-Perl 5 parser.>, the C<can()> method will throw a method invocation exception
-if you use them as invocants.  The C<eval> block catches such an exception.
+虽然你 I<可以> 使用名为 C<0> 或 C<''> N<……仅仅在你符号化地定义它们时，因为这些
+I<并非> Perl 5 语法分析器禁止的标识符。> 的包，C<can()> 方法会在你将其作为调用
+物时抛出一个方法调用异常。C<eval> 代码块可以捕获这类异常。
 
-You I<could> also grovel through the symbol table, but this approach is quicker
-and easier to understand.
+你也 I<可以> 对符号表的条目进行一一礼拜，但上述方法更加快速同时也更易理解。
 
-=head2 Checking that a Class Exists
+=head2 检查一个类是否存在
 
-Because Perl 5 makes no strong distinction between packages and classes, the
-same technique for checking the existence of a package works for checking that
-a class exists.  There is no generic way for determining if a package is a
-class.  You I<can> check that the package C<can()> perform C<new()>, but there
-is no guarantee that any C<new()> found is a method, nor a constructor.
+由于 Perl 5 对包和类不加以严格区分，检查包存在性的技巧同时可用于检查一个类是否
+存在。尚没有方法可以判断一个包是否是一个类。你 I<可以> 用 C<can()> 来检查一个包
+是否可以执行 C<new()>，但这样无法保证任何找到的 C<new()> 是方法，更不要说是构造
+器了。
 
-=head2 Checking that a Module Has Loaded
+=head2 检查一个模块是否被加载
 
 X<%INC>
 X<@INC>
 
-If you know the name of a module, you can check that Perl believes it has
-loaded that module from disk by looking in the C<%INC> hash.  This hash
-corresponds to C<@INC>; when Perl 5 loads code with C<use> or C<require>, it
-stores an entry in C<%INC> where the key is the pathified name of the module to
-load and the value is the full path on disk to that module.  In other words,
-loading C<Modern::Perl> effectively does:
+如果知道模块的名称，你可以通过查看 C<%INC> 哈希来确定 Perl 是否相信它已经从
+磁盘加载了这个模块。这个哈希和 C<@INC> 是对应的；当 Perl 5 用 C<use> 和 C<require>
+加载代码时，会在 C<%INC> 中存储一个条目，其中键是欲加载模块的路径化名称，值是
+模块完整的磁盘路径。就是说，加载 C<Modern::Perl> 等效于：
 
 =begin programlisting
 
@@ -64,10 +57,8 @@ loading C<Modern::Perl> effectively does:
 
 =end programlisting
 
-The details of the path will vary depending on your installation, but for the
-purpose of testing that Perl has successfully loaded a module, you can convert
-the name of the module into the canonical file form and test for existence
-within C<%INC>:
+路径的细节大部分取决于安装，但出于测试 Perl 是否成功加载一个模块目的，你可以把
+模块名转换为正规文件形式并测试在 C<%INC> 内是否存在：
 
 =begin programlisting
 
@@ -79,17 +70,14 @@ within C<%INC>:
 
 =end programlisting
 
-Nothing prevents other code from manipulating C<%INC> itself.  Depending on
-your paranoia level, you may check the path and the expected contents of the
-package yourself, but modules with good reasons for manipulating this variable
-(such as C<Test::MockObject> or C<Test::MockModule>) may do so.  Code which
-manipulates C<%INC> for poor reasons deserves replacing.
+没有什么阻止其它代码修改 C<%INC>。按你偏执的程度，你可以自行检查路径和预期的包
+内容，但是拥有充足利用修改此变量的模块（诸如 C<Test::MockObject> 和 C<Test::MockModule>）
+可以这样做。修改 C<%INC> 但理由不足的代码应该被替换。
 
-=head2 Checking the Version of a Module
+=head2 检查模块的版本
 
-There is no guarantee that a given module provides a version.  Even so, all
-modules inherit from C<UNIVERSAL> (L<universal>), so they all have a
-C<VERSION()> method available:
+无法保证某给定的模块是否提供版本号。即便如此，所有模块都继承自 C<UNIVERSAL>（L<universal>）
+，因此它们全含有 C<VERSION()> 方法以供调用：
 
 =begin programlisting
 
@@ -97,14 +85,12 @@ C<VERSION()> method available:
 
 =end programlisting
 
-If the given module does not override C<VERSION()> or contain a package
-variable C<$VERSION>, the method will return an undefined value.  Likewise, if
-the module does not exist, the method call will fail.
+如果给定的模块不覆盖 C<VERSION()> 或不包含包变量 C<$VERSION>，这个方法将返回一个未定义值。
+类似地，如果该模块不存在，则对方法的调用将会失败。
 
-=head2 Checking that a Function Exists
+=head2 检查一个函数是否存在
 
-The simplest mechanism by which to determine if a function exists is to use the
-C<can()> method on the package name:
+确定函数是否存在最简单的机制就是对包名使用 C<can()> 方法：
 
 =begin programlisting
 
@@ -112,14 +98,12 @@ C<can()> method on the package name:
 
 =end programlisting
 
-Perl will throw an exception unless C<$pkg> is a valid invocant; wrap the
-method call in an C<eval> block if you have any doubts about its validity.
-Beware that a function implemented in terms of C<AUTOLOAD()> (L<autoload>) may
-report the wrong answer if the function's package does not also override
-C<can()> correctly.  This is a bug in the other package.
+除非 C<$pkg> 是合法的调用物，否则 Perl 将会抛出异常；如果对其合法性有任何怀疑，
+可以将此方法调用包装在一个 C<eval> 块内。注意，若函数所在的包没有正确地覆盖 C<can()>，
+使用 C<AUTOLOAD()>（L<autoload>）实现的函数可能会导致错误结果。这在其他包里便会
+导致代码缺陷。
 
-You may use this technique to determine if a module's C<import()> has imported
-a function into the current namespace:
+你可以用这个技巧决定一个模块的 C<import()> 是否向当前名称空间导入某函数：
 
 =begin programlisting
 
@@ -127,36 +111,29 @@ a function into the current namespace:
 
 =end programlisting
 
-You may also root around in the symbol table and typeglobs to determine if a
-function exists, but this mechanism is simpler and easier to explain.
+你也可以检查符号表和类型团来决定函数是否存在，但这种机制更简单也更好解释。
 
-=head2 Checking that a Method Exists
+=head2 检查一个方法是否存在
 
-There is no generic way to determine whether a given function is a function or
-a method.  Some functions perform dual duty as both functions and methods;
-though this is overly complex and usually a mistake, it is an allowed feature.
+没有检查某给定函数究竟是函数还是方法的通用办法。一些函数身兼双职，既是函数
+也是方法，尽管听上去过于复杂并且同时是失误，但这确实是一个允许的特性。
 
-=head2 Rooting Around in Symbol Tables
+=head2 搜查符号表
 
 X<symbol tables>
 X<typeglobs>
 
-A Perl 5 symbol table is a special type of hash, where the keys are the names
-of package global symbols and the values are typeglobs.  A I<typeglob> is a
-core data structure which can contain any or all of a scalar, an array, a hash,
-a filehandle, and a function.  Perl 5 uses typeglobs internally when it looks
-up these variables.
+Perl 5 符号表是一个种类特别的哈希，其中的键是包全局符号的名称，值则是类型团。
+I<类型团> 是一种核心数据结构，它可以包含一个标量、一个数组、一个哈希、一个文
+件句柄和一个函数。Perl 5 内部在查找这些变量时使用类型团。
 
-You can access a symbol table as a hash by appending double-colons to the name
-of the package.  For example, the symbol table for the MonkeyGrinder package is
-available as C<%MonkeyGrinder::>.
+通过在包名末尾添加双冒号，你可以将符号表当作哈希访问。例如，MonkeyGrinder 包
+的符号表可以通过 C<%MonkeyGrinder::> 访问。
 
-You I<can> test the existence of specific symbol names within a symbol table
-with the C<exists> operator (or manipulate the symbol table to I<add> or
-I<remove>) symbols, if you like).  Yet be aware that certain changes to the
-Perl 5 core have modified what exists by default in each typeglob entry.  In
-particular, earlier versions of Perl 5 have always provided a default scalar
-variable for every typeglob created, while modern versions of Perl 5 do not.
+你 I<可以> 用 C<exists> 操作符检查特定的符号名是否存在于符号表中（或随你喜好
+修改符号表来 I<添加> 或 or I<删除> 符号）。还应注意到一些对 Perl 5 核心的变更
+已经修改了默认出现的类型团条目。特别是，Perl 5 早期版本总是为每个类型团默认提
+供一个标量变量，现代化的 Perl 5 已经取消。
 
-See the "Symbol Tables" section in C<perldoc perlmod> for more details, then
-prefer the other techniques in this section for reflection.
+参见 C<perldoc perlmod> 中的“Symbol Tables”小节以获取更多细节，最好采用不同于
+本章介绍的反射技巧。
