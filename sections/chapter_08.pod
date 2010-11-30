@@ -1,17 +1,15 @@
-=head0 Style and Efficacy
+=encoding utf8
 
-Programming and programming I<well> are related, but distinct skills.  If we
-only wrote programs once and never had to modify or maintain them, if our
-programs never had bugs, if we never had to choose between using more memory or
-taking more time, and if we never had to work with other people, we wouldn't
-have to worry about how well we program.  To program well, you must understand
-the differences between potential solutions based on specific priorities of
-time, resources, and future plans.
+=head0 编程风格和效能
 
-Writing Perl well means understanding how Perl works.  It also means developing
-a sense of good taste.  To develop that skill, you must practice writing and
-maintaining code and reading good code.  There are no shortcuts--but you can
-improve the effectiveness of your practice by following a few guidelines.
+编程和编I<好>程是两个相关但有所区分的技能。如果我们仅编写一次性程序并不再需要修
+改或维护它们，如果我们的程序毫无缺陷，如果我们的无需在耗内存和耗时间之间做出选择，
+并且如果我们永远不用和他人一起工作，我们就不必担心我们的程序写得有多差。要写好程
+序，你必须基于特定的时间、资源侧重点理解候选解决方案和进一步计划间的区别。
+
+写好 Perl 程序意味着理解 Perl 是如何工作的。同时也意味这个培养良好的编程品味。要
+培养这种技能，你必须不断练习编写和维护代码，并阅读优秀的代码。此处并无捷径可走────
+但通过遵守如下指导，你可以提高练习效率。
 
 L<style>
 
