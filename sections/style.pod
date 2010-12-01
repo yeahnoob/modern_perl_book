@@ -1,153 +1,115 @@
+=encoding utf8
+
 Z<style>
 
-=head1 Writing Maintainable Perl
+=head1 编写可维护的 Perl 程序
 
 X<maintenance>
 X<maintainability>
 
-The easier your program is to understand and to modify, the better.  This is
-I<maintainability>.  Set aside your current program for six months, then try to
-fix a bug or add a feature.  The more maintainable the code, the less
-artificial complexity you will encounter making changes.
+程序越易理解和修改越好。这就是 I<可维护性>。假设将你现在正编写的程序放一边，
+六个月以后回来修改缺陷或是添加功能。代码越一样维护，修改是遇到的人工复杂度
+就越小。
 
-To write maintainable Perl you must:
+要编写可维护的 Perl 程序，你必须：
 
 =over 4
 
-=item * I<Remove duplication.>  Perl offers many opportunities to use
-abstraction to reduce and remove duplication.  Functions, objects, roles, and
-modules, for example, allow you to define models of the problem and your
-solution.
+=item * I<去掉重复> Perl 提供了不少使用抽象消去重复的机会。函数、对象、角色和
+模块，举例来说，允许你定义程序和解决方案的模型。
 
-The more duplication in your system, the more work it is to make a necessary
-change, and the more likely you will forget to make a change in every place
-necessary.  The less duplication in your system, the more likely you've found
-an effective design for your problem.  The best designs allow you to add
-features while removing code overall.
+程序中重复越多，做出必要修改时花的精力越多，并且很可能会忘记修改每一必要处。
+重复越少，说明你很可能找到了问题的有效解决。最佳设计让你在添加功能的同时减少
+整体代码量。
 
-=item * I<Name entities well.>  Everything you can name in your
-system--functions, classes, methods, variables, modules--can aid or hinder
-clarity.  The ease with which you can name these entities reveals your
-understanding of the problem and the cohesion of your design.  Your design
-tells a story, and every word you use effectively can help you remember that
-story when you must later maintain the code.
+=item * I<正确命名实体> 系统中每一样由你命名的事物────函数、类、方法、变量、模块
+────可以有助也可以妨害代码的清晰程度。好的一面是，你可以通过命名这些实体来揭示你
+对问题的理解以及你设计的内聚力。你的设计就是在讲述一个故事，其中经斟酌的一词一字
+都有助于在日后维护代码时帮你记起故事的来龙去脉。
 
-=item * I<Avoid unnecessary cleverness.>  Novices sometimes mistake cleverness
-for conciseness.  Concise code avoids unnecessary structure or complexity.
-Clever code sometimes prefers its own cleverness to simplicity.  Perl offers
-many approaches to solve similar problems.  Often one form is more readable.
-Sometimes one form is faster, or simpler.  Usually one is more obvious in
-context.
+=item * I<避免小聪明> 新手有时候误将小聪明认作简明。简明的代码避免非必要的结构和
+复杂性。耍小聪明的代码通常倾向于展示聪明而非简明。Perl 提供了许多解决相似问题的
+手段。通常其中之一更加可读。有时候某中形式的解更加快速或简单，通常某一解法的上下
+文特征更加明显。
 
-You can't always avoid the dark corners of Perl, and some problems require
-cleverness to solve effectively.  Only good taste and experience will help you
-evaluate the appropriate level of cleverness.  As a rule of thumb, if you're
-prouder of explaining your solution to your coworkers than you are of solving a
-problem, your code may have unnecessary complexity.
+你无法总是避开 Perl 中黑暗的角落，而且有部分问题需要高效解决的小聪明。仅有良好的
+代码品味和经验能帮助你估计小聪明的合适程度。按经验来看，如果你认为在你的同事面前
+解释你的解法更使你感到骄傲，你的代码更可能包含不必要的复杂性。
 
-If you I<do> need clever code, encapsulate it behind a simple interface and
-document your cleverness very well.
+如果你 I<确实> 需要编写小聪明代码，请将其封装在简单的接口之后并详尽地用文档记下你
+的聪明才智。
 
-=item * I<Embrace simplicity.>  Given two programs which solve the same
-problem, the simplest is almost always easier to maintain.  Simplicity doesn't
-require you to eschew advanced Perl knowledge, or to avoid using libraries, or
-to pound out hundreds of lines of procedural code.
+=item * I<拥抱简洁> 给出两个解决相同问题的程序，简洁的那个几乎总是更易于维护。简
+洁并非让你避开高级 Perl 知识，或是避免使用库，或是扫清几百行过程式代码。
 
-Simplicity means that you've solved the problem at hand effectively without
-adding anything you don't need.  This is no excuse to avoid error checking or
-verification or validation or security.  Instead it's a reminder to think about
-what's really important.  Sometimes you don't need frameworks, or objects, or
-complex data structures.  Sometimes you do.  Simplicity means knowing the
-difference.
+简洁意味着你高效地解决手边的问题而不用增加任何你不需要的东西。没有任何理由避开错误
+检查或验证数据或不注重安全性。相反，应该重点思考究竟什么是重要的。有时候你不需要框
+架、对象或复杂的数据结构。有时候你需要。简洁意味着你了解其中的区别。
 
 =back
 
-=head1 Writing Idiomatic Perl
+=head1 编写惯用语化的 Perl 程序
 
 X<idioms>
 
-Perl steals ideas from other languages as well as from the wild world outside
-of programming.  Perl tends to claim these ideas by making them Perlish.  To
-write Perl well, you must know how experienced Perl programmers write it.
+Perl 从其他语言及编程以外的大千世界借鉴各式思想。Perl 倾向于使其 Perl 化来占有这些思想。
+要写好 Perl 程序，你必须了解有经验的 Perl 程序员是如何写程序的。
 
 =over 4
 
-=item * I<Understand community wisdom.>  The Perl community often debates
-techniques, sometimes fiercely.  Yet even these disagreements offer
-enlightenment on specific design tradeoffs and styles.  You know your specific
-needs, but CPAN authors, CPAN developers, your local Perl Mongers group, and
-other programmers have experience solving similar problems.  Talk to them.
-Read their public code.  Ask questions.  Learn from them and let them learn
-from you.
+=item * I<理解社区的智慧> Perl 社区通常就技巧进行辩论，有时非常激烈。甚至这些反对的声音
+也会给特点设计取舍和风格带来启示。你了解自身特定的需求，但 CPAN 作者，CPAN 开发人员，本
+地的 Perl 贩子小组以及其他程序员拥有解决类似问题的经验。和他们聊聊。阅读他们公开的代码。
+提问。并互相学习。
 
-=item * I<Follow community norms.>  The Perl community isn't always right,
-especially if your needs are very specific or unique, but it works continually
-to solve problems as broadly as possible.  Perl's testing and packaging tools
-work best when you organize your code as if you were to distribute it on the
-CPAN.  Adopt the standard approaches to writing, documenting, packaging,
-testing, and distributing your code, to take advantage of these tools.
+=item * I<遵循社区标准> Perl 社区并不总是正确的，特别是在你的需求特别专一或独特时，但社
+区本身一直持续运作以尽可能广泛地解决各类问题。Perl 的测试和打包工具在代码符合 CPAN 发行
+规则时可最高效地工作。遵守编码、文档、打包、测试、代码发布的各项标准，利用好这些工具。
 
-Similarly, CPAN distributions such as C<Perl::Critic> and C<Perl::Tidy> and
-C<CPAN::Mini> can make your work simpler and easier.
+类似地，CPAN 上的发行包如 C<Perl::Critic>、C<Perl::Tidy> 以及 C<CPAN::Mini> 可让你的工作
+更简单更轻松。
 
-=item * I<Read code.>  Join in a mailing list such as the Perl Beginners list
-(U<http://learn.perl.org/faq/beginners.html>), sign up for PerlMonks
-(U<http://perlmonks.org/>), and otherwise immerse yourself in the Perl
-Community (U<http://www.perl.org/community.html> has copious links).  You'll
-have plenty of opportunities to see how other people solve their problems, good
-and bad.  Learn from the good (it's often obvious) and the bad (to see what to
-avoid).
+=item * I<阅读代码> 加入诸如 Perl Beginners (U<http://learn.perl.org/faq/beginners.html>)
+之类的邮件列表，注册一个 PerlMonks (U<http://perlmonks.org/>) 帐号，使自己沉浸在 Perl 社区
+(U<http://www.perl.org/community.html> 包括了丰富的链接)。你将会有非常多的机会见识他人是如
+何解决问题的（无论方法是好是坏）。学习优秀的方法（通常很明显），并从不那么好的方法中汲取教
+训。
 
-Writing a few lines of code to solve a problem someone else posted is a great
-way to learn.
+就他人发贴提出的问题编写几行代码给出自己的解答，这是一种学习的好方法。
 
 =back
 
-=head1 Writing Effective Perl
+=head1 编写高效的 Perl 程序
 
 X<efficacy>
 
-Knowing Perl's syntax and semantics is only the beginning.  You can only
-achieve good design if you follow habits to I<encourage> good design.
+了解 Perl 的语法和语义只是一个起步。你之能通过 I<鼓励> 良好设计的习惯达成良好
+的设计。
 
 =over 4
 
-=item * I<Write testable code.>  Perhaps the best way to ensure that you can
-maintain code is to write an effective test suite.  Writing test code well
-exercises the same design skills as designing programs well; never forget that
-test code is still code.  Even so, a good test suite will give you confidence
-that you can modify a program and not break existing behaviors you care about.
+=item * I<编写可测试的代码> 也许确保你可以维护一段代码的最佳方法就是编写一个高效
+的测试套件。编写良好的测试代码和设计程序一样，都锻炼了设计技能；绝对不要忘记，测
+试代码仍是代码。即便如此，一个良好的测试套件会给你带来信心，让你知道你可以修改程
+序并不会打破你关心的程序行为。
 
-=item * I<Modularize.>  Break your code into individual modules to enforce
-encapsulation and abstraction boundaries.  Make a habit of this and you'll
-recognize individual units of code which do too many things.  You'll identify
-multiple units that work too tightly together.
+=item * I<模块化> 将你的代码分割为单独的模块强制推行封装和抽象边界。将此培养成一
+种习惯后你就能认出那些功能过于臃肿的代码单元。你也将识别出结合过于紧密的多个模块。
 
-Modularity also forces you to manage different levels of abstraction; you must
-consider how the entities of your system work together.  There's no better way
-to learn the value of abstraction than having to revise systems into effective
-abstractions.
+模块化同时强制你处理各个层面的抽象；你必须考虑系统中的各个实体如何协作。没有比
+将系统修改为高效抽象更能学到抽象的价值了。
 
-=item * I<Take advantage of the CPAN.>  The single best force multiplier for
-any Perl 5 program is the amazing library of reusable code available for anyone
-to use.  Thousands of developers have written tens of thousands of modules to
-solve more problems than you can imagine, and the CPAN only continues to grow.
-Community standards for documentation, for packaging, for installation, and for
-testing contribute to the quality of the code, and the CPAN's centrality in
-modern Perl has helped the Perl community grow in knowledge, in wisdom, and in
-efficacy.
+=item * I<利用 CPAN> 使任何 Perl 5 程序能力倍增的是这个唾手可得、令人惊叹的可重用
+代码库。数千开发人员已经编写了几万个模块，可以解决的问题超乎你的想象，CPAN 仍在继
+续成长。社区有关文档、打包、安装、测试的规范保证了代码质量，并且，以 CPAN 为中心的
+现代化 Perl 已经帮助 Perl 社区在知识、智慧和效能上发展壮大。
 
-Whenever possible, search the CPAN first--and ask your fellow community
-members--for advice on solving your problems.  You may even report a bug, or
-submit a patch, or produce your own distribution on the CPAN.  Nothing
-demonstrates you're an effective Perl programmer more than helping other people
-solve their problems.
+当可能时，请先搜索 CPAN────并询问你的社区伙伴────征询解决问题的建议。你甚至可以报
+告缺陷，或提交补丁，再或自己编写 CPAN 模块发行版。没有什么比帮助解决他人的问题更
+能展示你是一个高效的 Perl 程序员了。
 
-=item * I<Establish sensible coding standards.>  Effective guidelines establish
-policies for error handling, security, encapsulation, API design, project
-layout, and other maintainability concerns.  Excellent guidelines evolve as you
-and your team understand each other and your projects better.  The goal of
-programming is to solve problems, and the goal of coding standards is to help
-you communicate your intentions clearly.
+=item * I<建立合理的编码标准> 有效的指导为错误处理、安全性、封装、API 设计、
+项目布局以及其他可维护性考虑建立对策。出色的指导随着你和你的团队互相理解及项目跟进
+而革新。编程的目的是解决问题，建立编码标准的目的是帮助你清晰地表达意图。
 
 =back
