@@ -1,138 +1,127 @@
-=head1 Pragmas
+=encoding utf8
+
+=head1 编译命令
 
 Z<pragmas>
 
-Perl 5's extension mechanism is modules (L<modules>).  Most modules provide
-functions to call or they define classes (L<moose>), but some modules instead
-influence the behavior of the language itself.
+Perl 5 的扩展机制是模块（L<modules>）。大部分模块提供了函数可供调用的函数，或定义
+了一些类（L<moose>），但有部分模块则不同，它们对语言自身的行为产生了影响。
 
 X<pragma>
 X<modules; pragmas>
 
-A module which influences the behavior of the compiler is a I<pragma>.  By
-convention, pragmas have lower-case names to differentiate them from other
-modules.  You've heard of some before: C<strict> and C<warnings>, for example.
+影响编译器行为的模块称为一条 I<编译命令（pragma）>。按照惯例，编译命令的名称为小写，
+以示与其他模块的区别。你已经听说过的一些编译命令有：C<strict> 和 C<warnings>。
 
-=head2 Pragmas and Scope
+=head2 编译命令和作用域
 
 X<pragmas; scope>
 
-A pragma works by exporting specific behavior or information into the enclosing
-static scope.  The scope of a pragma is the same as the scope of a lexical
-variable.  In a way, you can think of lexical variable declaration as a sort of
-pragma with funny syntax.  Pragma scope is clearer with an example:
+编译命令的工作方式是向闭合的静态作用域导出特定行为或信息。编译命令的作用域与词法变
+量相同。在某种程度上你可以将词法变量声明看做是一种带有可笑语法的编译命令。用例子说
+明编译命令的作用域会更加清楚：
 
 =begin programlisting
 
     {
-        # $lexical is B<not> visible; strict is B<not> in effect
+        # $lexical B<不> 可见；strict B<未> 生效
         {
             use strict;
             my $lexical = 'available here';
-            # $lexical B<is> visible; strict B<is> in effect
+            # $lexical B<可见>；strict B<有效>
             ...
         }
-        # $lexical is again B<not> visible; strict is B<not> in effect
+        # $lexical 再次 B<不> 可见；strict B<不> 起作用
     }
 
 =end programlisting
 
 =begin sidebar
 
-A sufficiently motivated Perl guru could implement a poorly-behaved pragma
-which ignores scoping, but that would be unneighborly.
+一个潜能被充分激发的 Perl 大师可以实现一个无视作用域的行为不良的编译命令，
+但这太不友善了。
 
 =end sidebar
 
-Just as lexical declarations affect inner scopes, so do pragmas maintain their
-effects on inner scopes:
+如同词法声明影响内层作用域那样，编译命令也会如此：
 
 =begin programlisting
 
-    # file scope
+    # 整个文件范围
     use strict;
 
     {
-        # inner scope, but strict still in effect
+        # 内层作用域；但是仍在 strict 生效的范围内
         my $inner = 'another lexical';
         ...
     }
 
 =end programlisting
 
-=head2 Using Pragmas
+=head2 使用编译命令
 
 X<pragmas; enabling>
 X<pragmas; customizing>
 
-Pragmas have the same usage mechanism as modules.  As with modules, you may
-specify the desired version number of the pragma and you may pass a list of
-arguments to the pragma to control its behavior at a finer level:
+编译命令与模块的使用机制相同。和使用模块时相同，你可以指定所需编译命令的版本，也
+可以向编译命令传递参数列表以便更好地控制其行为：
 
 =begin programlisting
 
-    # require variable declaration; prohibit bareword function names
+    # 要求变量声明；防止裸字函数名称
     use strict qw( subs vars );
 
 =end programlisting
 
 X<pragmas; disabling>
 
-Within a scope you may disable all or part of a pragma with the C<no> keyword:
+在作用域内你可以用 C<no> 关键字禁用全部或部分编译命令：
 
 =begin programlisting
 
     use strict;
 
     {
-        # get ready to manipulate the symbol table
+        # 准备修改符号表
         no strict 'refs';
         ...
     }
 
 =end programlisting
 
-=head2 Useful Core Pragmas
+=head2 常用核心编译命令
 
 X<pragmas; useful>
 
-Perl 5 includes several useful core pragmas:
+Perl 5 包含了一些有用的核心编译命令：
 
 =over 4
 
-=item * the C<strict> pragma enables compiler checking of symbolic references,
-the use of barewords, and the declaration of variables
+=item * C<strict> 编译命令启用编译器对符号引用、裸字、变量声明的检查
 
-=item * the C<warnings> pragma enables optional warnings for deprecated,
-unintended, and awkward behaviors that are not I<necessarily> errors but may
-produce unwanted behaviors
+=item * C<warnings> 编译命令为不推荐的、出人意料的、古怪的行为启用可选的警告。
+它们 I<不一定> 是错误，但可能产生多余的行为
 
-=item * the C<utf8> pragma enables the use of the UTF-8 encoding of source code
+=item * C<utf8> 编译命令对源代码启用 UTF-8 编码
 
-=item * the C<autodie> pragma (new in 5.10.1) enables automatic error checking
-of system calls and keywords, reducing the need for manual error checking
+=item * C<autodie> 编译命令（5.10.1 新增）对系统调用和关键字启用自动错误检查，
+减少手动检查之需
 
-=item * the C<constant> pragma allows you to create compile-time constant
-values (though see C<Readonly> from the CPAN for an alternative)
+=item * C<constant> 编译命令允许你创建编译期常量（也请参见来自 CPAN 的 C<Readonly> 替代）
 
-=item * the C<vars> pragma allows you to declare package global variables, such
-as C<$VERSION> or those for exporting (L<exporting>) and manual OO
-(L<blessed_references>)
+=item * C<vars> 编译命令允许你声明包全局变量，诸如 C<$VERSION>、导出变量（L<exporting>）
+以及来自 Perl 文档的 OO（L<blessed_references>）
 
 =back
 
-Several useful pragmas exist on the CPAN as well.  Two worth exploring in
-detail are C<autobox>, which enables object-like behavior for Perl 5's core
-types (scalars, references, arrays, and hashes) and C<perl5i>, which combines
-and enables many experimental language extensions into a coherent whole.  These
-two pragmas may not belong yet in your production code without extensive
-testing and thoughtful consideration, but they demonstrate the power and
-utility of pragmas.
+另有一些来自 CPAN 的实用编译命令。两个值得细看的是 C<autobox>，它为 Perl 5 核心类型
+（标量、引用、数组和哈希）启用了类对象行为；以及 C<perl5i>，它组合并启用了许多实验性
+质的语言扩展，使之成为一个有机的整体。这两个编译命令不经大量测试和慎重考虑可能不会出
+现在你的产品代码中，但它们展示了编译命令的实用和强大。
 
 =begin sidebar
 
-Perl 5.10.0 added the ability to write your own lexical pragmas in pure Perl
-code.  C<perldoc perlpragma> explains how to do so, while the explanation of
-C<$^H> in C<perldoc perlvar> explains how the feature works.
+Perl 5.10.0 新增了用纯 Perl 代码编写你自己的词法编译命令的能力。C<perldoc perlpragma>
+阐述了如何去做，同时，C<perldoc perlvar> 内对 C<$^H> 的解释说明了此特性的工作原理。
 
 =end sidebar
