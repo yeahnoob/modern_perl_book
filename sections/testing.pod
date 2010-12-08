@@ -1,18 +1,18 @@
-=head1 Testing
+=encoding utf8
+
+=head1 测试
 
 Z<testing>
 
 X<testing>
 X<tests>
 
-I<Testing> is the process of writing and running automated verifications that
-your software performs as intended, in whole or in part.  At its heart, this is
-an automation of a process you've performed countless times already: write a
-bit of code, run it, and see if it works.  The difference is in the
-I<automation>.  Rather than performing these manual steps and relying on humans
-to do everything perfectly every time, let the computer handle the repetition.
+I<测试> 是编写并运行自动验证套件的过程，以保证软件整体或局部按预期的方式工作。从
+核心来说，这是你已经无数次手动执行过程的自动化：编写一段代码，运行并检查是否正常。
+区别在与整个过程是否 I<自动化>。相比手动执行这些步骤并依靠人力保证每次都完美无缺，
+还是让计算机来处理这些重复部分。
 
-Perl 5 provides great tools to help you write good and useful automated tests.
+Perl 5 提供了上佳的工具来帮助你编写良好且实用的自动化测试。
 
 =head2 Test::More
 
