@@ -5,6 +5,9 @@ use warnings;
 
 use Pod::PseudoPod::HTML;
 use File::Spec::Functions qw( catfile catdir splitpath );
+use Encode;
+use URI::Escape;
+use HTML::Entities;
 
 # P::PP::H uses Text::Wrap which breaks HTML tags
 local *Text::Wrap::wrap;
@@ -20,6 +23,9 @@ sub Pod::PseudoPod::HTML::end_L
     {
         my $link = $1;
         die "Unknown link $link\n" unless exists $anchors->{$link};
+        $anchors->{$link}[1]=decode("utf-8",$anchors->{$link}[1]);
+        $anchors->{$link}[1]=encode_entities($anchors->{$link}[1]);
+        $anchors->{$link}[1] =~ s/&amp;/&/g;
         $self->{scratch} .= '<a href="' . $anchors->{$link}[0] . "#$link\">"
                                         . $anchors->{$link}[1] . '</a>';
     }
